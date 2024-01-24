@@ -1,0 +1,280 @@
+/* Touch fix */
+button, input, select, textarea, div {
+  -webkit-tap-highlight-color: rgba(0, 0, 0, 0);
+  -webkit-touch-callout: none;
+  -webkit-user-select: none;
+  -moz-user-select: none;
+  -ms-user-select: none;
+  user-select: none;
+  -webkit-appearance: none;
+  -moz-appearance: none;
+}
+
+/* Buttons */
+.btn-1 {
+    @apply txt-8-w bg-zinc-700 hover:bg-zinc-800 active:bg-zinc-700 focus:outline-none active:ring-2 active:ring-zinc-700 active:ring-offset-2 h-12 px-6 rounded-full whitespace-nowrap pointer-events-auto
+}
+.dark .btn-1 {
+    @apply bg-zinc-200 hover:bg-zinc-300 active:bg-zinc-200 active:ring-zinc-200 active:ring-offset-zinc-700
+}
+
+.btn-1-icon {
+    @apply txt-3-w bg-zinc-700 hover:bg-zinc-800 active:bg-zinc-700 focus:outline-none active:ring-2 active:ring-zinc-700 active:ring-offset-2 h-12 w-12 rounded-full flex-shrink-0 flex items-center justify-center pointer-events-auto
+}
+.dark .btn-1-icon {
+    @apply bg-zinc-200 hover:bg-zinc-300 active:bg-zinc-200 active:ring-zinc-200 active:ring-offset-zinc-700
+}
+
+.btn-2 {
+    @apply txt-8 bg-white hover:bg-zinc-50 border-2 border-zinc-700 focus:outline-none active:ring-2 active:ring-zinc-700 active:ring-offset-2 h-12 px-6 rounded-full whitespace-nowrap pointer-events-auto
+}
+.dark .btn-2 {
+    @apply bg-zinc-700 hover:bg-zinc-800 border-zinc-200 active:ring-zinc-200 active:ring-offset-zinc-700
+}
+
+.btn-2-icon {
+    @apply txt-3 bg-white hover:bg-zinc-50 border-2 border-zinc-700 focus:outline-none active:ring-2 active:ring-zinc-700 active:ring-offset-2 h-12 w-12 rounded-full flex-shrink-0 flex items-center justify-center pointer-events-auto
+}
+.dark .btn-2-icon {
+    @apply bg-zinc-700 hover:bg-zinc-800 border-zinc-200 active:ring-zinc-200 active:ring-offset-zinc-700
+}
+
+.btn-3 {
+    @apply txt-8 hover:text-zinc-500
+}
+.dark .btn-3 {
+    @apply hover:text-zinc-300
+}
+
+.btn-4 {
+    @apply txt-11 hover:text-zinc-500
+}
+.dark .btn-4 {
+    @apply hover:text-zinc-300
+}
+
+.btn-5 {
+    @apply txt-3-w flex flex-col justify-center bg-zinc-700 transition ease-in-out rounded-lg min-h-fit mb-4 p-4 overflow-hidden
+}
+.dark .btn-5 {
+    @apply bg-zinc-200
+}
+
+.btn-5-w {
+    @apply txt-3 flex items-center justify-center hover:bg-zinc-100 hover:from-zinc-100 transition ease-in-out rounded-lg min-h-fit mb-4 p-4 overflow-hidden
+}
+.dark .btn-5-w {
+    @apply hover:bg-zinc-600 hover:from-zinc-600
+}
+
+.btn-6 {
+    @apply txt-5 hover:text-zinc-500 w-full flex flex-col py-4 border-b border-zinc-200
+}
+.dark .btn-6 {
+    @apply hover:text-zinc-300 border-zinc-600
+}
+
+.btn-7 {
+    @apply txt-8 hover:text-zinc-500 px-4 my-4 w-full flex justify-center items-center border-r border-zinc-200
+}
+.dark .btn-7 {
+    @apply hover:text-zinc-300 border-zinc-600
+}
+
+/* Texts */
+.txt-1 {
+    @apply text-zinc-700 font-extrabold text-2xl
+}
+.dark .txt-1 {
+    @apply text-zinc-200
+}
+
+.txt-2 {
+    @apply text-zinc-700 font-semibold text-2xl
+}
+.dark .txt-2 {
+    @apply text-zinc-200
+}
+
+.txt-2-w {
+    @apply text-zinc-300 font-semibold text-2xl
+}
+.dark .txt-2-w {
+    @apply text-zinc-500
+}
+
+.txt-3 {
+    @apply text-zinc-700 font-semibold text-lg
+}
+.dark .txt-3 {
+    @apply text-zinc-200
+}
+
+.txt-3-w {
+    @apply text-white font-semibold text-lg
+}
+.dark .txt-3-w {
+    @apply text-zinc-700
+}
+
+.txt-4 {
+    @apply text-zinc-700 font-normal text-lg tracking-tight
+}
+.dark .txt-4 {
+    @apply text-zinc-200
+}
+
+.txt-5 {
+    @apply text-zinc-700 font-medium text-base
+}
+.dark .txt-5 {
+    @apply text-zinc-200
+}
+
+.txt-6 {
+    @apply text-zinc-700 font-normal text-base
+}
+.dark .txt-6 {
+    @apply text-zinc-200
+}
+
+.txt-7 {
+    @apply text-zinc-500 font-normal text-base
+}
+.dark .txt-7 {
+    @apply text-zinc-400
+}
+
+.txt-8 {
+    @apply text-zinc-700 font-semibold text-sm
+}
+.dark .txt-8 {
+    @apply text-zinc-200
+}
+
+.txt-8-w {
+    @apply text-white font-semibold text-sm
+}
+.dark .txt-8-w {
+    @apply text-zinc-700
+}
+
+.txt-9 {
+    @apply text-zinc-400 font-normal text-lg
+}
+
+.txt-10 {
+    @apply text-zinc-400 font-normal text-sm
+}
+.dark .txt-10 {
+    @apply text-zinc-500
+}
+
+.txt-11 {
+    @apply text-zinc-700 font-normal text-sm
+}
+.dark .txt-11 {
+    @apply text-zinc-200
+}
+
+.txt-11-w {
+    @apply text-white font-normal text-sm
+}
+.dark .txt-11-w {
+    @apply text-zinc-700
+}
+
+/* Inputs */
+.inp-1 {
+    @apply txt-6 placeholder:text-transparent bg-white rounded-lg transition border border-zinc-200 px-4 py-2
+}
+.dark .inp-1 {
+    @apply bg-zinc-700 border-zinc-600
+}
+.inp-1:focus {
+    @apply border-zinc-400 outline-none
+}
+
+.inp-1-nb {
+    @apply txt-6 placeholder:text-transparent bg-white rounded-lg min-w-0 focus:outline-none px-4 py-2
+}
+.dark .inp-1-nb {
+    @apply bg-zinc-700
+}
+
+.inp-2 {
+    @apply txt-6 placeholder:text-zinc-300 bg-white grow w-36 transition border border-zinc-200 rounded-full px-4 py-2
+}
+.dark .inp-2 {
+    @apply placeholder:text-zinc-500 border-zinc-600 bg-zinc-700
+}
+.inp-2:focus {
+    @apply border-zinc-400 outline-none
+}
+
+.inp-3 {
+    @apply txt-6 placeholder:text-zinc-300 bg-white rounded-full w-24 focus:outline-none px-4 p-2
+}
+.dark .inp-3 {
+    @apply placeholder:text-zinc-500 bg-zinc-700
+}
+
+/* Containers */
+.con-1 {
+    @apply bg-white shadow-lg rounded-lg flex flex-col px-4 sm:px-6 md:px-8 relative
+}
+.dark .con-1 {
+    @apply bg-zinc-700
+}
+
+.con-2 {
+    @apply bg-zinc-100 shadow-lg rounded-lg top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 fixed
+}
+.dark .con-2 {
+    @apply bg-zinc-600
+}
+
+.con-3 {
+    @apply bg-white rounded-lg focus:outline-none
+}
+.dark .con-3 {
+    @apply bg-zinc-700
+}
+
+.con-4 {
+    @apply bg-white rounded-full shadow-lg focus:outline-none flex justify-center h-12 overflow-hidden
+}
+.dark .con-4 {
+    @apply bg-zinc-700
+}
+
+/* Gradients */
+.gr-1 {
+    @apply inset-x-0 bottom-0 flex rounded-lg justify-center bg-gradient-to-t from-white pt-32 absolute
+}
+.dark .gr-1 {
+    @apply from-zinc-700
+}
+
+/* Animations */
+.an-1 {
+    @apply bg-sky-200 w-112 h-96 rounded-full mix-blend-multiply opacity-30 blur-7xl animate-blob absolute
+}
+.dark .an-1 {
+    @apply bg-sky-300 mix-blend-screen opacity-10
+}
+
+.an-2 {
+    @apply bg-purple-200 w-96 h-112 rounded-full mix-blend-multiply opacity-70 blur-7xl animate-blob absolute
+}
+.dark .an-2 {
+    @apply bg-purple-400 mix-blend-screen opacity-20
+}
+
+/* Labels */
+.lb-1 {
+    @apply text-zinc-300 bg-white rounded-lg pointer-events-none font-normal text-sm peer-focus:text-sm peer-placeholder-shown:text-base whitespace-nowrap left-0 -top-2.5 peer-focus:-top-2.5 peer-placeholder-shown:top-[9px] peer-focus:text-zinc-400 mx-2 px-2 transition-all absolute
+}
+.dark .lb-1 {
+    @apply text-zinc-500 bg-zinc-700
+}
