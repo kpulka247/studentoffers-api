@@ -75,7 +75,7 @@ export function useChatsData() {
     }
 
     const deleteChat = async (chatId) => {
-        await fetch(`/api/chats/${chatId}/delete/`, {
+        await fetch(`/api/chats/${chatId}/`, {
             method: 'DELETE',
             headers: {
                 'Content-Type': 'application/json',
@@ -119,7 +119,7 @@ export function useChatData() {
     const createChat = async () => {
         let senderId = user.user_id
         let receiverId = offer.company.id
-        let response = await fetch(`/api/chats/create/${receiverId}/`, {
+        let response = await fetch(`/api/chats/new/${receiverId}/`, {
             method: 'POST',
             headers: {
                 'Content-Type': 'application/json',
@@ -165,7 +165,7 @@ export function useMessagesData() {
             messageData.append('file', file)
         }
 
-        let response = await fetch(`/api/chats/${chatId}/send/`, {
+        let response = await fetch(`/api/chats/${chatId}/`, {
             method: 'POST',
             headers: {
                 'Authorization': 'Bearer ' + authTokens.access
@@ -272,7 +272,7 @@ export function useOfferData() {
     }
 
     const createOffer = async () => {
-        let response = await fetch(`/api/offers/create/`, {
+        let response = await fetch(`/api/offers/`, {
             method: 'POST',
             headers: {
                 'Content-Type': 'application/json',
@@ -290,7 +290,7 @@ export function useOfferData() {
     }
 
     const updateOffer = async () => {
-        let response = await fetch(`/api/offers/${offerId}/update/`, {
+        let response = await fetch(`/api/offers/${offerId}/`, {
             method: 'PUT',
             headers: {
                 'Content-Type': 'application/json',
@@ -320,7 +320,7 @@ export function useOfferData() {
     }
 
     const deleteOffer = async () => {
-        await fetch(`/api/offers/${offerId}/delete/`, {
+        await fetch(`/api/offers/${offerId}/`, {
             method: 'DELETE',
             headers: {
                 'Content-Type': 'application/json',

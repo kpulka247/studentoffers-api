@@ -12,7 +12,7 @@ const SignUpPage = () => {
     const [toggleIcon, passwordInputType] = usePasswordToggle()
 
     const createUser = async () => {
-        let response = await fetch(`/api/users/create/`, {
+        let response = await fetch(`/api/users/new/`, {
             method: 'POST',
             headers: {
                 'Content-Type': 'application/json'
@@ -22,7 +22,7 @@ const SignUpPage = () => {
         let data = await response.json()
 
         if (response.status === 200) {
-            console.log('Successful registration!', data)
+            // console.log('Successful registration!', data)
         } else {
             console.log('Something went wrong!')
         }
