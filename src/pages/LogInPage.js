@@ -5,7 +5,7 @@ import {usePasswordToggle} from "../utils/UseData"
 import {useTranslation} from "react-i18next"
 
 
-const LogInPage = () => {
+export default function LogInPage() {
 
     const [t] = useTranslation()
     const {loginUser} = useContext(AuthContext)
@@ -62,5 +62,3 @@ const LogInPage = () => {
 
     )
 }
-
-export default LogInPage

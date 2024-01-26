@@ -1,21 +1,22 @@
-import React from "react"
+import React, {lazy, Suspense} from "react"
 import {BrowserRouter as Router, Routes, Route} from "react-router-dom"
 import PrivateRoute from "./utils/PrivateRoute"
 import {AuthProvider} from "./context/AuthContext"
 
 import "./styles/main.css"
 import "./tailwind.css"
-import Header from "./components/Header"
-import LogInPage from "./pages/LogInPage"
-import SignUpPage from "./pages/SignUpPage"
-import HomePage from "./pages/HomePage"
-import OfferPage from "./pages/OfferPage"
-import OffersListPage from "./pages/OffersListPage"
-import AccountPage from "./pages/AccountPage"
-import MessagesPage from "./pages/MessagesPage"
+
+const Header = lazy(() => import("./components/Header"))
+const LogInPage = lazy(() => import("./pages/LogInPage"))
+const SignUpPage = lazy(() => import("./pages/SignUpPage"))
+const HomePage = lazy(() => import("./pages/HomePage"))
+const OfferPage = lazy(() => import("./pages/OfferPage"))
+const OffersListPage = lazy(() => import("./pages/OffersListPage"))
+const AccountPage = lazy(() => import("./pages/AccountPage"))
+const MessagesPage = lazy(() => import("./pages/MessagesPage"))
 
 
-function App() {
+export default function App() {
 
     return (
         <div
@@ -32,22 +33,26 @@ function App() {
             <Router>
                 <AuthProvider>
                     <Header/>
-                    <Routes>
-                        <Route path="/" element={<PrivateRoute/>}>
-                            <Route path="/" element={<HomePage/>}/>
-                            <Route path="/account" element={<AccountPage/>}/>
-                            <Route path="/chat" element={<MessagesPage/>}/>
-                            <Route path="/chat/:id" element={<MessagesPage/>}/>
-                            <Route path="/offer" element={<OffersListPage/>}/>
-                            <Route path="/offer/:id" element={<OfferPage/>}/>
-                        </Route>
-                        <Route path="/login" element={<LogInPage/>}/>
-                        <Route path="/signup" element={<SignUpPage/>}/>
-                    </Routes>
+                    <Suspense fallback={
+                        <div className="txt-1 flex flex-grow justify-center items-center min-h-fit">
+                            . . .
+                        </div>
+                    }>
+                        <Routes>
+                            <Route path="/" element={<PrivateRoute/>}>
+                                <Route path="/" element={<HomePage/>}/>
+                                <Route path="/account" element={<AccountPage/>}/>
+                                <Route path="/chat" element={<MessagesPage/>}/>
+                                <Route path="/chat/:id" element={<MessagesPage/>}/>
+                                <Route path="/offer" element={<OffersListPage/>}/>
+                                <Route path="/offer/:id" element={<OfferPage/>}/>
+                            </Route>
+                            <Route path="/login" element={<LogInPage/>}/>
+                            <Route path="/signup" element={<SignUpPage/>}/>
+                        </Routes>
+                    </Suspense>
                 </AuthProvider>
             </Router>
         </div>
     )
 }
-
-export default App

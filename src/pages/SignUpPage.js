@@ -1,41 +1,13 @@
-import React, {useState} from "react"
-import {useNavigate} from "react-router-dom"
-import {usePasswordToggle} from "../utils/UseData"
+import React from "react"
+import {usePasswordToggle, useUsersData} from "../utils/UseData"
 import {useTranslation} from "react-i18next"
 
 
-const SignUpPage = () => {
+export default function SignUpPage() {
 
     const [t] = useTranslation()
-    const navigate = useNavigate()
-    const [user, setUser] = useState({user_type: 'Student'})
+    const {user, setUser, handleUserSubmit, handleUserType} = useUsersData()
     const [toggleIcon, passwordInputType] = usePasswordToggle()
-
-    const createUser = async () => {
-        let response = await fetch(`/api/users/new/`, {
-            method: 'POST',
-            headers: {
-                'Content-Type': 'application/json'
-            },
-            body: JSON.stringify(user)
-        })
-        let data = await response.json()
-
-        if (response.status === 200) {
-            // console.log('Successful registration!', data)
-        } else {
-            console.log('Something went wrong!')
-        }
-    }
-
-    const handleUserSubmit = () => {
-        createUser()
-        navigate("/login")
-    }
-
-    const handleUserType = (userType) => {
-        setUser({...user, 'user_type': userType})
-    }
 
     return (
         <section className="w-full max-w-3xl mx-auto px-4 sm:px-6 md:px-8 relative">
@@ -282,6 +254,3 @@ const SignUpPage = () => {
 
     )
 }
-
-
-export default SignUpPage

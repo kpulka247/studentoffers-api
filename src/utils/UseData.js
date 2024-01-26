@@ -1,10 +1,12 @@
-import React, {useState, useEffect, useContext} from "react"
+import React, {lazy, Suspense, useState, useEffect, useContext} from "react"
 import AuthContext from "../context/AuthContext"
 import {useParams, useNavigate} from "react-router-dom"
-import ConfirmationDialog from "../components/ConfirmationDialog"
 import {FontAwesomeIcon} from "@fortawesome/react-fontawesome"
 import {faEye, faEyeSlash} from "@fortawesome/free-solid-svg-icons"
 import {useTranslation} from "react-i18next"
+
+const ConfirmationDialog = lazy(() => import("../components/ConfirmationDialog"))
+
 
 // export function useUsersData() {
 //
@@ -37,6 +39,40 @@ import {useTranslation} from "react-i18next"
 //     return {students, companies}
 // }
 
+export function useUsersData() {
+
+    const navigate = useNavigate()
+    const [user, setUser] = useState({user_type: 'Student'})
+
+    const createUser = async () => {
+        const response = await fetch(`/api/users/`, {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json'
+            },
+            body: JSON.stringify(user)
+        })
+        const data = await response.json()
+
+        if (response.status === 200) {
+            // console.log('Successful registration!', data)
+        } else {
+            console.log('Something went wrong!')
+        }
+    }
+
+    const handleUserSubmit = () => {
+        createUser()
+        navigate("/login")
+    }
+
+    const handleUserType = (userType) => {
+        setUser({...user, 'user_type': userType})
+    }
+
+    return {user, setUser, handleUserSubmit, handleUserType}
+}
+
 export function useChatsData() {
 
     const [t] = useTranslation()
@@ -51,15 +87,15 @@ export function useChatsData() {
     }, [])
 
     const getChats = async () => {
-        let response = await fetch('/api/chats/', {
+        const response = await fetch('/api/chats/', {
             method: 'GET',
             headers: {
                 'Content-Type': 'application/json',
                 'Authorization': 'Bearer ' + String(authTokens.access)
             }
         })
-        let data = await response.json()
-        let filteredChats = data.filter(chat => chat.sender.id === user.user_id || chat.receiver.id === user.user_id)
+        const data = await response.json()
+        const filteredChats = data.filter(chat => chat.sender.id === user.user_id || chat.receiver.id === user.user_id)
         setChats(filteredChats)
         // console.log(filteredChats)
     }
@@ -95,11 +131,13 @@ export function useChatsData() {
             <div className={`fixed top-0 left-0 w-full h-full bg-black bg-opacity-30 flex justify-center items-center ${
                 showConfirmation ? '' : 'hidden'
             }`}>
-                <ConfirmationDialog
-                    confirmationMessage={t("confirmation.delete_chat")}
-                    onConfirm={() => deleteChat(chatToDelete)}
-                    onCancel={closeConfirmation}
-                />
+                <Suspense>
+                    <ConfirmationDialog
+                        confirmationMessage={t("confirmation.delete_chat")}
+                        onConfirm={() => deleteChat(chatToDelete)}
+                        onCancel={closeConfirmation}
+                    />
+                </Suspense>
             </div>
         )
     }
@@ -117,9 +155,9 @@ export function useChatData() {
     }, [])
 
     const createChat = async () => {
-        let senderId = user.user_id
-        let receiverId = offer.company.id
-        let response = await fetch(`/api/chats/new/${receiverId}/`, {
+        const senderId = user.user_id
+        const receiverId = offer.company.id
+        const response = await fetch(`/api/chats/new/${receiverId}/`, {
             method: 'POST',
             headers: {
                 'Content-Type': 'application/json',
@@ -127,7 +165,7 @@ export function useChatData() {
             },
             body: JSON.stringify({sender: senderId, receiver: receiverId})
         })
-        let data = await response.json()
+        const data = await response.json()
         setChat(data)
         navigate(`/chat/${data.id}`)
     }
@@ -141,14 +179,14 @@ export function useMessagesData() {
     const {authTokens} = useContext(AuthContext)
 
     const getMessages = async (chatId) => {
-        let response = await fetch(`/api/chats/${chatId}/`, {
+        const response = await fetch(`/api/chats/${chatId}/`, {
             method: 'GET',
             headers: {
                 'Content-Type': 'application/json',
                 'Authorization': 'Bearer ' + String(authTokens.access)
             }
         })
-        let data = await response.json()
+        const data = await response.json()
         setMessages(data)
         // console.log(messages)
     }
@@ -165,7 +203,7 @@ export function useMessagesData() {
             messageData.append('file', file)
         }
 
-        let response = await fetch(`/api/chats/${chatId}/`, {
+        const response = await fetch(`/api/chats/${chatId}/`, {
             method: 'POST',
             headers: {
                 'Authorization': 'Bearer ' + authTokens.access
@@ -212,14 +250,14 @@ export function useOffersData() {
     }, [])
 
     const getOffers = async () => {
-        let response = await fetch('/api/offers/', {
+        const response = await fetch('/api/offers/', {
             method: 'GET',
             headers: {
                 'Content-Type': 'application/json',
                 'Authorization': 'Bearer ' + String(authTokens.access)
             }
         })
-        let data = await response.json()
+        const data = await response.json()
         data.forEach((offer) => {
             offer.date = new Date(offer.updated_at)
         })
@@ -250,14 +288,14 @@ export function useOfferData() {
     const getOffer = async () => {
         if (offerId === 'new') return
 
-        let response = await fetch(`/api/offers/${offerId}/`, {
+        const response = await fetch(`/api/offers/${offerId}/`, {
             method: 'GET',
             headers: {
                 'Content-Type': 'application/json',
                 'Authorization': 'Bearer ' + String(authTokens.access)
             }
         })
-        let data = await response.json()
+        const data = await response.json()
         setOffer(data)
     }
 
@@ -272,7 +310,7 @@ export function useOfferData() {
     }
 
     const createOffer = async () => {
-        let response = await fetch(`/api/offers/`, {
+        const response = await fetch(`/api/offers/`, {
             method: 'POST',
             headers: {
                 'Content-Type': 'application/json',
@@ -290,7 +328,7 @@ export function useOfferData() {
     }
 
     const updateOffer = async () => {
-        let response = await fetch(`/api/offers/${offerId}/`, {
+        const response = await fetch(`/api/offers/${offerId}/`, {
             method: 'PUT',
             headers: {
                 'Content-Type': 'application/json',
@@ -347,11 +385,13 @@ export function useOfferData() {
             <div className={`fixed top-0 left-0 w-full h-full bg-black bg-opacity-30 flex justify-center items-center ${
                 showConfirmation ? '' : 'hidden'
             }`}>
-                <ConfirmationDialog
-                    confirmationMessage={t("confirmation.delete_offer")}
-                    onConfirm={() => deleteOffer(offerToDelete)}
-                    onCancel={closeConfirmation}
-                />
+                <Suspense>
+                    <ConfirmationDialog
+                        confirmationMessage={t("confirmation.delete_offer")}
+                        onConfirm={() => deleteOffer(offerToDelete)}
+                        onCancel={closeConfirmation}
+                    />
+                </Suspense>
             </div>
         )
     }
@@ -359,12 +399,12 @@ export function useOfferData() {
 
 export function usePasswordToggle() {
 
-    let [visible, setVisibility] = useState(false)
-    let iconEye = <FontAwesomeIcon
+    const [visible, setVisibility] = useState(false)
+    const iconEye = <FontAwesomeIcon
         icon={visible ? faEye : faEyeSlash}
         onClick={() => setVisibility(visibility => !visibility)}
     />
-    let inputType = visible ? "text" : "password"
+    const inputType = visible ? "text" : "password"
 
     return [iconEye, inputType]
 }
@@ -372,9 +412,9 @@ export function usePasswordToggle() {
 export function useThemeSwitch() {
 
     const savedTheme = localStorage.getItem("theme") || "light"
-    let [theme, setTheme] = useState(savedTheme)
+    const [theme, setTheme] = useState(savedTheme)
 
-    let handleThemeSwitch = () => {
+    const handleThemeSwitch = () => {
         setTheme(theme === "dark" ? "light" : "dark")
     }
 
@@ -401,6 +441,7 @@ export function useWindowSize() {
         function handleResize() {
             setVisibleOffers(getWindowSize())
         }
+
         window.addEventListener('resize', handleResize)
 
         return () => {

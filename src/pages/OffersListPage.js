@@ -1,11 +1,12 @@
-import ListItem from "../components/ListItem"
+import React, {lazy, Suspense, useEffect, useState} from "react"
 import {useOfferData, useOffersData} from "../utils/UseData"
-import React, {useEffect, useState} from "react"
 import {useLocation} from "react-router-dom"
 import {useTranslation} from "react-i18next"
 
+const ListItem = lazy(() => import("../components/ListItem"))
 
-const OffersListPage = () => {
+
+export default function OffersListPage() {
 
     const [t] = useTranslation()
     const {offers, jobs, internships, apprenticeships} = useOffersData()
@@ -117,74 +118,78 @@ const OffersListPage = () => {
                 </div>
             </div>
             <div className="grid grid-cols-1 relative pt-8 lg:px-8 gap-y-4 sm:gap-y-6 md:gap-y-8 overflow-hidden">
-                {offer.offer_type === 'Offer' ? (
-                    filteredOffers
-                        .sort((a, b) => {
-                            if (sortOffers === "desc") {
-                                return b.date - a.date
-                            } else {
-                                return a.date - b.date
-                            }
-                        })
-                        .map((offer, index) => (
-                            <ListItem
-                                key={index}
-                                offer={offer}
-                            />
-                        ))
-                ) : offer.offer_type === 'Job' ? (
-                    filteredJobs
-                        .sort((a, b) => {
-                            if (sortOffers === "desc") {
-                                return b.date - a.date
-                            } else {
-                                return a.date - b.date
-                            }
-                        })
-                        .map((job, index) => (
-                            <ListItem
-                                key={index}
-                                offer={job}
-                            />
-                        ))
-                ) : offer.offer_type === 'Internship' ? (
-                    filteredInternships
-                        .sort((a, b) => {
-                            if (sortOffers === "desc") {
-                                return b.date - a.date
-                            } else {
-                                return a.date - b.date
-                            }
-                        })
-                        .map((internship, index) => (
-                            <ListItem
-                                key={index}
-                                offer={internship}
-                            />
-                        ))
-                ) : offer.offer_type === 'Apprenticeship' ? (
-                    filteredApprenticeships
-                        .sort((a, b) => {
-                            if (sortOffers === "desc") {
-                                return b.date - a.date
-                            } else {
-                                return a.date - b.date
-                            }
-                        })
-                        .map((apprenticeship, index) => (
-                            <ListItem
-                                key={index}
-                                offer={apprenticeship}
-                            />
-                        ))
-                ) : (
-                    <div className="txt-1 text-center mb-8 relative">
-                        <p>{t("offer.please_select_offers")}</p>
+                <Suspense fallback={
+                    <div className="txt-1 flex justify-center items-center">
+                        . . .
                     </div>
-                )}
+                }>
+                    {offer.offer_type === 'Offer' ? (
+                        filteredOffers
+                            .sort((a, b) => {
+                                if (sortOffers === "desc") {
+                                    return b.date - a.date
+                                } else {
+                                    return a.date - b.date
+                                }
+                            })
+                            .map((offer, index) => (
+                                <ListItem
+                                    key={index}
+                                    offer={offer}
+                                />
+                            ))
+                    ) : offer.offer_type === 'Job' ? (
+                        filteredJobs
+                            .sort((a, b) => {
+                                if (sortOffers === "desc") {
+                                    return b.date - a.date
+                                } else {
+                                    return a.date - b.date
+                                }
+                            })
+                            .map((job, index) => (
+                                <ListItem
+                                    key={index}
+                                    offer={job}
+                                />
+                            ))
+                    ) : offer.offer_type === 'Internship' ? (
+                        filteredInternships
+                            .sort((a, b) => {
+                                if (sortOffers === "desc") {
+                                    return b.date - a.date
+                                } else {
+                                    return a.date - b.date
+                                }
+                            })
+                            .map((internship, index) => (
+                                <ListItem
+                                    key={index}
+                                    offer={internship}
+                                />
+                            ))
+                    ) : offer.offer_type === 'Apprenticeship' ? (
+                        filteredApprenticeships
+                            .sort((a, b) => {
+                                if (sortOffers === "desc") {
+                                    return b.date - a.date
+                                } else {
+                                    return a.date - b.date
+                                }
+                            })
+                            .map((apprenticeship, index) => (
+                                <ListItem
+                                    key={index}
+                                    offer={apprenticeship}
+                                />
+                            ))
+                    ) : (
+                        <div className="txt-1 text-center mb-8 relative">
+                            <p>{t("offer.please_select_offers")}</p>
+                        </div>
+                    )}
+                </Suspense>
             </div>
         </section>
     )
 }
-
-export default OffersListPage

@@ -1,7 +1,7 @@
 import React, {useEffect, useRef} from "react"
 import {useTranslation} from "react-i18next"
 
-function ConfirmationDialog({confirmationMessage, onConfirm, onCancel}) {
+export default function ConfirmationDialog({confirmationMessage, onConfirm, onCancel}) {
 
     const [t] = useTranslation()
     const dialogRef = useRef(null)
@@ -35,5 +35,3 @@ function ConfirmationDialog({confirmationMessage, onConfirm, onCancel}) {
         </div>
     )
 }
-
-export default ConfirmationDialog

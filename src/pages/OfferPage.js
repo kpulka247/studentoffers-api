@@ -5,7 +5,7 @@ import AuthContext from "../context/AuthContext"
 import {useTranslation} from "react-i18next"
 
 
-const OfferPage = () => {
+export default function OfferPage() {
 
     const [t] = useTranslation()
     const offerId = useParams().id
@@ -304,5 +304,3 @@ const OfferPage = () => {
         </section>
     )
 }
-
-export default OfferPage

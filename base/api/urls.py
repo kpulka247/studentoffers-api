@@ -12,14 +12,13 @@ urlpatterns = [
     path('', views.getRoutes, name='routes'),
     path('token/', MyTokenObtainPairView.as_view(), name='token_obtain_pair'),
     path('token/refresh/', TokenRefreshView.as_view(), name='token_refresh'),
-    path('users/', views.getUsers, name='users'),
-    path('users/new/', views.newUser, name='new-user'),
+    path('users/', views.usersView, name='users'),
     path('users/<str:pk>/', views.getUser, name='user'),
     path('chats/', views.getChats, name='chats'),
     path('chats/new/<int:receiver_id>/', views.newChat, name='new-chat'),
-    path('chats/<int:chat_id>/', views.messages, name='messages'),
-    path('offers/', views.offers, name='offers'),
-    path('offers/<str:pk>/', views.offer, name='offer'),
+    path('chats/<int:chat_id>/', views.messagesView, name='messages'),
+    path('offers/', views.offersView, name='offers'),
+    path('offers/<str:pk>/', views.offerView, name='offer'),
 ]
 
 if settings.DEBUG:

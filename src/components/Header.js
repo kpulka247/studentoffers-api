@@ -8,7 +8,7 @@ import i18n from "i18next"
 import {useTranslation} from "react-i18next"
 
 
-const Header = () => {
+export default function Header() {
 
     const [t] = useTranslation()
     const navigate = useNavigate()
@@ -257,5 +257,3 @@ const Header = () => {
         </div>
     )
 }
-
-export default Header

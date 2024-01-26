@@ -1,15 +1,16 @@
-import React, {useContext} from "react"
+import React, {lazy, Suspense, useContext} from "react"
 import AuthContext from "../context/AuthContext"
 import {useOffersData} from "../utils/UseData"
-import ListMyItem from "../components/ListMyItem"
 import {useTranslation} from "react-i18next"
 
+const ListMyItem = lazy(() => import("../components/ListMyItem"))
 
-const AccountPage = () => {
+
+export default function AccountPage() {
 
     const [t] = useTranslation()
-    let {user} = useContext(AuthContext)
-    let {offers} = useOffersData()
+    const {user} = useContext(AuthContext)
+    const {offers} = useOffersData()
 
     const userOffers = offers
         .filter((offer) => offer.company.id === user.user_id)
@@ -90,22 +91,34 @@ const AccountPage = () => {
                     </div>
                 </figure>
                 {user.user_type === 'Company' ? (
-                    <div className="relative">
-                        <section className="text-center">
-                            <h1 className="txt-1 mt-8">
-                                {t("account.your_offers")}
-                            </h1>
-                        </section>
-                        <div className="hidden md:flex gr-1"/>
-                        <div
-                            className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4 sm:gap-6 md:gap-8 pt-8 md:pb-8 md:px-8 overflow-hidden">
-                            {userOffers}
-                        </div>
+                    <div className="relative mt-8">
+                        {userOffers && userOffers.length > 0 ? (
+                            <Suspense fallback={
+                                <div className="txt-1 flex justify-center items-center">
+                                    . . .
+                                </div>
+                            }>
+                                <section className="text-center">
+                                    <h1 className="txt-1">
+                                        {t("account.your_offers")}
+                                    </h1>
+                                </section>
+                                <div className="hidden md:flex gr-1"/>
+                                <div
+                                    className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4 sm:gap-6 md:gap-8 pt-8 md:pb-8 md:px-8 overflow-hidden">
+                                    {userOffers}
+                                </div>
+                            </Suspense>
+                        ) : (
+                            <section className="text-center">
+                                <h1 className="txt-1">
+                                    {t("account.add_offer")}
+                                </h1>
+                            </section>
+                        )}
                     </div>
                 ) : null}
             </div>
         </section>
     )
 }
-
-export default AccountPage

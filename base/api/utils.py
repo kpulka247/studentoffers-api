@@ -1,7 +1,58 @@
+from django.core.files import File
+from rest_framework.decorators import permission_classes
+from rest_framework.permissions import IsAuthenticated
 from rest_framework.response import Response
-from base.models import Offer, Job, Internship, Apprenticeship, Company, Message, Chat
+from base.models import Offer, Job, Internship, Apprenticeship, Company, Message, Chat, User, Student
 from .serializers import OfferSerializer, JobSerializer, InternshipSerializer, ApprenticeshipSerializer, \
-    MessageSerializer
+    MessageSerializer, UserSerializer, StudentSerializer, CompanySerializer
+
+
+@permission_classes([IsAuthenticated])
+def getUsers():
+    users = User.objects.all()
+    serializer = UserSerializer(users, many=True)
+    return Response(serializer.data)
+
+
+def newUser(request):
+    data = request.data
+    user_type = data['user_type']
+    username = data.get('username')
+    first_name = data.get('first_name')
+    last_name = data.get('last_name')
+    password = data.get('password')
+    if user_type == 'Student':
+        student = Student.objects.create(
+            username=username,
+            email=data['email'],
+            password=password,
+            first_name=first_name,
+            last_name=last_name,
+            field_of_study=data['student']['field_of_study'],
+            student_id=data['student']['student_id'],
+            user_type=user_type
+        )
+        student.set_password(password)
+        student.save()
+        serializer = StudentSerializer(student, many=False)
+    elif user_type == 'Company':
+        company = Company.objects.create(
+            username=username,
+            email=data['email'],
+            password=password,
+            first_name=first_name,
+            last_name=last_name,
+            name=data['company']['name'],
+            description=data['company']['description'],
+            location=data['company']['location'],
+            user_type=user_type
+        )
+        company.set_password(password)
+        company.save()
+        serializer = CompanySerializer(company, many=False)
+    else:
+        return Response({'Invalid user type!'}, status=400)
+    return Response(serializer.data)
 
 
 def getOffers():

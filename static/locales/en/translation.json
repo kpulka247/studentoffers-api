@@ -68,6 +68,7 @@
     "company_description": "Company description",
     "address": "Address",
     "your_offers": "Your offers",
+    "add_offer": "Press \"Add offer\" to create an offer",
     "student": "Student",
     "company": "Company"
   },
