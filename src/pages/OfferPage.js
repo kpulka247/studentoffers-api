@@ -2,10 +2,12 @@ import React, {useContext, useEffect} from "react"
 import {useParams} from "react-router-dom"
 import {useChatData, useOfferData} from "../utils/UseData"
 import AuthContext from "../context/AuthContext"
+import {useTranslation} from "react-i18next"
 
 
 const OfferPage = () => {
 
+    const [t] = useTranslation()
     const offerId = useParams().id
     const {user} = useContext(AuthContext)
 
@@ -25,11 +27,11 @@ const OfferPage = () => {
                 <div>
                     {offer.offer_type === null ? (
                         <div className="txt-1 text-center mb-8">
-                            <p>Wybierz typ oferty</p>
+                            <p>{t("offer.select_offer_type")}</p>
                         </div>
                     ) : (
                         <p className="txt-1 text-center mb-8">
-                            Dodawanie oferty
+                            {t("offer.adding_offer")}
                         </p>
                     )}
                     <div className="hidden md:block lg:flex justify-center">
@@ -37,17 +39,17 @@ const OfferPage = () => {
                             <button
                                 onClick={() => handleOfferType('Job')}
                                 className={offer.offer_type === 'Job' ? ("btn-1") : ("btn-2")}>
-                                Praca
+                                {t("offer.job")}
                             </button>
                             <button
                                 onClick={() => handleOfferType('Internship')}
                                 className={offer.offer_type === 'Internship' ? ("btn-1") : ("btn-2")}>
-                                Staż
+                                {t("offer.internship")}
                             </button>
                             <button
                                 onClick={() => handleOfferType('Apprenticeship')}
                                 className={offer.offer_type === 'Apprenticeship' ? ("btn-1") : ("btn-2")}>
-                                Praktyka
+                                {t("offer.apprenticeship")}
                             </button>
                         </div>
                     </div>
@@ -55,17 +57,17 @@ const OfferPage = () => {
                         <button
                             onClick={() => handleOfferType('Job')}
                             className={offer.offer_type === 'Job' ? ("btn-7") : ("btn-7 text-zinc-400 dark:text-zinc-500")}>
-                            Praca
+                            {t("offer.job")}
                         </button>
                         <button
                             onClick={() => handleOfferType('Internship')}
                             className={offer.offer_type === 'Internship' ? ("btn-7") : ("btn-7 text-zinc-400 dark:text-zinc-500")}>
-                            Staż
+                            {t("offer.internship")}
                         </button>
                         <button
                             onClick={() => handleOfferType('Apprenticeship')}
                             className={offer.offer_type === 'Apprenticeship' ? ("btn-7 border-r-0") : ("btn-7 text-zinc-400 dark:text-zinc-500 border-r-0")}>
-                            Praktyka
+                            {t("offer.apprenticeship")}
                         </button>
                     </div>
                 </div>
@@ -78,7 +80,7 @@ const OfferPage = () => {
                             className="txt-1 text-center my-8">
                             {offer.company.name}
                         </div>
-                        <p className="pb-2">Tytuł oferty</p>
+                        <p className="pb-2">{t("offer.offer_name")}</p>
                         <input
                             className="inp-1 mb-8"
                             type="text"
@@ -91,7 +93,7 @@ const OfferPage = () => {
                             }}
                             defaultValue={offer?.name}
                         />
-                        <p className="pb-2">Czego wymagamy?</p>
+                        <p className="pb-2">{t("offer.what_we_require")}</p>
                         <textarea
                             className="inp-1 mb-8"
                             rows={6}
@@ -103,7 +105,7 @@ const OfferPage = () => {
                             }}
                             defaultValue={offer?.requirements}
                         />
-                        <p className="pb-2">Nasza oferta</p>
+                        <p className="pb-2">{t("offer.our_offer")}</p>
                         <textarea
                             className="inp-1 mb-8"
                             rows={6}
@@ -117,7 +119,7 @@ const OfferPage = () => {
                         />
                         {offer.offer_type === 'Job' && (
                             <>
-                                <p className="pb-2">Wynagrodzenie (zł / mies.)</p>
+                                <p className="pb-2">{t("offer.salary")} ({t("offer.pln_month")})</p>
                                 <input
                                     className="inp-1 mb-8"
                                     type="text"
@@ -133,7 +135,7 @@ const OfferPage = () => {
                                     }}
                                     defaultValue={offer?.job?.salary}
                                 />
-                                <p className="pb-2">Rodzaj zatrudnienia</p>
+                                <p className="pb-2">{t("offer.type_of_employment")}</p>
                                 <input
                                     className="inp-1 mb-8"
                                     type="text"
@@ -153,7 +155,7 @@ const OfferPage = () => {
                         )}
                         {offer.offer_type === 'Internship' && (
                             <>
-                                <p className="pb-2">Wysokość stypendium (zł)</p>
+                                <p className="pb-2">{t("offer.scholarship_amount")} ({t("offer.pln")})</p>
                                 <input
                                     className="inp-1 mb-8"
                                     type="text"
@@ -169,7 +171,7 @@ const OfferPage = () => {
                                     }}
                                     defaultValue={offer?.internship?.stipend}
                                 />
-                                <p className="pb-2">Zaliczający się na uczelni?</p>
+                                <p className="pb-2">{t("offer.academic_credit")}</p>
                                 <select
                                     className="inp-1 mb-8"
                                     onChange={(e) => {
@@ -177,14 +179,14 @@ const OfferPage = () => {
                                             ...offer,
                                             internship: {
                                                 ...offer.internship,
-                                                academic_credit: e.target.value === "Tak"
+                                                academic_credit: e.target.value === "Yes"
                                             }
                                         })
                                     }}
                                     defaultValue={offer && offer.internship && offer.internship.academic_credit !== undefined ?
-                                        (offer.internship.academic_credit ? "Nie" : "Tak") : "Nie"}>
-                                    <option value="Nie">Nie</option>
-                                    <option value="Tak">Tak</option>
+                                        (offer.internship.academic_credit ? "Yes" : "No") : "No"}>
+                                    <option value="No">{t("button.no")}</option>
+                                    <option value="Yes">{t("button.yes")}</option>
                                 </select>
                             </>
                         )}
@@ -194,12 +196,12 @@ const OfferPage = () => {
                                 <button
                                     onClick={handleOfferSubmit}
                                     className="btn-1">
-                                    Potwierdź
+                                    {t("button.confirm")}
                                 </button>
                                 <button
                                     onClick={deleteOffer}
                                     className="btn-2">
-                                    Usuń ofertę
+                                    {t("button.delete_offer")}
                                 </button>
                             </div>
                         ) : (
@@ -207,7 +209,7 @@ const OfferPage = () => {
                                 <button
                                     onClick={handleOfferSubmit}
                                     className="btn-1">
-                                    Potwierdź
+                                    {t("button.confirm")}
                                 </button>
                             </div>
                         )}
@@ -219,11 +221,11 @@ const OfferPage = () => {
                     <div
                         className="txt-1 text-center mb-8 relative">
                         {offer.offer_type === 'Job' ? (
-                            <p>Praca</p>
+                            <p>{t("offer.job")}</p>
                         ) : offer.offer_type === 'Internship' ? (
-                            <p>Staż</p>
+                            <p>{t("offer.internship")}</p>
                         ) : offer.offer_type === 'Apprenticeship' ? (
-                            <p>Praktyka</p>
+                            <p>{t("offer.apprenticeship")}</p>
                         ) : null}
                     </div>
                     <figure
@@ -238,29 +240,29 @@ const OfferPage = () => {
                                 offer.company.description = offer.company.description.substring(0, 250) + "..."
                             ) : offer.company.description}
                         </p>
-                        <p className="pt-8 pb-2">Tytuł oferty</p>
+                        <p className="pt-8 pb-2">{t("offer.offer_name")}</p>
                         <div
                             className="con-3 txt-2 mb-8">
                             {offer.name}
                         </div>
-                        <p className="text-2xl pb-2">Czego wymagamy?</p>
+                        <p className="text-2xl pb-2">{t("offer.what_we_require")}</p>
                         <p
                             className="con-3 txt-4 whitespace-pre-wrap mb-8">
                             {offer.requirements}
                         </p>
-                        <p className="text-2xl pb-2">Nasza oferta</p>
+                        <p className="text-2xl pb-2">{t("offer.our_offer")}</p>
                         <p
                             className="con-3 txt-4 whitespace-pre-wrap mb-8">
                             {offer.offer}
                         </p>
                         {offer.offer_type === 'Job' && (
                             <>
-                                <p className="pb-2">Wynagrodzenie</p>
+                                <p className="pb-2">{t("offer.salary")}</p>
                                 <div
                                     className="con-3 txt-4 mb-8">
-                                    {offer.job.salary} zł / mies.
+                                    {offer.job.salary} {t("offer.pln_month")}
                                 </div>
-                                <p className="pb-2">Rodzaj zatrudnienia</p>
+                                <p className="pb-2">{t("offer.type_of_employment")}</p>
                                 <div
                                     className="con-3 txt-4 mb-8">
                                     {offer.job.employment_type}
@@ -269,18 +271,18 @@ const OfferPage = () => {
                         )}
                         {offer.offer_type === 'Internship' && (
                             <>
-                                <p className="pb-2">Wysokość stypendium</p>
+                                <p className="pb-2">{t("offer.scholarship_amount")}</p>
                                 <div
                                     className="con-3 txt-4 mb-8">
-                                    {offer.internship.stipend} zł
+                                    {offer.internship.stipend} {t("offer.pln")}
                                 </div>
-                                <p className="pb-2">Zaliczający się na uczelni?</p>
+                                <p className="pb-2">{t("offer.academic_credit")}</p>
                                 <div
                                     className="con-3 txt-4 mb-8">
                                     {offer.internship.academic_credit === true ? (
-                                        <p>Tak</p>
+                                        <p>{t("button.yes")}</p>
                                     ) : (
-                                        <p>Nie</p>
+                                        <p>{t("button.no")}</p>
                                     )}
                                 </div>
                             </>
@@ -291,7 +293,7 @@ const OfferPage = () => {
                                 <button
                                     onClick={createChat}
                                     className="btn-1">
-                                    Skontaktuj się
+                                    {t("button.contact")}
                                 </button>
                             </div>
                         )}

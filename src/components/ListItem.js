@@ -1,10 +1,12 @@
 import React from "react"
 import {Link} from "react-router-dom"
 import {format} from "date-fns"
+import {useTranslation} from "react-i18next"
 
 
 const ListItem = ({offer}) => {
 
+    const [t] = useTranslation()
     const getTime = (offer) => {
         return format(new Date(offer.updated_at), 'dd/MM/yyyy')
     }
@@ -33,7 +35,7 @@ const ListItem = ({offer}) => {
             <div className="txt-5 text-center mt-auto">
                 {offer.offer_type === 'Job' && offer.job.salary ? (
                     <p className="pt-4">
-                        Wynagrodzenie:<br/>{offer.job.salary} zł / mies.
+                        {t("offer.salary")}:<br/>{offer.job.salary} {t("offer.pln_month")}
                     </p>
                 ) : null}
             </div>

@@ -1,0 +1,81 @@
+{
+  "button": {
+    "confirm": "Potwierdź",
+    "delete_offer": "Usuń ofertę",
+    "cancel": "Anuluj",
+    "delete": "Usuń",
+    "show_more": "Pokaż więcej",
+    "yes": "Tak",
+    "no": "Nie",
+    "send": "Wyślij",
+    "contact": "Skontaktuj się",
+    "log_in": "Zaloguj",
+    "log_out": "Wyloguj",
+    "sign_up": "Zarejestruj się"
+  },
+  "header": {
+    "home": "Strona główna",
+    "hello": "Witaj",
+    "search": "Szukaj",
+    "offers": "Oferty",
+    "add_offer": "Dodaj ofertę",
+    "conversations": "Konwersacje",
+    "account": "Konto"
+  },
+  "offer": {
+    "all": "Wszystkie",
+    "newest": "Najnowsze",
+    "oldest": "Najstarsze",
+    "job": "Praca",
+    "internship": "Staż",
+    "apprenticeship": "Praktyka",
+    "select_offer_type": "Wybierz typ oferty",
+    "please_select_offers": "Proszę wybrać typ ofert",
+    "adding_offer": "Dodawanie oferty",
+    "offer_name": "Nazwa oferty",
+    "what_we_require": "Czego wymagamy?",
+    "our_offer": "Nasza oferta",
+    "salary": "Wynagrodzenie",
+    "type_of_employment": "Rodzaj zatrudnienia",
+    "scholarship_amount": "Wysokość stypendium",
+    "academic_credit": "Zaliczający się na uczelni?",
+    "pln_month": "zł / mies.",
+    "pln": "zł"
+  },
+  "confirmation": {
+    "delete_chat": "Czy chcesz usunąć tę konwersację?",
+    "delete_offer": "Czy chcesz usunąć tę ofertę?"
+  },
+  "chat": {
+    "type_message": "Wpisz wiadomość",
+    "write_first_message": "Napisz pierwszą wiadomość do",
+    "select_conversation": "Wybierz konwersację",
+    "press_contact": "Naciśnij \"Skontaktuj się\" na wybranej ofercie, aby stworzyć konwersację"
+  },
+  "account": {
+    "account_details": "Dane konta",
+    "personal_details": "Dane personalne",
+    "username": "Nazwa użytkownika",
+    "password": "Hasło",
+    "email": "Email",
+    "account_type": "Typ konta",
+    "first_name": "Imię",
+    "last_name": "Nazwisko",
+    "full_name": "Imię i nazwisko",
+    "field_of_study": "Kierunek studiów",
+    "student_id_number": "Numer legitymacji studenckiej",
+    "company_name": "Nazwa firmy",
+    "company_description": "Opis firmy",
+    "address": "Adres",
+    "your_offers": "Twoje oferty",
+    "student": "Student",
+    "company": "Firma"
+  },
+  "login": {
+    "logging_in": "Logowanie"
+  },
+  "register": {
+    "select_account_type": "Wybierz typ konta",
+    "fill_in_details": "Uzupełnij wymagane dane"
+  }
+}

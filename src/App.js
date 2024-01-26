@@ -6,8 +6,8 @@ import {AuthProvider} from "./context/AuthContext"
 import "./styles/main.css"
 import "./tailwind.css"
 import Header from "./components/Header"
-import LogPage from "./pages/LogPage"
-import RegPage from "./pages/RegPage"
+import LogInPage from "./pages/LogInPage"
+import SignUpPage from "./pages/SignUpPage"
 import HomePage from "./pages/HomePage"
 import OfferPage from "./pages/OfferPage"
 import OffersListPage from "./pages/OffersListPage"
@@ -18,7 +18,8 @@ import MessagesPage from "./pages/MessagesPage"
 function App() {
 
     return (
-        <div className="min-h-screen max-h-fit antialiased flex flex-col bg-zinc-100 dark:bg-zinc-800 pb-4 overflow-hidden relative">
+        <div
+            className="min-h-screen max-h-fit antialiased flex flex-col bg-zinc-100 dark:bg-zinc-800 pb-4 overflow-hidden relative">
             <div className="an-1 top-1/4 left-2/4"/>
             <div className="an-1 bottom-3/4 right-1/4 animation-delay-2000"/>
             <div className="an-2 bottom-2/3 left-1/2 animation-delay-4000"/>
@@ -40,8 +41,8 @@ function App() {
                             <Route path="/offer" element={<OffersListPage/>}/>
                             <Route path="/offer/:id" element={<OfferPage/>}/>
                         </Route>
-                        <Route path="/login" element={<LogPage/>}/>
-                        <Route path="/register" element={<RegPage/>}/>
+                        <Route path="/login" element={<LogInPage/>}/>
+                        <Route path="/signup" element={<SignUpPage/>}/>
                     </Routes>
                 </AuthProvider>
             </Router>

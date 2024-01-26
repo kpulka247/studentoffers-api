@@ -3,12 +3,14 @@ import {Link} from "react-router-dom"
 import {useOfferData, useOffersData} from "../utils/UseData"
 import ListItem from "../components/ListItem"
 import {useWindowSize} from "../utils/UseData"
+import {useTranslation} from "react-i18next"
 
 
 const HomePage = () => {
 
+    const [t] = useTranslation()
     let {jobs, internships, apprenticeships} = useOffersData()
-    let {handleOfferType} = useOfferData()
+    const {handleOfferType} = useOfferData()
     let visibleOffers = useWindowSize()
 
     return (
@@ -16,7 +18,7 @@ const HomePage = () => {
             <div className="relative">
                 <section className="text-center">
                     <h1 className="txt-1">
-                        Praca
+                        {t("offer.job")}
                     </h1>
                 </section>
                 <div
@@ -25,7 +27,7 @@ const HomePage = () => {
                         <button
                             onClick={() => handleOfferType('Job')}
                             className="btn-1 mb-4 sm:mb-6 md:mb-8">
-                            Pokaż więcej...
+                            {t("button.show_more") + "..."}
                         </button>
                     </Link>
                 </div>
@@ -44,7 +46,7 @@ const HomePage = () => {
             <div className="relative my-8">
                 <section className="text-center">
                     <h1 className="txt-1">
-                        Staże
+                        {t("offer.internship")}
                     </h1>
                 </section>
                 <div
@@ -53,7 +55,7 @@ const HomePage = () => {
                         <button
                             onClick={() => handleOfferType('Internship')}
                             className="btn-1 mb-4 sm:mb-6 md:mb-8">
-                            Pokaż więcej...
+                            {t("button.show_more") + "..."}
                         </button>
                     </Link>
                 </div>
@@ -72,7 +74,7 @@ const HomePage = () => {
             <div className="relative">
                 <section className="text-center">
                     <h1 className="txt-1">
-                        Praktyki
+                        {t("offer.apprenticeship")}
                     </h1>
                 </section>
                 <div
@@ -81,7 +83,7 @@ const HomePage = () => {
                         <button
                             onClick={() => handleOfferType('Apprenticeship')}
                             className="btn-1 mb-4 sm:mb-6 md:mb-8">
-                            Pokaż więcej...
+                            {t("button.show_more") + "..."}
                         </button>
                     </Link>
                 </div>

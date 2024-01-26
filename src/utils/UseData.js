@@ -4,6 +4,7 @@ import {useParams, useNavigate} from "react-router-dom"
 import ConfirmationDialog from "../components/ConfirmationDialog"
 import {FontAwesomeIcon} from "@fortawesome/react-fontawesome"
 import {faEye, faEyeSlash} from "@fortawesome/free-solid-svg-icons"
+import {useTranslation} from "react-i18next"
 
 // export function useUsersData() {
 //
@@ -38,6 +39,7 @@ import {faEye, faEyeSlash} from "@fortawesome/free-solid-svg-icons"
 
 export function useChatsData() {
 
+    const [t] = useTranslation()
     const navigate = useNavigate()
     const [chats, setChats] = useState([])
     const [showConfirmation, setShowConfirmation] = useState(false)
@@ -94,7 +96,7 @@ export function useChatsData() {
                 showConfirmation ? '' : 'hidden'
             }`}>
                 <ConfirmationDialog
-                    confirmationMessage="Czy chcesz usunąć tę konwersację?"
+                    confirmationMessage={t("confirmation.delete_chat")}
                     onConfirm={() => deleteChat(chatToDelete)}
                     onCancel={closeConfirmation}
                 />
@@ -178,7 +180,7 @@ export function useMessagesData() {
     }
 
     const downloadFile = (fileUrl, fileName) => {
-        const apiUrl = 'http://127.0.0.1:8000/api'
+        const apiUrl = '/api'
         const downloadUrl = `${apiUrl}${fileUrl}`
 
         fetch(downloadUrl)
@@ -236,6 +238,7 @@ export function useOffersData() {
 
 export function useOfferData() {
 
+    const [t] = useTranslation()
     const navigate = useNavigate()
     const offerId = useParams().id || 0
 
@@ -345,7 +348,7 @@ export function useOfferData() {
                 showConfirmation ? '' : 'hidden'
             }`}>
                 <ConfirmationDialog
-                    confirmationMessage="Czy chcesz usunąć tę ofertę?"
+                    confirmationMessage={t("confirmation.delete_offer")}
                     onConfirm={() => deleteOffer(offerToDelete)}
                     onCancel={closeConfirmation}
                 />

@@ -5,10 +5,12 @@ import {Link} from "react-router-dom"
 import {format} from "date-fns"
 import {FontAwesomeIcon} from "@fortawesome/react-fontawesome"
 import {faChevronLeft, faPaperclip, faTrash} from "@fortawesome/free-solid-svg-icons"
+import {useTranslation} from "react-i18next"
 
 
 const ListChat = () => {
 
+    const [t] = useTranslation()
     const {user} = useContext(AuthContext)
     const {chats, deleteChat, confirmationDialog} = useChatsData()
     const {messages, getMessages, sendMessage, downloadFile} = useMessagesData()
@@ -155,7 +157,7 @@ const ListChat = () => {
                                 {messages.length === 0 ? (
                                     <div className="h-full place-content-center flex flex-col">
                                         <p className="txt-2-w text-center w-full overflow-auto">
-                                            Napisz pierwszą wiadomość do {selectedChatName}
+                                            {t("chat.write_first_message")} {selectedChatName}
                                         </p>
                                     </div>
                                 ) : (
@@ -200,7 +202,7 @@ const ListChat = () => {
                             <div className="h-full place-content-center place-items-end flex flex-col overflow-auto">
                                 {chats.find(chat => chat.id !== chatId) && (
                                     <p className="txt-2-w w-full text-center">
-                                        Wybierz konwersację
+                                        {t("chat.select_conversation")}
                                     </p>
                                 )}
                             </div>
@@ -208,7 +210,7 @@ const ListChat = () => {
                         ) : (
                             <div className="h-full place-content-center place-items-end flex flex-col overflow-auto">
                                 <p className="txt-2-w w-full text-center">
-                                    Naciśnij "Skontaktuj się" na wybranej ofercie,<br/>aby stworzyć konwersację
+                                    {t("chat.press_contact")}
                                 </p>
                             </div>
                         )}
@@ -228,13 +230,13 @@ const ListChat = () => {
                                 <input
                                     className="inp-2"
                                     type="text"
-                                    placeholder="Wpisz treść..."
+                                    placeholder={t("chat.type_message") + "..."}
                                     value={content}
                                     onChange={(event) => setContent(event.target.value)}
                                     onKeyDown={handleEnter}/>
                                 <button
                                     className="hidden lg:flex items-center btn-1"
-                                    onClick={handleSendButton}>Wyślij
+                                    onClick={handleSendButton}>{t("button.send")}
                                 </button>
                             </div>
                         )}
