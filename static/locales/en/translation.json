@@ -73,6 +73,7 @@
     "company": "Company"
   },
   "login": {
+    "under_development": "The website is currently under development and it is used for testing and presentation purposes.",
     "logging_in": "Logging in"
   },
   "signup": {

@@ -73,6 +73,7 @@
     "company": "Firma"
   },
   "login": {
+    "under_development": "Strona internetowa jest obecnie w fazie rozwoju i służy do celów testowych i prezentacyjnych.",
     "logging_in": "Logowanie"
   },
   "register": {

@@ -30,7 +30,8 @@ def newUser(request):
             last_name=last_name,
             field_of_study=data['student']['field_of_study'],
             student_id=data['student']['student_id'],
-            user_type=user_type
+            user_type=user_type,
+            is_active=False
         )
         student.set_password(password)
         student.save()
@@ -45,7 +46,8 @@ def newUser(request):
             name=data['company']['name'],
             description=data['company']['description'],
             location=data['company']['location'],
-            user_type=user_type
+            user_type=user_type,
+            is_active=False
         )
         company.set_password(password)
         company.save()
@@ -83,7 +85,7 @@ def newOffer(request):
             offer=data['offer'],
             offer_type=offer_type,
             stipend=data['internship']['stipend'],
-            academic_credit=data['internship']['academic_credit']
+            academic_credit=data['internship'].get('academic_credit', False)
         )
         serializer = InternshipSerializer(offer, many=False)
     elif offer_type == 'Apprenticeship':

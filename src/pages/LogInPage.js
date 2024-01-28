@@ -13,8 +13,13 @@ export default function LogInPage() {
 
     return (
         <section className="flex justify-center items-center">
+            <div className="w-full absolute animate-text max-w-xl top-1/4 -translate-y-3/4 gap-6 lg:gap-8 px-4 z-0">
+                <div className="txt-3 text-center px-4 sm:px-6 md:px-8">
+                    <p className="my-8">{t("login.under_development")}</p>
+                </div>
+            </div>
             <div
-                className="w-full max-w-xl gap-6 lg:gap-8 px-4 absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2">
+                className="w-full absolute max-w-xl gap-6 lg:gap-8 px-4 top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 z-10">
                 <form
                     className="con-1 txt-1 text-center px-4 sm:px-6 md:px-8"
                     onSubmit={loginUser}>
