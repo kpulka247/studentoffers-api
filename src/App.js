@@ -14,6 +14,7 @@ const OfferPage = lazy(() => import("./pages/OfferPage"))
 const OffersListPage = lazy(() => import("./pages/OffersListPage"))
 const AccountPage = lazy(() => import("./pages/AccountPage"))
 const MessagesPage = lazy(() => import("./pages/MessagesPage"))
+const Footer = lazy(() => import("./components/Footer"))
 
 
 export default function App() {
@@ -34,7 +35,7 @@ export default function App() {
                 <AuthProvider>
                     <Header/>
                     <Suspense fallback={
-                        <div className="txt-1 flex flex-grow justify-center items-center min-h-fit">
+                        <div className="txt-1 flex grow justify-center items-center min-h-fit">
                             . . .
                         </div>
                     }>
@@ -51,6 +52,7 @@ export default function App() {
                             <Route path="/signup" element={<SignUpPage/>}/>
                         </Routes>
                     </Suspense>
+                    <Footer/>
                 </AuthProvider>
             </Router>
         </div>

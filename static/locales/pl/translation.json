@@ -1,4 +1,7 @@
 {
+  "global": {
+    "copyright": "Wszelkie prawa zastrzeżone."
+  },
   "button": {
     "confirm": "Potwierdź",
     "delete_offer": "Usuń ofertę",
@@ -74,10 +77,13 @@
   },
   "login": {
     "under_development": "Strona internetowa jest obecnie w fazie rozwoju i służy do celów testowych i prezentacyjnych.",
-    "logging_in": "Logowanie"
+    "logging_in": "Logowanie",
+    "incorrect": "Niepoprawna nazwa użytkownika lub hasło!"
   },
-  "register": {
+  "signup": {
     "select_account_type": "Wybierz typ konta",
-    "fill_in_details": "Uzupełnij wymagane dane"
+    "fill_in_details": "Uzupełnij wymagane dane",
+    "account_created": "Konto utworzone, oczekuj na aktywację konta!",
+    "required_data": "Brak niektórych wymaganych danych!"
   }
 }

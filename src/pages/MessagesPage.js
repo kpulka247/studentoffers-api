@@ -79,7 +79,7 @@ export default function MessagesPage() {
 
     return (
         <section
-            className="min-h-fit flex flex-grow w-full max-w-7xl mx-auto focus:outline-none px-4 sm:px-6 md:px-8 relative">
+            className="min-h-fit flex grow w-full max-w-7xl mx-auto focus:outline-none px-4 sm:px-6 md:px-8 relative">
             <div className="gap-6 lg:gap-8 w-full">
                 <figure className="con-1 h-80 min-h-full flex flex-col px-4 sm:px-6 md:px-8">
                     {chats.find(chat => chat.id === chatId) && (
@@ -94,7 +94,7 @@ export default function MessagesPage() {
                             </p>
                         </div>
                     )}
-                    <div className="flex flex-grow overflow-y-auto py-4 sm:py-6 md:py-8">
+                    <div className="flex grow overflow-y-auto py-4 sm:py-6 md:py-8">
                         <div
                             className={chats.find(chat => chat.id === chatId || chat.id !== chatId) ? (`w-full md:w-1/3 text-center ${chats.find(chat => chat.id === chatId) ? `hidden md:block` : ``}`) : null}>
                             <div className="overflow-y-auto md:pr-8 h-full">

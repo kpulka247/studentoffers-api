@@ -1,7 +1,7 @@
 /** @type {import('tailwindcss').Config} */
 module.exports = {
     content: [
-        "./src/**/*.{js,jsx,ts,tsx}",
+        "./src/**/*.{js,jsx,ts,tsx}"
     ],
     darkMode: "class",
     theme: {
@@ -36,32 +36,35 @@ module.exports = {
                     }
                 }
             },
+            transitionProperty: {
+                "move": "top, right, left, bottom, font-size, line-height"
+            },
             height: {
                 "100": '30rem',
                 "106": '36rem',
-                "112": '42rem',
+                "112": '42rem'
             },
             width: {
                 "100": '30rem',
                 "106": '36rem',
-                "112": '42rem',
+                "112": '42rem'
             },
             maxHeight: {
-                "8xl": '90%',
+                "8xl": '90%'
             },
             maxWidth: {
-                "8xl": '90%',
+                "8xl": '90%'
             },
             flex: {
-                "2": '1 1 25%',
+                "2": '1 1 25%'
             },
             blur: {
                 "4xl": '88px',
                 "5xl": '128px',
                 "6xl": '164px',
-                "7xl": '248px',
-            },
-        },
+                "7xl": '248px'
+            }
+        }
     },
-    plugins: [],
+    plugins: []
 }

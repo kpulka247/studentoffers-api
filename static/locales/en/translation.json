@@ -1,4 +1,7 @@
 {
+  "global": {
+    "copyright": "All Rights Reserved."
+  },
   "button": {
     "confirm": "Confirm",
     "delete_offer": "Delete offer",
@@ -74,10 +77,13 @@
   },
   "login": {
     "under_development": "The website is currently under development and it is used for testing and presentation purposes.",
-    "logging_in": "Logging in"
+    "logging_in": "Logging in",
+    "incorrect": "Incorrect username or password!"
   },
   "signup": {
     "select_account_type": "Select your account type",
-    "fill_in_details": "Fill in the required details"
+    "fill_in_details": "Fill in the required details",
+    "account_created": "Account created, await account activation!",
+    "required_data": "Some required data is missing!"
   }
 }

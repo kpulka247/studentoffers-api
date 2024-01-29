@@ -57,9 +57,9 @@ export default function SignUpPage() {
                         </div>
                         <div className="relative">
                             <div
-                                className="flex rounded-lg border border-zinc-200 dark:border-zinc-600 transition focus-within:border-zinc-400 dark:focus-within:border-zinc-400 w-full mb-8">
+                                className="flex rounded-lg border border-zinc-200 dark:border-zinc-600 focus-within:transition focus-within:border-zinc-400 dark:focus-within:border-zinc-400 w-full mb-8">
                                 <input
-                                    className="inp-1-nb transition peer grow"
+                                    className="inp-1-nb peer grow"
                                     type={passwordInputType}
                                     onChange={(e) => {
                                         setUser({

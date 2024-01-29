@@ -17,8 +17,9 @@ export default function OfferPage() {
     useEffect(() => {
         if (offerId === 'new') {
             setOffer({company: user.user_id, offer_type: null})
+        } else {
+            getOffer(offerId)
         }
-        getOffer(offerId)
     }, [user, offerId])
 
     return (
