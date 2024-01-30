@@ -186,30 +186,33 @@ button, input, select, textarea, div {
 
 /* Inputs */
 .inp-1 {
-    @apply txt-6 placeholder:text-transparent bg-white rounded-lg transition border border-zinc-200 px-4 py-2
+    @apply txt-6 placeholder:text-transparent bg-white rounded-lg border border-zinc-200 px-4 py-2
 }
 .dark .inp-1 {
     @apply bg-zinc-700 border-zinc-600
 }
 .inp-1:focus {
-    @apply border-zinc-400 outline-none
+    @apply transition border-zinc-400 outline-none
 }
 
 .inp-1-nb {
-    @apply txt-6 placeholder:text-transparent bg-white rounded-lg min-w-0 focus:outline-none px-4 py-2
+    @apply txt-6 placeholder:text-transparent bg-white rounded-lg min-w-0 px-4 py-2
 }
 .dark .inp-1-nb {
     @apply bg-zinc-700
 }
+.inp-1-nb:focus {
+    @apply outline-none
+}
 
 .inp-2 {
-    @apply txt-6 placeholder:text-zinc-300 bg-white grow w-36 transition border border-zinc-200 rounded-full px-4 py-2
+    @apply txt-6 placeholder:text-zinc-300 bg-white grow w-36 border border-zinc-200 rounded-full px-4 py-2
 }
 .dark .inp-2 {
     @apply placeholder:text-zinc-500 border-zinc-600 bg-zinc-700
 }
 .inp-2:focus {
-    @apply border-zinc-400 outline-none
+    @apply transition border-zinc-400 outline-none
 }
 
 .inp-3 {
@@ -273,7 +276,7 @@ button, input, select, textarea, div {
 
 /* Labels */
 .lb-1 {
-    @apply text-zinc-300 bg-white rounded-lg pointer-events-none font-normal text-sm peer-focus:text-sm peer-placeholder-shown:text-base whitespace-nowrap left-0 -top-2.5 peer-focus:-top-2.5 peer-placeholder-shown:top-[9px] peer-focus:text-zinc-400 mx-2 px-2 transition-all absolute
+    @apply text-zinc-300 bg-white rounded-lg pointer-events-none font-normal text-sm peer-focus:text-sm peer-placeholder-shown:text-base whitespace-nowrap left-0 -top-2.5 peer-focus:-top-2.5 peer-placeholder-shown:top-[9px] peer-focus:text-zinc-400 mx-2 px-2 peer-focus:transition-all transition-move absolute
 }
 .dark .lb-1 {
     @apply text-zinc-500 bg-zinc-700

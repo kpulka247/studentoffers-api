@@ -1,7 +1,9 @@
-import React, {useEffect, useRef} from 'react'
+import React, {useEffect, useRef} from "react"
+import {useTranslation} from "react-i18next"
 
-function ConfirmationDialog({confirmationMessage, onConfirm, onCancel}) {
+export default function ConfirmationDialog({confirmationMessage, onConfirm, onCancel}) {
 
+    const [t] = useTranslation()
     const dialogRef = useRef(null)
 
     useEffect(() => {
@@ -23,15 +25,13 @@ function ConfirmationDialog({confirmationMessage, onConfirm, onCancel}) {
             <div className="place-content-between flex items-center gap-x-4 sm:gap-x-6 md:gap-x-8 mb-4">
                 <button
                     className="btn-3"
-                    onClick={onCancel}>Anuluj
+                    onClick={onCancel}>{t("button.cancel")}
                 </button>
                 <button
                     className="btn-1"
-                    onClick={onConfirm}>Usuń
+                    onClick={onConfirm}>{t("button.delete")}
                 </button>
             </div>
         </div>
     )
 }
-
-export default ConfirmationDialog

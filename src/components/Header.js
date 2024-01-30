@@ -4,10 +4,13 @@ import AuthContext from "../context/AuthContext"
 import {useOfferData, useThemeSwitch} from "../utils/UseData"
 import {FontAwesomeIcon} from "@fortawesome/react-fontawesome"
 import {faSun, faMoon, faMagnifyingGlass, faHouse, faBars} from "@fortawesome/free-solid-svg-icons"
+import i18n from "i18next"
+import {useTranslation} from "react-i18next"
 
 
-const Header = () => {
+export default function Header() {
 
+    const [t] = useTranslation()
     const navigate = useNavigate()
     const {user, logoutUser} = useContext(AuthContext)
     const {handleOfferType} = useOfferData()
@@ -17,6 +20,11 @@ const Header = () => {
 
     const toggleMenu = () => {
         setMenuOpen(!menuOpen)
+    }
+
+    const toggleLanguage = () => {
+        const newLanguage = i18n.language === 'en' ? 'pl' : 'en'
+        i18n.changeLanguage(newLanguage)
     }
 
     const handleSearch = () => {
@@ -72,14 +80,22 @@ const Header = () => {
                                     StudentOffers
                                 </Link>
                             </li>
+                            {user && menuOpen && (
+                                <button className="md:hidden flex txt-8" onClick={toggleLanguage}>
+                                    {i18n.language === 'en' ? 'EN' : 'PL'}
+                                </button>
+                            )}
+                            <button className="hidden md:flex txt-8" onClick={toggleLanguage}>
+                                {i18n.language === 'en' ? 'EN' : 'PL'}
+                            </button>
                             <li className="hidden xl:flex txt-8">
-                                {user && <p>Witaj, {user.username}</p>}
+                                {user && <p>{t("header.hello")}, {user.username}</p>}
                             </li>
                             <li className="flex md:max-lg:hidden rounded-full bg-white dark:bg-zinc-700 w-full shadow-lg">
                                 <input
                                     className="inp-3 grow"
                                     type="text"
-                                    placeholder="Szukaj..."
+                                    placeholder={t("header.search") + "..."}
                                     value={searchQuery}
                                     onChange={(e) => setSearchQuery(e.target.value)}
                                     onKeyDown={handleEnter}>
@@ -92,7 +108,7 @@ const Header = () => {
                             </li>
                         </ul>
                     ) : (
-                        <li>
+                        <li className="flex items-center gap-x-4 sm:gap-x-6 md:gap-x-8">
                             <Link
                                 className="sm:hidden flex btn-1-icon"
                                 to={`/`}>
@@ -103,6 +119,9 @@ const Header = () => {
                                 to={`/`}>
                                 StudentOffers
                             </Link>
+                            <button className="flex txt-8" onClick={toggleLanguage}>
+                                {i18n.language === 'en' ? 'EN' : 'PL'}
+                            </button>
                         </li>
                     )}
                 </ul>
@@ -113,7 +132,7 @@ const Header = () => {
                             onClick={() => handleOfferType('Offer')}
                             className="btn-3"
                             to={"/offer"}>
-                            Oferty
+                            {t("header.offers")}
                         </Link>
                     </div>
                 )}
@@ -123,23 +142,23 @@ const Header = () => {
                             <Link
                                 className="hidden md:flex btn-3"
                                 to="/offer/new">
-                                Dodaj ofertę
+                                {t("header.add_offer")}
                             </Link>
                         )}
                         <Link
                             className="hidden md:flex btn-3"
                             to="/chat">
-                            Konwersacje
+                            {t("header.conversations")}
                         </Link>
                         <Link
                             className="hidden btn-1 md:flex items-center"
                             to={`/account`}>
-                            Konto
+                            {t("header.account")}
                         </Link>
                         <button
                             className="hidden md:flex btn-3"
                             onClick={logoutUser}>
-                            Wyloguj
+                            {t("button.log_out")}
                         </button>
                         <button
                             className="btn-2-icon"
@@ -154,7 +173,7 @@ const Header = () => {
                         <Link
                             className="btn-1 flex items-center"
                             to={"/login"}>
-                            Zaloguj się
+                            {t("button.log_in")}
                         </Link>
                         <button
                             className="btn-2-icon"
@@ -175,7 +194,7 @@ const Header = () => {
                                 onClick={toggleMenu}
                                 className="btn-6"
                                 to="/">
-                                Strona główna
+                                {t("header.home")}
                             </Link>
                             <Link
                                 onClick={() => {
@@ -184,27 +203,27 @@ const Header = () => {
                                 }}
                                 className="btn-6"
                                 to={"/offer"}>
-                                Oferty
+                                {t("header.offers")}
                             </Link>
                             {user.user_type === 'Company' && (
                                 <Link
                                     onClick={toggleMenu}
                                     className="btn-6"
                                     to="/offer/new">
-                                    Dodaj ofertę
+                                    {t("header.add_offer")}
                                 </Link>
                             )}
                             <Link
                                 onClick={toggleMenu}
                                 className="btn-6"
                                 to="/chat">
-                                Konwersacje
+                                {t("header.conversations")}
                             </Link>
                             <Link
                                 onClick={toggleMenu}
                                 className="btn-6"
                                 to={`/account`}>
-                                Konto
+                                {t("header.account")}
                             </Link>
                             <button
                                 className="btn-6 border-b-0"
@@ -212,19 +231,18 @@ const Header = () => {
                                     logoutUser()
                                     toggleMenu()
                                 }}>
-                                Wyloguj
+                                {t("button.log_out")}
                             </button>
                         </ul>
                     </div>
                 )}
-
             </div>
             {user && (
                 <li className="hidden md:max-lg:flex mb-8 sm:mx-6 md:mx-8 rounded-full bg-white dark:bg-zinc-700 shadow-lg">
                     <input
                         className="inp-3 grow"
                         type="text"
-                        placeholder="Wyszukaj..."
+                        placeholder={t("header.search") + "..."}
                         value={searchQuery}
                         onChange={(e) => setSearchQuery(e.target.value)}
                         onKeyDown={handleEnter}>
@@ -239,5 +257,3 @@ const Header = () => {
         </div>
     )
 }
-
-export default Header

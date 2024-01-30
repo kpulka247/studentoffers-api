@@ -1,6 +1,5 @@
 {
   "name": "frontend",
-  "proxy": "http://127.0.0.1:8000",
   "version": "0.1.0",
   "private": true,
   "dependencies": {
@@ -12,10 +11,14 @@
     "@testing-library/react": "^13.4.0",
     "@testing-library/user-event": "^14.4.3",
     "date-fns": "^2.29.3",
+    "i18next": "^23.7.19",
+    "i18next-browser-languagedetector": "^7.2.0",
+    "i18next-http-backend": "^2.4.2",
     "jwt-decode": "^3.1.2",
     "multipart": "^0.1.5",
     "react": "^18.2.0",
     "react-dom": "^18.2.0",
+    "react-i18next": "^14.0.1",
     "react-router-dom": "^6.7.0",
     "react-scripts": "^5.0.1",
     "web-vitals": "^3.1.1"
