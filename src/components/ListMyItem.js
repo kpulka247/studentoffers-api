@@ -8,7 +8,7 @@ const ListMyItem = ({offer}) => {
     const [t] = useTranslation()
 
     return (
-        <div className="transition ease-in-out lg:hover:-translate-y-2 lg:hover:scale-105">
+        <div className="transition ease-in-out lg:hover:-translate-y-2 lg:hover:scale-105 break-words">
             <Link
                 className="con-1 w-full h-full self-start  py-4 sm:py-6 md:py-8"
                 to={`/offer/${offer.id}`}>

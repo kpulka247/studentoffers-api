@@ -74,7 +74,7 @@ export default function MessagesPage() {
         <section
             className="min-h-fit flex grow w-full max-w-7xl mx-auto focus:outline-none px-4 sm:px-6 md:px-8 relative">
             <div className="gap-6 lg:gap-8 w-full">
-                <figure className="con-1 h-80 min-h-full flex flex-col px-4 sm:px-6 md:px-8">
+                <figure className="con-1 overflow-hidden h-80 min-h-full flex flex-col px-4 sm:px-6 md:px-8">
                     {chats.find(chat => chat.id === chatId) && (
                         <div className="md:hidden gap-x-4 sm:gap-x-6 flex justify-between items-center pt-4 sm:pt-6">
                             <button
@@ -87,10 +87,12 @@ export default function MessagesPage() {
                             </p>
                         </div>
                     )}
-                    <div className="flex grow overflow-y-auto py-4 sm:py-6 md:py-8">
+                    <div className="flex grow overflow-y-auto py-4 sm:py-6 md:py-8"
+                         id="sc-1">
                         <div
                             className={chats.find(chat => chat.id === chatId || chat.id !== chatId) ? (`w-full md:w-1/3 text-center ${chats.find(chat => chat.id === chatId) ? `hidden md:block` : ``}`) : null}>
-                            <div className="overflow-y-auto md:pr-8 h-full">
+                            <div className="overflow-y-auto md:pr-6 md:mr-2 h-full"
+                                 id="sc-1">
                                 {chats.map((chat, index) => (
                                     <Link
                                         key={index}
@@ -147,7 +149,8 @@ export default function MessagesPage() {
                             className={chats.find(chat => chat.id === chatId || chat.id !== chatId) ? (`w-full md:w-2/3 flex flex-col bg-white dark:bg-zinc-700 md:border-l border-zinc-200 dark:border-zinc-600 focus:outline-none md:pl-8 ${chats.find(chat => chat.id === chatId) ? `` : `hidden md:block`}`) : ("w-full")}>
                             {chats.find(chat => chat.id === chatId) ? (
                                 <div
-                                    className="txt-4 place-content-end flex flex-col-reverse flex-grow overflow-y-auto">
+                                    className="txt-4 place-content-end flex flex-col-reverse flex-grow overflow-y-auto"
+                                    id="sc-1">
                                     {messages.length === 0 ? (
                                         <div className="h-full place-content-center flex flex-col">
                                             <p className="txt-2-w text-center w-full overflow-auto">
@@ -166,7 +169,8 @@ export default function MessagesPage() {
                                                     </p>
                                                     <ReactLinkify
                                                         componentDecorator={(decoratedHref, decoratedText, key) => (
-                                                            <a target="blank" href={decoratedHref} key={key}>
+                                                            <a target="blank" href={decoratedHref} key={key}
+                                                               className="btn-8">
                                                                 {decoratedText}
                                                             </a>
                                                         )}>
@@ -186,9 +190,10 @@ export default function MessagesPage() {
                                                                 </div>
                                                             ) : (
                                                                 <button
-                                                                    className="text-start w-full break-words btn-4"
+                                                                    className="text-start overflow-auto break-words btn-4"
                                                                     onClick={() => downloadFile(message.file, message.file)}>
-                                                                    {message.file.replace("/media/chat_files/", "")}
+                                                                    <FontAwesomeIcon
+                                                                        icon={faPaperclip}/> {message.file.replace("/media/chat_files/", "")}
                                                                 </button>
                                                             )
                                                         )}

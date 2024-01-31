@@ -3,6 +3,7 @@ import {useParams} from "react-router-dom"
 import {useChatData, useOfferData} from "../utils/UseData"
 import AuthContext from "../context/AuthContext"
 import {useTranslation} from "react-i18next"
+import ReactLinkify from "react-linkify";
 
 
 export default function OfferPage() {
@@ -218,88 +219,95 @@ export default function OfferPage() {
                 </div>
             ) : null}
             {offer.offer_type && offer.company.id !== user.user_id && offerId !== 'new' ? (
-                <div className="relative gap-6 lg:gap-8">
-                    <div
-                        className="txt-1 text-center mb-8 relative">
-                        {offer.offer_type === 'Job' ? (
-                            <p>{t("offer.job")}</p>
-                        ) : offer.offer_type === 'Internship' ? (
-                            <p>{t("offer.internship")}</p>
-                        ) : offer.offer_type === 'Apprenticeship' ? (
-                            <p>{t("offer.apprenticeship")}</p>
-                        ) : null}
-                    </div>
-                    <figure
-                        className="con-1 txt-9">
+                <ReactLinkify
+                    componentDecorator={(decoratedHref, decoratedText, key) => (
+                        <a target="blank" href={decoratedHref} key={key} className="btn-8">
+                            {decoratedText}
+                        </a>
+                    )}>
+                    <div className="relative gap-6 lg:gap-8">
                         <div
-                            className="txt-1 text-center my-8 relative">
-                            {offer.company.name}
+                            className="txt-1 text-center mb-8 relative">
+                            {offer.offer_type === 'Job' ? (
+                                <p>{t("offer.job")}</p>
+                            ) : offer.offer_type === 'Internship' ? (
+                                <p>{t("offer.internship")}</p>
+                            ) : offer.offer_type === 'Apprenticeship' ? (
+                                <p>{t("offer.apprenticeship")}</p>
+                            ) : null}
                         </div>
-                        <p
-                            className="txt-4 text-center pb-8 border-b border-zinc-200 dark:border-zinc-600 relative">
-                            {offer.company.description.length > 250 ? (
-                                offer.company.description = offer.company.description.substring(0, 250) + "..."
-                            ) : offer.company.description}
-                        </p>
-                        <p className="pt-8 pb-2">{t("offer.offer_name")}</p>
-                        <div
-                            className="con-3 txt-2 mb-8">
-                            {offer.name}
-                        </div>
-                        <p className="text-2xl pb-2">{t("offer.what_we_require")}</p>
-                        <p
-                            className="con-3 txt-4 whitespace-pre-wrap mb-8">
-                            {offer.requirements}
-                        </p>
-                        <p className="text-2xl pb-2">{t("offer.our_offer")}</p>
-                        <p
-                            className="con-3 txt-4 whitespace-pre-wrap mb-8">
-                            {offer.offer}
-                        </p>
-                        {offer.offer_type === 'Job' && (
-                            <>
-                                <p className="pb-2">{t("offer.salary")}</p>
-                                <div
-                                    className="con-3 txt-4 mb-8">
-                                    {offer.job.salary} {t("offer.pln_month")}
-                                </div>
-                                <p className="pb-2">{t("offer.type_of_employment")}</p>
-                                <div
-                                    className="con-3 txt-4 mb-8">
-                                    {offer.job.employment_type}
-                                </div>
-                            </>
-                        )}
-                        {offer.offer_type === 'Internship' && (
-                            <>
-                                <p className="pb-2">{t("offer.scholarship_amount")}</p>
-                                <div
-                                    className="con-3 txt-4 mb-8">
-                                    {offer.internship.stipend} {t("offer.pln")}
-                                </div>
-                                <p className="pb-2">{t("offer.academic_credit")}</p>
-                                <div
-                                    className="con-3 txt-4 mb-8">
-                                    {offer.internship.academic_credit === true ? (
-                                        <p>{t("button.yes")}</p>
-                                    ) : (
-                                        <p>{t("button.no")}</p>
-                                    )}
-                                </div>
-                            </>
-                        )}
-                        {offer.offer_type !== null && (
+                        <figure
+                            className="con-1 txt-9">
                             <div
-                                className="mb-8 flex justify-center">
-                                <button
-                                    onClick={createChat}
-                                    className="btn-1">
-                                    {t("button.contact")}
-                                </button>
+                                className="txt-1 text-center my-8 relative">
+                                {offer.company.name}
                             </div>
-                        )}
-                    </figure>
-                </div>
+                            <p
+                                className="txt-4 text-center pb-8 border-b border-zinc-200 dark:border-zinc-600 relative">
+                                {offer.company.description.length > 250 ? (
+                                    offer.company.description = offer.company.description.substring(0, 250) + "..."
+                                ) : offer.company.description}
+                            </p>
+                            <p className="pt-8 pb-2">{t("offer.offer_name")}</p>
+                            <div
+                                className="con-3 txt-2 mb-8">
+                                {offer.name}
+                            </div>
+                            <p className="text-2xl pb-2">{t("offer.what_we_require")}</p>
+                            <p
+                                className="con-3 txt-4 whitespace-pre-wrap mb-8">
+                                {offer.requirements}
+                            </p>
+                            <p className="text-2xl pb-2">{t("offer.our_offer")}</p>
+                            <p
+                                className="con-3 txt-4 whitespace-pre-wrap mb-8">
+                                {offer.offer}
+                            </p>
+                            {offer.offer_type === 'Job' && (
+                                <>
+                                    <p className="pb-2">{t("offer.salary")}</p>
+                                    <div
+                                        className="con-3 txt-4 mb-8">
+                                        {offer.job.salary} {t("offer.pln_month")}
+                                    </div>
+                                    <p className="pb-2">{t("offer.type_of_employment")}</p>
+                                    <div
+                                        className="con-3 txt-4 mb-8">
+                                        {offer.job.employment_type}
+                                    </div>
+                                </>
+                            )}
+                            {offer.offer_type === 'Internship' && (
+                                <>
+                                    <p className="pb-2">{t("offer.scholarship_amount")}</p>
+                                    <div
+                                        className="con-3 txt-4 mb-8">
+                                        {offer.internship.stipend} {t("offer.pln")}
+                                    </div>
+                                    <p className="pb-2">{t("offer.academic_credit")}</p>
+                                    <div
+                                        className="con-3 txt-4 mb-8">
+                                        {offer.internship.academic_credit === true ? (
+                                            <p>{t("button.yes")}</p>
+                                        ) : (
+                                            <p>{t("button.no")}</p>
+                                        )}
+                                    </div>
+                                </>
+                            )}
+                            {offer.offer_type !== null && (
+                                <div
+                                    className="mb-8 flex justify-center">
+                                    <button
+                                        onClick={createChat}
+                                        className="btn-1">
+                                        {t("button.contact")}
+                                    </button>
+                                </div>
+                            )}
+                        </figure>
+                    </div>
+                </ReactLinkify>
             ) : null}
             {confirmationDialog}
         </section>
