@@ -227,7 +227,9 @@ export function useMessagesData() {
         }
 
         if (file) {
-            messageData.append('file', file)
+            const lowercaseFile = file.name.toLowerCase()
+            const newFile = new File([file], lowercaseFile, { type: file.type })
+            messageData.append('file', newFile)
         }
 
         try {

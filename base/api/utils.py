@@ -124,7 +124,7 @@ def deleteOffer(pk):
 
 
 def getMessages(chat_id):
-    messages = Message.objects.filter(chat__id=chat_id)
+    messages = Message.objects.filter(chat__id=chat_id).order_by('-created_at')
     serializer = MessageSerializer(messages, many=True)
     return Response(serializer.data)
 

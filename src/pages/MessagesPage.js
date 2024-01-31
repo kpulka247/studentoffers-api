@@ -1,4 +1,4 @@
-import React, {useContext, useEffect, useRef, useState} from "react"
+import React, {useContext, useState} from "react"
 import AuthContext from "../context/AuthContext"
 import {useChatsData, useMessagesData} from "../utils/UseData"
 import {Link} from "react-router-dom"
@@ -6,6 +6,7 @@ import {format} from "date-fns"
 import {FontAwesomeIcon} from "@fortawesome/react-fontawesome"
 import {faChevronLeft, faPaperclip, faTrash} from "@fortawesome/free-solid-svg-icons"
 import {useTranslation} from "react-i18next"
+import ReactLinkify from 'react-linkify'
 
 
 export default function MessagesPage() {
@@ -68,14 +69,6 @@ export default function MessagesPage() {
     const getTime = (message) => {
         return format(new Date(message.created_at), 'dd/MM HH:mm')
     }
-
-    const scrollRef = useRef(null)
-
-    useEffect(() => {
-        if (scrollRef.current) {
-            scrollRef.current.scrollTop = scrollRef.current.scrollHeight
-        }
-    }, [messages])
 
     return (
         <section
@@ -154,8 +147,7 @@ export default function MessagesPage() {
                             className={chats.find(chat => chat.id === chatId || chat.id !== chatId) ? (`w-full md:w-2/3 flex flex-col bg-white dark:bg-zinc-700 md:border-l border-zinc-200 dark:border-zinc-600 focus:outline-none md:pl-8 ${chats.find(chat => chat.id === chatId) ? `` : `hidden md:block`}`) : ("w-full")}>
                             {chats.find(chat => chat.id === chatId) ? (
                                 <div
-                                    className="txt-4 place-content-end flex-grow overflow-y-auto"
-                                    ref={scrollRef}>
+                                    className="txt-4 place-content-end flex flex-col-reverse flex-grow overflow-y-auto">
                                     {messages.length === 0 ? (
                                         <div className="h-full place-content-center flex flex-col">
                                             <p className="txt-2-w text-center w-full overflow-auto">
@@ -172,21 +164,26 @@ export default function MessagesPage() {
                                                     <p className={user.user_id === message.user.id ? ("txt-10 text-right") : ("txt-10 text-left")}>
                                                         {message.user.first_name} {message.user.last_name} {getTime(message)}
                                                     </p>
-                                                    <p className="txt-6">
-                                                        {message.content}
-                                                    </p>
+                                                    <ReactLinkify
+                                                        componentDecorator={(decoratedHref, decoratedText, key) => (
+                                                            <a target="blank" href={decoratedHref} key={key}>
+                                                                {decoratedText}
+                                                            </a>
+                                                        )}>
+                                                        <p className="txt-6">
+                                                            {message.content}
+                                                        </p>
+                                                    </ReactLinkify>
                                                     <div
                                                         className={user.user_id === message.user.id ? ("flex place-content-end") : ("flex place-content-start")}>
                                                         {message.file && (
                                                             imageExtensions.some(ext => message.file.endsWith(ext)) ? (
-                                                                <button
-                                                                    className="my-2"
-                                                                    onClick={() => downloadFile(message.file, message.file)}>
+                                                                <div className="my-2">
                                                                     <img
                                                                         className="max-w-full max-h-full rounded-lg"
                                                                         src={`/api${message.file}`}
-                                                                    />
-                                                                </button>
+                                                                        alt={message.file.name}/>
+                                                                </div>
                                                             ) : (
                                                                 <button
                                                                     className="text-start w-full break-words btn-4"
