@@ -53,7 +53,9 @@
     "type_message": "Type message",
     "write_first_message": "Write your first message to",
     "select_conversation": "Select a conversation",
-    "press_contact": "Press \"Contact\" on the selected offer to create a conversation"
+    "press_contact": "Press \"Contact\" on the selected offer to create a conversation",
+    "load_more": "Load more",
+    "first_message": "First message"
   },
   "account": {
     "account_details": "Account details",

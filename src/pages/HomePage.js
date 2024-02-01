@@ -32,7 +32,7 @@ export default function HomePage() {
                             <button
                                 onClick={() => handleOfferType('Job')}
                                 className="btn-1 mb-4 sm:mb-6 md:mb-8">
-                                {t("button.show_more")}...
+                                {t("button.show_more")}
                             </button>
                         </Link>
                     </div>
@@ -61,7 +61,7 @@ export default function HomePage() {
                             <button
                                 onClick={() => handleOfferType('Internship')}
                                 className="btn-1 mb-4 sm:mb-6 md:mb-8">
-                                {t("button.show_more")}...
+                                {t("button.show_more")}
                             </button>
                         </Link>
                     </div>
@@ -90,7 +90,7 @@ export default function HomePage() {
                             <button
                                 onClick={() => handleOfferType('Apprenticeship')}
                                 className="btn-1 mb-4 sm:mb-6 md:mb-8">
-                                {t("button.show_more")}...
+                                {t("button.show_more")}
                             </button>
                         </Link>
                     </div>

@@ -167,7 +167,7 @@ button, input, select, textarea, div {
 }
 
 .txt-10 {
-    @apply text-zinc-400 font-normal text-sm
+    @apply text-zinc-300 font-normal text-sm
 }
 .dark .txt-10 {
     @apply text-zinc-500

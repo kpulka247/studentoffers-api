@@ -109,7 +109,7 @@ def newChat(request, receiver_id):
 @permission_classes([IsAuthenticated])
 def messagesView(request, chat_id):
     if request.method == 'GET':
-        return getMessages(chat_id)
+        return getMessages(request, chat_id)
 
     if request.method == 'POST':
         return sendMessage(request, chat_id)

@@ -14,7 +14,7 @@ export default function MessagesPage() {
     const [t] = useTranslation()
     const {user} = useContext(AuthContext)
     const {chats, deleteChat, confirmationDialog} = useChatsData()
-    const {messages, getMessages, sendMessage, downloadFile} = useMessagesData()
+    const {messages, setMessages, hasNextPage, page, setPage, limit, getMessages, sendMessage, downloadFile} = useMessagesData()
     const [chatId, setChatId] = useState([])
     const [content, setContent] = useState('')
     const [file, setFile] = useState(null)
@@ -22,10 +22,18 @@ export default function MessagesPage() {
 
     const imageExtensions = [".jpg", ".jpeg", ".png", ".gif", ".tiff", ".gif", ".bmp"]
 
+    const loadMoreMessages = () => {
+        if (!hasNextPage) return
+        setPage(prevPage => prevPage + 1)
+        getMessages(chatId, page + 1, limit)
+    }
+
     const handleGetMessages = (chatId) => {
         setChatId(chatId)
+        setPage(1)
+        setMessages([])
         if (chatId) {
-            getMessages(chatId)
+            getMessages(chatId, 1, limit)
             setFile(null)
         }
 
@@ -49,7 +57,7 @@ export default function MessagesPage() {
         }
     }
 
-    const handleSendButton = () => {
+    const handleSendButton = async () => {
         sendMessage(chatId, content, file)
         setContent('')
         setFile(null)
@@ -201,6 +209,15 @@ export default function MessagesPage() {
                                                 </div>
                                             </div>
                                         )))}
+                                    <div className="flex items-center justify-center">
+                                        {hasNextPage ? (
+                                            <button className="btn-4"
+                                                    onClick={loadMoreMessages}>{t("chat.load_more")}</button>
+                                        ) : messages.length !== 0 ? (
+                                            <p className="txt-10">{t("chat.first_message")}</p>
+                                        ) : null}
+
+                                    </div>
                                 </div>
                             ) : chats.find(chat => chat.id !== chatId) ? (
                                 <div
