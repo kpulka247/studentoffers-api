@@ -91,7 +91,7 @@ export default function Header() {
                             <li className="hidden xl:flex txt-8">
                                 {user && <p>{t("header.hello")}, {user.username}</p>}
                             </li>
-                            <li className="flex md:max-lg:hidden rounded-full bg-white dark:bg-zinc-700 w-full shadow-lg">
+                            <li className="flex md:max-lg:hidden rounded-full bg-white/70 dark:bg-zinc-700/70 w-full shadow-lg">
                                 <input
                                     className="inp-3 grow"
                                     type="text"
@@ -238,7 +238,7 @@ export default function Header() {
                 )}
             </div>
             {user && (
-                <li className="hidden md:max-lg:flex mb-8 sm:mx-6 md:mx-8 rounded-full bg-white dark:bg-zinc-700 shadow-lg">
+                <li className="hidden md:max-lg:flex mb-8 sm:mx-6 md:mx-8 rounded-full bg-white/70 dark:bg-zinc-700/70 shadow-lg">
                     <input
                         className="inp-3 grow"
                         type="text"

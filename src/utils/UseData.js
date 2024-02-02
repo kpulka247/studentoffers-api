@@ -105,7 +105,6 @@ export function useChatsData() {
             const data = await response.json()
             const filteredChats = data.filter(chat => chat.sender.id === user.user_id || chat.receiver.id === user.user_id)
             setChats(filteredChats)
-            // console.log(filteredChats)
         } catch (error) {
             console.error("Error during chats request:", error)
         }
@@ -198,9 +197,35 @@ export function useChatData() {
 export function useMessagesData() {
 
     const [messages, setMessages] = useState([])
+    const [hasNextPage, setHasNextPage] = useState(true)
     const {authTokens} = useContext(AuthContext)
+    const [page, setPage] = useState(1)
+    const limit = useState(20)
 
-    const getMessages = async (chatId) => {
+    const getMessages = async (chatId, page, limit) => {
+
+        try {
+            const response = await fetch(`/api/chats/${chatId}/?page=${page}&limit=${limit}/`, {
+                method: 'GET',
+                headers: {
+                    'Content-Type': 'application/json',
+                    'Authorization': 'Bearer ' + String(authTokens.access)
+                }
+            })
+            const data = await response.json()
+            if ('results' in data) {
+                setMessages(prevMessages => [...prevMessages, ...data.results])
+                const hasNextPage = data.next !== null
+                setHasNextPage(hasNextPage)
+            } else {
+                setHasNextPage(null)
+            }
+        } catch (error) {
+            console.error("Error during request:", error)
+        }
+    }
+
+    const getLatestMessage = async (chatId) => {
 
         try {
             const response = await fetch(`/api/chats/${chatId}/`, {
@@ -211,10 +236,13 @@ export function useMessagesData() {
                 }
             })
             const data = await response.json()
-            setMessages(data)
-            // console.log(messages)
+
+            if (data.results.length > 0) {
+                const latestMessage = data.results[0]
+                setMessages(prevMessages => [latestMessage, ...prevMessages])
+            }
         } catch (error) {
-            console.error("Error during request:", error)
+            console.error("Error during request:", error);
         }
     }
 
@@ -227,7 +255,9 @@ export function useMessagesData() {
         }
 
         if (file) {
-            messageData.append('file', file)
+            const lowercaseFile = file.name.toLowerCase()
+            const newFile = new File([file], lowercaseFile, {type: file.type})
+            messageData.append('file', newFile)
         }
 
         try {
@@ -239,7 +269,7 @@ export function useMessagesData() {
                 body: messageData
             })
             if (response.ok) {
-                await getMessages(chatId)
+                await getLatestMessage(chatId)
             } else {
                 console.log('Something went wrong!')
             }
@@ -265,7 +295,7 @@ export function useMessagesData() {
             .catch(error => console.log(error))
     }
 
-    return {messages, getMessages, sendMessage, downloadFile}
+    return {messages, setMessages, hasNextPage, page, setPage, limit, getMessages, sendMessage, downloadFile}
 }
 
 export function useOffersData() {
@@ -472,7 +502,8 @@ export function usePasswordToggle() {
 
 export function useThemeSwitch() {
 
-    const savedTheme = localStorage.getItem("theme") || "light"
+    const defaultTheme = window.matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light'
+    const savedTheme = localStorage.getItem("theme") || defaultTheme
     const [theme, setTheme] = useState(savedTheme)
 
     const handleThemeSwitch = () => {

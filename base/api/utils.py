@@ -1,10 +1,17 @@
 from django.core.files import File
 from rest_framework.decorators import permission_classes
+from rest_framework.pagination import PageNumberPagination
 from rest_framework.permissions import IsAuthenticated
 from rest_framework.response import Response
 from base.models import Offer, Job, Internship, Apprenticeship, Company, Message, Chat, User, Student
 from .serializers import OfferSerializer, JobSerializer, InternshipSerializer, ApprenticeshipSerializer, \
     MessageSerializer, UserSerializer, StudentSerializer, CompanySerializer
+
+
+class MessagesPagination(PageNumberPagination):
+    page_size = 20
+    page_size_query_param = 'limit'
+    max_page_size = 100
 
 
 @permission_classes([IsAuthenticated])
@@ -123,10 +130,12 @@ def deleteOffer(pk):
     return Response('Offer was deleted!')
 
 
-def getMessages(chat_id):
-    messages = Message.objects.filter(chat__id=chat_id)
-    serializer = MessageSerializer(messages, many=True)
-    return Response(serializer.data)
+def getMessages(request, chat_id):
+    paginator = MessagesPagination()
+    messages = Message.objects.filter(chat__id=chat_id).order_by('-created_at')
+    result_page = paginator.paginate_queryset(messages, request)
+    serializer = MessageSerializer(result_page, many=True)
+    return paginator.get_paginated_response(serializer.data)
 
 
 def sendMessage(request, chat_id):
