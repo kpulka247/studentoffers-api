@@ -213,9 +213,13 @@ export function useMessagesData() {
                 }
             })
             const data = await response.json()
-            setMessages(prevMessages => [...prevMessages, ...data.results])
-            const hasNextPage = data.next !== null
-            setHasNextPage(hasNextPage)
+            if ('results' in data) {
+                setMessages(prevMessages => [...prevMessages, ...data.results])
+                const hasNextPage = data.next !== null
+                setHasNextPage(hasNextPage)
+            } else {
+                setHasNextPage(null)
+            }
         } catch (error) {
             console.error("Error during request:", error)
         }
@@ -498,7 +502,8 @@ export function usePasswordToggle() {
 
 export function useThemeSwitch() {
 
-    const savedTheme = localStorage.getItem("theme") || "light"
+    const defaultTheme = window.matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light'
+    const savedTheme = localStorage.getItem("theme") || defaultTheme
     const [theme, setTheme] = useState(savedTheme)
 
     const handleThemeSwitch = () => {

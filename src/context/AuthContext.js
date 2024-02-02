@@ -94,7 +94,7 @@ export const AuthProvider = ({ children }) => {
   }, [])
 
   useEffect(() => {
-    const fourMinutes = 1000 * 60 * 4
+    const fourMinutes = 1000 * 60 * 30
     const interval = setInterval(updateToken, fourMinutes)
 
     return () => clearInterval(interval)

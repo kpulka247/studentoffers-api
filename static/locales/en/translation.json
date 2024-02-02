@@ -51,7 +51,7 @@
   },
   "chat": {
     "type_message": "Type message",
-    "write_first_message": "Write your first message to",
+    "type_first_message": "Type first message",
     "select_conversation": "Select a conversation",
     "press_contact": "Press \"Contact\" on the selected offer to create a conversation",
     "load_more": "Load more",

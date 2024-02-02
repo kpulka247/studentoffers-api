@@ -1,4 +1,4 @@
-import React, {useContext, useState} from "react"
+import React, {useContext, useEffect, useRef, useState} from "react"
 import AuthContext from "../context/AuthContext"
 import {useChatsData, useMessagesData} from "../utils/UseData"
 import {Link} from "react-router-dom"
@@ -6,7 +6,8 @@ import {format} from "date-fns"
 import {FontAwesomeIcon} from "@fortawesome/react-fontawesome"
 import {faChevronLeft, faPaperclip, faTrash} from "@fortawesome/free-solid-svg-icons"
 import {useTranslation} from "react-i18next"
-import ReactLinkify from 'react-linkify'
+import ReactLinkify from "react-linkify"
+import _ from "lodash"
 
 
 export default function MessagesPage() {
@@ -19,8 +20,31 @@ export default function MessagesPage() {
     const [content, setContent] = useState('')
     const [file, setFile] = useState(null)
     const [selectedChatName, setSelectedChatName] = useState('')
+    const containerRef = useRef(null)
+    const [scrollActive, setScrollActive] = useState(true)
 
     const imageExtensions = [".jpg", ".jpeg", ".png", ".gif", ".tiff", ".gif", ".bmp"]
+
+    const handleScroll = _.debounce((e) => {
+        const container = e.target
+        const scrollConverted = container.scrollTop + container.scrollHeight - container.clientHeight
+        // console.log('Scrolling...', scrollConverted)
+        if (scrollConverted <= 10 && hasNextPage && scrollActive) {
+            loadMoreMessages()
+        }
+    }, 100)
+
+    useEffect(() => {
+        const container = containerRef.current
+        if (container) {
+            container.addEventListener('scroll', handleScroll)
+        }
+        return () => {
+            if (container) {
+                container.removeEventListener('scroll', handleScroll)
+            }
+        }
+    }, [handleScroll])
 
     const loadMoreMessages = () => {
         if (!hasNextPage) return
@@ -29,11 +53,14 @@ export default function MessagesPage() {
     }
 
     const handleGetMessages = (chatId) => {
+        setScrollActive(false)
         setChatId(chatId)
         setPage(1)
         setMessages([])
         if (chatId) {
-            getMessages(chatId, 1, limit)
+            getMessages(chatId, 1, limit).then(() => {
+                setScrollActive(true)
+            })
             setFile(null)
         }
 
@@ -58,9 +85,11 @@ export default function MessagesPage() {
     }
 
     const handleSendButton = async () => {
-        sendMessage(chatId, content, file)
-        setContent('')
-        setFile(null)
+        if (content.trim() !== '' || file !== null) {
+            await sendMessage(chatId, content, file)
+            setContent('')
+            setFile(null)
+        }
     }
 
     const handleEnter = (event) => {
@@ -99,7 +128,7 @@ export default function MessagesPage() {
                          id="sc-1">
                         <div
                             className={chats.find(chat => chat.id === chatId || chat.id !== chatId) ? (`w-full md:w-1/3 text-center ${chats.find(chat => chat.id === chatId) ? `hidden md:block` : ``}`) : null}>
-                            <div className="overflow-y-auto md:pr-6 md:mr-2 h-full"
+                            <div className="overflow-y-auto md:pr-6 h-full"
                                  id="sc-1">
                                 {chats.map((chat, index) => (
                                     <Link
@@ -110,7 +139,7 @@ export default function MessagesPage() {
                                             className={chatId === chat.id ? ("btn-5 group relative") : ("btn-5-w")}>
                                             {chatId === chat.id ? (
                                                 <button
-                                                    className="btn-2-icon opacity-0 group-hover:opacity-100 absolute self-end transition ease-in-out"
+                                                    className="btn-2-icon bg-zinc-200 dark:bg-zinc-700 opacity-0 group-hover:opacity-100 absolute self-end transition ease-in-out"
                                                     onClick={() => {
                                                         deleteChat(chatId)
                                                     }}>
@@ -154,61 +183,54 @@ export default function MessagesPage() {
                             </div>
                         </div>
                         <div
-                            className={chats.find(chat => chat.id === chatId || chat.id !== chatId) ? (`w-full md:w-2/3 flex flex-col bg-white dark:bg-zinc-700 md:border-l border-zinc-200 dark:border-zinc-600 focus:outline-none md:pl-8 ${chats.find(chat => chat.id === chatId) ? `` : `hidden md:block`}`) : ("w-full")}>
+                            className={chats.find(chat => chat.id === chatId || chat.id !== chatId) ? (`w-full md:w-2/3 flex flex-col md:border-l border-zinc-200 dark:border-zinc-600 focus:outline-none md:pl-8 ${chats.find(chat => chat.id === chatId) ? `` : `hidden md:block`}`) : ("w-full")}>
                             {chats.find(chat => chat.id === chatId) ? (
                                 <div
-                                    className="txt-4 place-content-end flex flex-col-reverse flex-grow overflow-y-auto"
-                                    id="sc-1">
-                                    {messages.length === 0 ? (
-                                        <div className="h-full place-content-center flex flex-col">
-                                            <p className="txt-2-w text-center w-full overflow-auto">
-                                                {t("chat.write_first_message")} {selectedChatName}
-                                            </p>
-                                        </div>
-                                    ) : (
-                                        messages.map((message, index) => (
+                                    className="txt-4 place-content-end flex flex-col-reverse flex-grow overflow-x-hidden overflow-y-auto"
+                                    id="sc-1"
+                                    ref={containerRef}>
+                                    {messages.map((message, index) => (
+                                        <div key={index}
+                                             className={user.user_id === message.user.id ? ("w-full max-w-xl flex flex-col place-items-end pl-8 ml-auto") : ("w-full max-w-xl pr-8")}>
                                             <div
-                                                key={index}
-                                                className={user.user_id === message.user.id ? ("w-full max-w-xl flex flex-col place-items-end pl-8 ml-auto") : ("w-full max-w-xl pr-8")}>
-                                                <div
-                                                    className={user.user_id === message.user.id ? ("max-w-fit w-full py-2 px-4 mt-4 break-words rounded-lg bg-zinc-100 dark:bg-zinc-600") : ("max-w-fit w-full py-2 px-4 mt-4 break-words rounded-lg border border-zinc-200 dark:border-zinc-600 align-start")}>
-                                                    <p className={user.user_id === message.user.id ? ("txt-10 text-right") : ("txt-10 text-left")}>
-                                                        {message.user.first_name} {message.user.last_name} {getTime(message)}
+                                                className={user.user_id === message.user.id ? ("max-w-fit w-full py-2 px-4 mt-4 break-words rounded-lg bg-zinc-100 dark:bg-zinc-600") : ("max-w-fit w-full py-2 px-4 mt-4 break-words rounded-lg border border-zinc-200 dark:border-zinc-600 align-start")}>
+                                                <p className={user.user_id === message.user.id ? ("txt-10 text-right") : ("txt-10 text-left")}>
+                                                    {message.user.first_name} {message.user.last_name} {getTime(message)}
+                                                </p>
+                                                <ReactLinkify
+                                                    componentDecorator={(decoratedHref, decoratedText, key) => (
+                                                        <a target="blank" href={decoratedHref} key={key}
+                                                           className="btn-8">
+                                                            {decoratedText}
+                                                        </a>
+                                                    )}>
+                                                    <p className="txt-6">
+                                                        {message.content}
                                                     </p>
-                                                    <ReactLinkify
-                                                        componentDecorator={(decoratedHref, decoratedText, key) => (
-                                                            <a target="blank" href={decoratedHref} key={key}
-                                                               className="btn-8">
-                                                                {decoratedText}
-                                                            </a>
-                                                        )}>
-                                                        <p className="txt-6">
-                                                            {message.content}
-                                                        </p>
-                                                    </ReactLinkify>
-                                                    <div
-                                                        className={user.user_id === message.user.id ? ("flex place-content-end") : ("flex place-content-start")}>
-                                                        {message.file && (
-                                                            imageExtensions.some(ext => message.file.endsWith(ext)) ? (
-                                                                <div className="my-2">
-                                                                    <img
-                                                                        className="max-w-full max-h-full rounded-lg"
-                                                                        src={`/api${message.file}`}
-                                                                        alt={message.file.name}/>
-                                                                </div>
-                                                            ) : (
-                                                                <button
-                                                                    className="text-start overflow-auto break-words btn-4"
-                                                                    onClick={() => downloadFile(message.file, message.file)}>
-                                                                    <FontAwesomeIcon
-                                                                        icon={faPaperclip}/> {message.file.replace("/media/chat_files/", "")}
-                                                                </button>
-                                                            )
-                                                        )}
-                                                    </div>
+                                                </ReactLinkify>
+                                                <div
+                                                    className={user.user_id === message.user.id ? ("flex place-content-end") : ("flex place-content-start")}>
+                                                    {message.file && (
+                                                        imageExtensions.some(ext => message.file.endsWith(ext)) ? (
+                                                            <div className="my-2">
+                                                                <img
+                                                                    className="max-w-full max-h-full rounded-lg"
+                                                                    src={`/api${message.file}`}
+                                                                    alt={message.file.name}/>
+                                                            </div>
+                                                        ) : (
+                                                            <button
+                                                                className="text-start overflow-auto btn-4"
+                                                                onClick={() => downloadFile(message.file, message.file)}>
+                                                                <FontAwesomeIcon
+                                                                    icon={faPaperclip}/> {message.file.replace("/media/chat_files/", "")}
+                                                            </button>
+                                                        )
+                                                    )}
                                                 </div>
                                             </div>
-                                        )))}
+                                        </div>
+                                    ))}
                                     <div className="flex items-center justify-center">
                                         {hasNextPage ? (
                                             <button className="btn-4"
@@ -253,7 +275,7 @@ export default function MessagesPage() {
                                     <input
                                         className="inp-2"
                                         type="text"
-                                        placeholder={t("chat.type_message") + "..."}
+                                        placeholder={messages.length === 0 ? t("chat.type_first_message") + "..." : t("chat.type_message") + "..."}
                                         value={content}
                                         onChange={(event) => setContent(event.target.value)}
                                         onKeyDown={handleEnter}/>

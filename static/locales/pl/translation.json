@@ -50,8 +50,8 @@
     "delete_offer": "Czy chcesz usunąć tę ofertę?"
   },
   "chat": {
-    "type_message": "Wpisz wiadomość",
-    "write_first_message": "Napisz pierwszą wiadomość do",
+    "type_message": "Napisz wiadomość",
+    "type_first_message": "Napisz pierwszą wiadomość",
     "select_conversation": "Wybierz konwersację",
     "press_contact": "Naciśnij \"Skontaktuj się\" na wybranej ofercie, aby stworzyć konwersację",
     "load_more": "Wczytaj kolejne",

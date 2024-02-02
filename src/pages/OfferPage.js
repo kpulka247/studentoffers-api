@@ -97,8 +97,9 @@ export default function OfferPage() {
                         />
                         <p className="pb-2">{t("offer.what_we_require")}</p>
                         <textarea
-                            className="inp-1 mb-8"
+                            className="inp-1 border-t mb-8"
                             rows={6}
+                            id="sc-1"
                             onChange={(e) => {
                                 setOffer({
                                     ...offer,
@@ -109,8 +110,9 @@ export default function OfferPage() {
                         />
                         <p className="pb-2">{t("offer.our_offer")}</p>
                         <textarea
-                            className="inp-1 mb-8"
+                            className="inp-1 border-t mb-8"
                             rows={6}
+                            id="sc-1"
                             onChange={(e) => {
                                 setOffer({
                                     ...offer,
@@ -173,23 +175,37 @@ export default function OfferPage() {
                                     }}
                                     defaultValue={offer?.internship?.stipend}
                                 />
-                                <p className="pb-2">{t("offer.academic_credit")}</p>
-                                <select
-                                    className="inp-1 mb-8"
-                                    onChange={(e) => {
-                                        setOffer({
-                                            ...offer,
-                                            internship: {
-                                                ...offer.internship,
-                                                academic_credit: e.target.value === "Yes"
-                                            }
-                                        })
-                                    }}
-                                    defaultValue={offer && offer.internship && offer.internship.academic_credit !== undefined ?
-                                        (offer.internship.academic_credit ? "Yes" : "No") : "No"}>
-                                    <option value="No">{t("button.no")}</option>
-                                    <option value="Yes">{t("button.yes")}</option>
-                                </select>
+                                <div className="flex items-center justify-between">
+                                    <p>{t("offer.academic_credit")}</p>
+                                    <div className="flex gap-x-4 sm:gap-x-6 md:gap-x-8">
+                                        <button
+                                            className={offer?.internship?.academic_credit === true ? "btn-1" : "btn-2"}
+                                            onClick={() => {
+                                                setOffer({
+                                                    ...offer,
+                                                    internship: {
+                                                        ...offer.internship,
+                                                        academic_credit: true
+                                                    }
+                                                })
+                                            }}>
+                                            {t("button.yes")}
+                                        </button>
+                                        <button
+                                            className={offer?.internship?.academic_credit === true ? "btn-2" : "btn-1"}
+                                            onClick={() => {
+                                                setOffer({
+                                                    ...offer,
+                                                    internship: {
+                                                        ...offer.internship,
+                                                        academic_credit: false
+                                                    }
+                                                })
+                                            }}>
+                                            {t("button.no")}
+                                        </button>
+                                    </div>
+                                </div>
                             </>
                         )}
                         {offerId !== 'new' ? (
@@ -207,7 +223,7 @@ export default function OfferPage() {
                                 </button>
                             </div>
                         ) : (
-                            <div className="mb-8 flex justify-center gap-x-8">
+                            <div className="my-8 flex justify-center gap-x-8">
                                 <button
                                     onClick={handleOfferSubmit}
                                     className="btn-1">

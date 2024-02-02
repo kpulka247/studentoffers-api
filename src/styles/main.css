@@ -22,17 +22,17 @@ button, input, select, textarea, div {
 }
 
 .btn-2 {
-    @apply txt-8 bg-white hover:bg-zinc-50 border-2 border-zinc-700 focus:outline-none active:ring-2 active:ring-zinc-700 active:ring-offset-2 h-12 px-6 rounded-full whitespace-nowrap pointer-events-auto
+    @apply txt-8 hover:bg-zinc-50 border-2 border-zinc-700 focus:outline-none active:ring-2 active:ring-zinc-700 active:ring-offset-2 h-12 px-6 rounded-full whitespace-nowrap pointer-events-auto
 }
 .dark .btn-2 {
-    @apply bg-zinc-700 hover:bg-zinc-800 border-zinc-200 active:ring-zinc-200 active:ring-offset-zinc-700
+    @apply hover:bg-zinc-800 border-zinc-200 active:ring-zinc-200 active:ring-offset-zinc-700
 }
 
 .btn-2-icon {
-    @apply txt-3 bg-white hover:bg-zinc-50 border-2 border-zinc-700 focus:outline-none active:ring-2 active:ring-zinc-700 active:ring-offset-2 h-12 w-12 rounded-full flex-shrink-0 flex items-center justify-center pointer-events-auto
+    @apply txt-3 hover:bg-zinc-50 border-2 border-zinc-700 focus:outline-none active:ring-2 active:ring-zinc-700 active:ring-offset-2 h-12 w-12 rounded-full flex-shrink-0 flex items-center justify-center pointer-events-auto
 }
 .dark .btn-2-icon {
-    @apply bg-zinc-700 hover:bg-zinc-800 border-zinc-200 active:ring-zinc-200 active:ring-offset-zinc-700
+    @apply hover:bg-zinc-800 border-zinc-200 active:ring-zinc-200 active:ring-offset-zinc-700
 }
 
 .btn-3 {
@@ -167,7 +167,7 @@ button, input, select, textarea, div {
 }
 
 .txt-10 {
-    @apply text-zinc-300 font-normal text-sm
+    @apply text-zinc-400 font-normal text-sm
 }
 .dark .txt-10 {
     @apply text-zinc-500
@@ -189,48 +189,45 @@ button, input, select, textarea, div {
 
 /* Inputs */
 .inp-1 {
-    @apply txt-6 placeholder:text-transparent bg-white rounded-lg border border-zinc-200 px-4 py-2
+    @apply txt-6 placeholder:text-transparent bg-transparent rounded-lg border-b border-zinc-200 px-4 py-2
 }
 .dark .inp-1 {
-    @apply bg-zinc-700 border-zinc-600
+    @apply border-zinc-600
 }
 .inp-1:focus {
     @apply transition border-zinc-400 outline-none
 }
 
 .inp-1-nb {
-    @apply txt-6 placeholder:text-transparent bg-white rounded-lg min-w-0 px-4 py-2
-}
-.dark .inp-1-nb {
-    @apply bg-zinc-700
+    @apply txt-6 placeholder:text-transparent bg-transparent rounded-lg min-w-0 px-4 py-2
 }
 .inp-1-nb:focus {
     @apply outline-none
 }
 
 .inp-2 {
-    @apply txt-6 placeholder:text-zinc-300 bg-white grow w-36 border border-zinc-200 rounded-full px-4 py-2
+    @apply txt-6 placeholder:text-zinc-400 bg-transparent grow w-36 border border-zinc-200 rounded-full px-4 py-2
 }
 .dark .inp-2 {
-    @apply placeholder:text-zinc-500 border-zinc-600 bg-zinc-700
+    @apply placeholder:text-zinc-500 border-zinc-600
 }
 .inp-2:focus {
     @apply transition border-zinc-400 outline-none
 }
 
 .inp-3 {
-    @apply txt-6 placeholder:text-zinc-300 bg-white rounded-full w-24 focus:outline-none px-4 p-2
+    @apply txt-6 placeholder:text-zinc-400 bg-transparent rounded-full w-24 focus:outline-none px-4 p-2
 }
 .dark .inp-3 {
-    @apply placeholder:text-zinc-500 bg-zinc-700
+    @apply placeholder:text-zinc-500
 }
 
 /* Containers */
 .con-1 {
-    @apply bg-white shadow-lg rounded-lg flex flex-col px-4 sm:px-6 md:px-8 relative
+    @apply bg-white/70 shadow-lg rounded-lg flex flex-col px-4 sm:px-6 md:px-8 relative
 }
 .dark .con-1 {
-    @apply bg-zinc-700
+    @apply bg-zinc-700/70
 }
 
 .con-2 {
@@ -241,17 +238,14 @@ button, input, select, textarea, div {
 }
 
 .con-3 {
-    @apply bg-white rounded-lg focus:outline-none
-}
-.dark .con-3 {
-    @apply bg-zinc-700
+    @apply rounded-lg focus:outline-none
 }
 
 .con-4 {
-    @apply bg-white rounded-full shadow-lg focus:outline-none flex justify-center h-12 overflow-hidden
+    @apply bg-white/70 rounded-full shadow-lg focus:outline-none flex justify-center h-12 overflow-hidden
 }
 .dark .con-4 {
-    @apply bg-zinc-700
+    @apply bg-zinc-700/70
 }
 
 /* Gradients */
@@ -279,65 +273,51 @@ button, input, select, textarea, div {
 
 /* Labels */
 .lb-1 {
-    @apply text-zinc-300 bg-white rounded-lg pointer-events-none font-normal text-sm peer-focus:text-sm peer-placeholder-shown:text-base whitespace-nowrap left-0 -top-2.5 peer-focus:-top-2.5 peer-placeholder-shown:top-[9px] peer-focus:text-zinc-400 mx-2 px-2 peer-focus:transition-all transition-move absolute
+    @apply text-zinc-400 rounded-lg pointer-events-none font-normal text-sm peer-focus:text-sm peer-placeholder-shown:text-base whitespace-nowrap left-0 -top-5 peer-focus:-top-5 peer-placeholder-shown:top-[9px] peer-focus:text-zinc-400 mx-2 px-2 peer-focus:transition-all transition-move absolute
 }
 .dark .lb-1 {
-    @apply text-zinc-500 bg-zinc-700
+    @apply text-zinc-500
 }
 
 /* Scrollbar */
 ::-webkit-scrollbar {
     width: 6px;
 }
-
-::-webkit-scrollbar-thumb {
-    background-color: #d4d4d8;
-    border-radius: 3px;
-}
-.dark ::-webkit-scrollbar-thumb {
-    background-color: #3f3f46;
-}
-::-webkit-scrollbar-thumb:hover {
-    background-color: #a1a1aa;
-}
-.dark ::-webkit-scrollbar-thumb:hover {
-    background-color: #52525b;
-}
-
-::-webkit-scrollbar-track {
-    background-color: #f4f4f5;
-}
-.dark ::-webkit-scrollbar-track {
-    background-color: #27272a;
-}
-
 ::-webkit-scrollbar:horizontal {
     height: 6px;
 }
 
-::-webkit-scrollbar-thumb:horizontal {
+::-webkit-scrollbar-thumb, ::-webkit-scrollbar-thumb:horizontal {
     background-color: #d4d4d8;
     border-radius: 3px;
 }
-.dark ::-webkit-scrollbar-thumb:horizontal {
+.dark ::-webkit-scrollbar-thumb, .dark ::-webkit-scrollbar-thumb:horizontal {
     background-color: #3f3f46;
 }
-::-webkit-scrollbar-thumb:horizontal:hover {
+::-webkit-scrollbar-thumb:hover, ::-webkit-scrollbar-thumb:horizontal:hover {
     background-color: #a1a1aa;
 }
-.dark ::-webkit-scrollbar-thumb:horizontal:hover {
+.dark ::-webkit-scrollbar-thumb:hover, .dark ::-webkit-scrollbar-thumb:horizontal:hover {
     background-color: #52525b;
 }
 
-::-webkit-scrollbar-track:horizontal {
+::-webkit-scrollbar-track, ::-webkit-scrollbar-track:horizontal {
     background-color: #f4f4f5;
 }
-.dark ::-webkit-scrollbar-track:horizontal {
+.dark ::-webkit-scrollbar-track, .dark ::-webkit-scrollbar-track:horizontal {
     background-color: #27272a;
 }
 
 #sc-1::-webkit-scrollbar {
     width: 10px;
+}
+#sc-1::-webkit-scrollbar:horizontal {
+    height: 10px;
+}
+
+#sc-1::-webkit-resizer, #sc-1::-webkit-scrollbar-corner {
+    background-color: transparent;
+    background-clip: padding-box;
 }
 
 #sc-1::-webkit-scrollbar-thumb {
@@ -346,26 +326,6 @@ button, input, select, textarea, div {
     border-radius: 0px;
     background-color: #e4e4e7;
 }
-.dark #sc-1::-webkit-scrollbar-thumb {
-    background-color: #52525b;
-}
-#sc-1::-webkit-scrollbar-thumb:hover {
-    background-color: #d4d4d8;
-}
-.dark #sc-1::-webkit-scrollbar-thumb:hover {
-    background-color: #71717a;
-}
-
-#sc-1::-webkit-scrollbar-track {
-    background-color: #FFFFFF;
-}
-.dark #sc-1::-webkit-scrollbar-track {
-    background-color: #3f3f46;
-}
-
-#sc-1::-webkit-scrollbar:horizontal {
-    height: 10px;
-}
 
 #sc-1::-webkit-scrollbar-thumb:horizontal {
     border-bottom: 8px solid rgba(0, 0, 0, 0);
@@ -373,19 +333,17 @@ button, input, select, textarea, div {
     border-radius: 0px;
     background-color: #e4e4e7;
 }
-.dark #sc-1::-webkit-scrollbar-thumb:horizontal {
+
+.dark #sc-1::-webkit-scrollbar-thumb, .dark #sc-1::-webkit-scrollbar-thumb:horizontal {
     background-color: #52525b;
 }
-#sc-1::-webkit-scrollbar-thumb:horizontal:hover {
+#sc-1::-webkit-scrollbar-thumb:hover, #sc-1::-webkit-scrollbar-thumb:horizontal:hover {
     background-color: #d4d4d8;
 }
-.dark #sc-1::-webkit-scrollbar-thumb:horizontal:hover {
+.dark #sc-1::-webkit-scrollbar-thumb:hover, .dark #sc-1::-webkit-scrollbar-thumb:horizontal:hover {
     background-color: #71717a;
 }
 
-#sc-1::-webkit-scrollbar-track:horizontal {
-    background-color: #FFFFFF;
-}
-.dark #sc-1::-webkit-scrollbar-track:horizontal {
-    background-color: #3f3f46;
+#sc-1::-webkit-scrollbar-track, #sc-1::-webkit-scrollbar-track:horizontal {
+    background-color: transparent;
 }
