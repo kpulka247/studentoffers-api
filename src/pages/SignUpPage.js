@@ -1,6 +1,6 @@
-import React from "react"
-import {usePasswordToggle, useUsersData} from "../utils/UseData"
-import {useTranslation} from "react-i18next"
+import React from 'react'
+import {usePasswordToggle, useUsersData} from '../utils/UseData'
+import {useTranslation} from 'react-i18next'
 
 
 export default function SignUpPage() {
@@ -10,38 +10,39 @@ export default function SignUpPage() {
     const [toggleIcon, passwordInputType] = usePasswordToggle()
 
     return (
-        <section className="w-full max-w-3xl mx-auto px-4 sm:px-6 md:px-8 relative">
-            <div className="gap-6 lg:gap-8">
+        <section className='w-full max-w-3xl mx-auto px-4 sm:px-6 md:px-8 relative'>
+            <div className='gap-6 lg:gap-8'>
                 <div
-                    className="con-1 txt-3 text-center">
-                    <p className="my-8">{t("signup.select_account_type")}</p>
+                    className='con-1 txt-3 text-center'>
+                    <p className='my-8'>{t('signup.select_account_type')}</p>
                     <div
-                        className="inset-x-0 bottom-0 flex justify-center gap-x-4 sm:gap-x-6 md:gap-x-8 mb-8">
+                        className='inset-x-0 bottom-0 flex justify-center gap-x-4 sm:gap-x-6 md:gap-x-8 mb-8'>
                         <button
                             onClick={() => handleUserType('Student')}
-                            className={user.user_type === 'Student' ? ("btn-1") : ("btn-2")}>
-                            {t("account.student")}
+                            className={user.user_type === 'Student' ? ('btn-1') : ('btn-2')}>
+                            {t('account.student')}
                         </button>
                         <button
                             onClick={() => handleUserType('Company')}
-                            className={user.user_type === 'Company' ? ("btn-1") : ("btn-2")}>
-                            {t("account.company")}
+                            className={user.user_type === 'Company' ? ('btn-1') : ('btn-2')}>
+                            {t('account.company')}
                         </button>
                     </div>
                 </div>
             </div>
             {user.user_type && (
-                <div className="gap-6 mt-8 lg:gap-8">
+                <div className='gap-6 mt-8 lg:gap-8'>
                     <figure
-                        className="con-1 txt-9 px-4 sm:px-6 md:px-8">
-                        <p className="txt-3 text-center my-8">
-                            {t("signup.fill_in_details")}
+                        className='con-1 txt-9 px-4 sm:px-6 md:px-8'>
+                        <p className='txt-3 text-center my-8'>
+                            {t('signup.fill_in_details')}
                         </p>
-                        <div className="relative">
+                        <div className='relative'>
                             <input
-                                className="inp-1 peer w-full mb-8"
-                                type="text"
-                                name="username"
+                                className='inp-1 peer w-full mb-8'
+                                type='text'
+                                name='username'
+                                maxLength={20}
                                 onChange={(e) => {
                                     setUser({
                                         ...user,
@@ -49,18 +50,19 @@ export default function SignUpPage() {
                                     })
                                 }}
                                 defaultValue={user?.username}
-                                placeholder="username"
+                                placeholder='username'
                             />
-                            <label className="lb-1">
-                                {t("account.username")}
+                            <label className='lb-1'>
+                                {t('account.username')}
                             </label>
                         </div>
-                        <div className="relative">
+                        <div className='relative'>
                             <div
-                                className="flex rounded-lg border-b border-zinc-200 dark:border-zinc-600 focus-within:transition focus-within:border-zinc-400 dark:focus-within:border-zinc-400 w-full mb-8">
+                                className='flex rounded-lg border-b border-zinc-200 dark:border-zinc-600 focus-within:transition focus-within:border-zinc-400 dark:focus-within:border-zinc-400 w-full mb-8'>
                                 <input
-                                    className="inp-1-nb peer grow"
+                                    className='inp-1-nb peer grow'
                                     type={passwordInputType}
+                                    maxLength={30}
                                     onChange={(e) => {
                                         setUser({
                                             ...user,
@@ -68,19 +70,20 @@ export default function SignUpPage() {
                                         })
                                     }}
                                     defaultValue={user?.password}
-                                    placeholder="password"
+                                    placeholder='password'
                                 />
-                                <label className="lb-1">
-                                    {t("account.password")}
+                                <label className='lb-1'>
+                                    {t('account.password')}
                                 </label>
-                                <span className="txt-9 flex flex-col place-content-center place-items-end px-4">
+                                <span className='txt-9 flex flex-col place-content-center place-items-end px-4'>
                                 {toggleIcon}
                             </span>
                             </div>
                         </div>
-                        <div className="relative">
+                        <div className='relative'>
                             <input
-                                className="inp-1 peer w-full mb-8"
+                                className='inp-1 peer w-full mb-8'
+                                maxLength={30}
                                 onChange={(e) => {
                                     setUser({
                                         ...user,
@@ -88,15 +91,16 @@ export default function SignUpPage() {
                                     })
                                 }}
                                 defaultValue={user?.email}
-                                placeholder="email"
+                                placeholder='email'
                             />
-                            <label className="lb-1">
-                                {t("account.email")}
+                            <label className='lb-1'>
+                                {t('account.email')}
                             </label>
                         </div>
-                        <div className="relative">
+                        <div className='relative'>
                             <input
-                                className="inp-1 peer w-full mb-8"
+                                className='inp-1 peer w-full mb-8'
+                                maxLength={30}
                                 onChange={(e) => {
                                     setUser({
                                         ...user,
@@ -104,15 +108,16 @@ export default function SignUpPage() {
                                     })
                                 }}
                                 defaultValue={user?.first_name}
-                                placeholder="first_name"
+                                placeholder='first_name'
                             />
-                            <label className="lb-1">
-                                {t("account.first_name")}
+                            <label className='lb-1'>
+                                {t('account.first_name')}
                             </label>
                         </div>
-                        <div className="relative">
+                        <div className='relative'>
                             <input
-                                className="inp-1 peer w-full mb-8"
+                                className='inp-1 peer w-full mb-8'
+                                maxLength={30}
                                 onChange={(e) => {
                                     setUser({
                                         ...user,
@@ -120,18 +125,18 @@ export default function SignUpPage() {
                                     })
                                 }}
                                 defaultValue={user?.last_name}
-                                placeholder="last_name"
+                                placeholder='last_name'
                             />
-                            <label className="lb-1">
-                                {t("account.last_name")}
+                            <label className='lb-1'>
+                                {t('account.last_name')}
                             </label>
                         </div>
                         {user.user_type === 'Student' ? (
                             <>
-                                <div className="relative">
+                                <div className='relative'>
                                     <input
-                                        className="inp-1 peer w-full mb-8"
-                                        type="text"
+                                        className='inp-1 peer w-full mb-8'
+                                        type='text'
                                         maxLength={100}
                                         onChange={(e) => {
                                             setUser({
@@ -143,16 +148,16 @@ export default function SignUpPage() {
                                             })
                                         }}
                                         defaultValue={user?.student?.field_of_study}
-                                        placeholder="field_of_study"
+                                        placeholder='field_of_study'
                                     />
-                                    <label className="lb-1">
-                                        {t("account.field_of_study")}
+                                    <label className='lb-1'>
+                                        {t('account.field_of_study')}
                                     </label>
                                 </div>
-                                <div className="relative">
+                                <div className='relative'>
                                     <input
-                                        className="inp-1 peer w-full mb-8"
-                                        type="text"
+                                        className='inp-1 peer w-full mb-8'
+                                        type='text'
                                         maxLength={20}
                                         onChange={(e) => {
                                             setUser({
@@ -164,19 +169,19 @@ export default function SignUpPage() {
                                             })
                                         }}
                                         defaultValue={user?.student?.student_id}
-                                        placeholder="student_id"
+                                        placeholder='student_id'
                                     />
-                                    <label className="lb-1">
-                                        {t("account.student_id_number")}
+                                    <label className='lb-1'>
+                                        {t('account.student_id_number')}
                                     </label>
                                 </div>
                             </>
                         ) : user.user_type === 'Company' ? (
                             <>
-                                <div className="relative">
+                                <div className='relative'>
                                     <input
-                                        className="inp-1 peer w-full mb-8"
-                                        type="text"
+                                        className='inp-1 peer w-full mb-8'
+                                        type='text'
                                         maxLength={100}
                                         onChange={(e) => {
                                             setUser({
@@ -188,17 +193,17 @@ export default function SignUpPage() {
                                             })
                                         }}
                                         defaultValue={user?.company?.name}
-                                        placeholder="company_name"
+                                        placeholder='company_name'
                                     />
-                                    <label className="lb-1">
-                                        {t("account.company_name")}
+                                    <label className='lb-1'>
+                                        {t('account.company_name')}
                                     </label>
                                 </div>
-                                <div className="relative">
+                                <div className='relative'>
                                     <input
-                                        className="inp-1 peer w-full mb-8"
-                                        type="text"
-                                        maxLength={400}
+                                        className='inp-1 peer w-full mb-8'
+                                        type='text'
+                                        maxLength={800}
                                         onChange={(e) => {
                                             setUser({
                                                 ...user,
@@ -209,16 +214,16 @@ export default function SignUpPage() {
                                             })
                                         }}
                                         defaultValue={user?.company?.description}
-                                        placeholder="company_description"
+                                        placeholder='company_description'
                                     />
-                                    <label className="lb-1">
-                                        {t("account.company_description")}
+                                    <label className='lb-1'>
+                                        {t('account.company_description')}
                                     </label>
                                 </div>
-                                <div className="relative">
+                                <div className='relative'>
                                     <input
-                                        className="inp-1 peer w-full mb-8"
-                                        type="text"
+                                        className='inp-1 peer w-full mb-8'
+                                        type='text'
                                         maxLength={150}
                                         onChange={(e) => {
                                             setUser({
@@ -230,20 +235,20 @@ export default function SignUpPage() {
                                             })
                                         }}
                                         defaultValue={user?.company?.location}
-                                        placeholder="company_location"
+                                        placeholder='company_location'
                                     />
-                                    <label className="lb-1">
-                                        {t("account.address")}
+                                    <label className='lb-1'>
+                                        {t('account.address')}
                                     </label>
                                 </div>
                             </>
                         ) : null}
                         <div
-                            className="mb-8 flex justify-center">
+                            className='mb-8 flex justify-center'>
                             <button
                                 onClick={handleUserSubmit}
-                                className="btn-1">
-                                {t("button.confirm")}
+                                className='btn-1'>
+                                {t('button.confirm')}
                             </button>
                         </div>
                     </figure>

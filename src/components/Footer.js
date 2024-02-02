@@ -1,6 +1,6 @@
-import React from "react"
-import {useLocation} from "react-router-dom"
-import {useTranslation} from "react-i18next"
+import React from 'react'
+import {useLocation} from 'react-router-dom'
+import {useTranslation} from 'react-i18next'
 
 
 export default function Footer() {
@@ -12,10 +12,12 @@ export default function Footer() {
 
     return (
         <>
-            <div className={`${location.pathname.startsWith("/chat") ? "" : "grow"}`}/>
-            <p className="txt-10 pt-4 flex justify-center items-center">
-                Copyright © {currentYear} Kamil Pułka. {t("global.copyright")}
-            </p>
+            <div className={`${location.pathname.startsWith('/chat') ? '' : 'grow'}`}/>
+            <div className={`flex justify-center items-center ${location.pathname.startsWith('/chat') ? 'hidden md:block' : ''}`}>
+                <p className='txt-10 py-4 text-center'>
+                    Copyright © {currentYear} Kamil Pułka. {t('global.copyright')}
+                </p>
+            </div>
         </>
     )
 }

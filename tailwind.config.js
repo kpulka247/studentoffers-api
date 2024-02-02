@@ -9,6 +9,7 @@ module.exports = {
             animation: {
                 blob: "blob 8s infinite",
                 text: "text 1s ease-in-out",
+                messages: "messages 1s ease-in-out"
             },
             keyframes: {
                 blob: {
@@ -32,6 +33,16 @@ module.exports = {
                     },
                     "100%": {
                         transform: 'translateY(-75%) scale(1)',
+                        opacity: 1
+                    }
+                },
+                messages: {
+                    "0%": {
+                        transform: 'translateX(-40%)',
+                        opacity: 0
+                    },
+                    "100%": {
+                        transform: 'translateX(0%)',
                         opacity: 1
                     }
                 }
@@ -63,6 +74,9 @@ module.exports = {
                 "5xl": '128px',
                 "6xl": '164px',
                 "7xl": '248px'
+            },
+            padding: {
+                "18": '72px'
             }
         }
     },

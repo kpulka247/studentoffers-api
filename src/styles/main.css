@@ -8,35 +8,35 @@ button, input, select, textarea, div {
 
 /* Buttons */
 .btn-1 {
-    @apply txt-8-w bg-zinc-700 hover:bg-zinc-800 active:bg-zinc-700 focus:outline-none active:ring-2 active:ring-zinc-700 active:ring-offset-2 h-12 px-6 rounded-full whitespace-nowrap pointer-events-auto
+    @apply txt-8-w bg-zinc-700 hover:bg-zinc-800 active:bg-zinc-700 focus:outline-none active:ring-2 active:ring-zinc-700 active:ring-offset-2 h-10 md:h-12 px-4 md:px-6 rounded-full whitespace-nowrap pointer-events-auto
 }
 .dark .btn-1 {
     @apply bg-zinc-200 hover:bg-zinc-300 active:bg-zinc-200 active:ring-zinc-200 active:ring-offset-zinc-700
 }
 
 .btn-1-icon {
-    @apply txt-3-w bg-zinc-700 hover:bg-zinc-800 active:bg-zinc-700 focus:outline-none active:ring-2 active:ring-zinc-700 active:ring-offset-2 h-12 w-12 rounded-full flex-shrink-0 flex items-center justify-center pointer-events-auto
+    @apply txt-3-w bg-zinc-700 hover:bg-zinc-800 active:bg-zinc-700 focus:outline-none active:ring-2 active:ring-zinc-700 active:ring-offset-2 h-10 w-10 md:h-12 md:w-12 rounded-full flex-shrink-0 flex items-center justify-center pointer-events-auto
 }
 .dark .btn-1-icon {
     @apply bg-zinc-200 hover:bg-zinc-300 active:bg-zinc-200 active:ring-zinc-200 active:ring-offset-zinc-700
 }
 
 .btn-2 {
-    @apply txt-8 hover:bg-zinc-50 border-2 border-zinc-700 focus:outline-none active:ring-2 active:ring-zinc-700 active:ring-offset-2 h-12 px-6 rounded-full whitespace-nowrap pointer-events-auto
+    @apply txt-8 hover:bg-zinc-50 border-2 border-zinc-700 focus:outline-none active:ring-2 active:ring-zinc-700 active:ring-offset-2 h-10 md:h-12 px-4 md:px-6 rounded-full whitespace-nowrap pointer-events-auto
 }
 .dark .btn-2 {
     @apply hover:bg-zinc-800 border-zinc-200 active:ring-zinc-200 active:ring-offset-zinc-700
 }
 
 .btn-2-icon {
-    @apply txt-3 hover:bg-zinc-50 border-2 border-zinc-700 focus:outline-none active:ring-2 active:ring-zinc-700 active:ring-offset-2 h-12 w-12 rounded-full flex-shrink-0 flex items-center justify-center pointer-events-auto
+    @apply txt-3 hover:bg-zinc-50 border-2 border-zinc-700 focus:outline-none active:ring-2 active:ring-zinc-700 active:ring-offset-2 h-10 w-10 md:h-12 md:w-12 rounded-full flex-shrink-0 flex items-center justify-center pointer-events-auto
 }
 .dark .btn-2-icon {
     @apply hover:bg-zinc-800 border-zinc-200 active:ring-zinc-200 active:ring-offset-zinc-700
 }
 
 .btn-3 {
-    @apply txt-8 hover:text-zinc-500
+    @apply txt-8 h-10 md:h-12 flex items-center justify-center pointer-events-auto hover:text-zinc-500
 }
 .dark .btn-3 {
     @apply hover:text-zinc-300
@@ -206,7 +206,7 @@ button, input, select, textarea, div {
 }
 
 .inp-2 {
-    @apply txt-6 placeholder:text-zinc-400 bg-transparent grow w-36 border border-zinc-200 rounded-full px-4 py-2
+    @apply txt-6 placeholder:text-zinc-400 bg-transparent grow w-36 border border-zinc-200 rounded-full px-4 py-2 md:py-[11px]
 }
 .dark .inp-2 {
     @apply placeholder:text-zinc-500 border-zinc-600
@@ -242,7 +242,7 @@ button, input, select, textarea, div {
 }
 
 .con-4 {
-    @apply bg-white/70 rounded-full shadow-lg focus:outline-none flex justify-center h-12 overflow-hidden
+    @apply bg-white/70 rounded-full shadow-lg focus:outline-none flex justify-center h-10 md:h-12 overflow-hidden
 }
 .dark .con-4 {
     @apply bg-zinc-700/70
@@ -346,4 +346,12 @@ button, input, select, textarea, div {
 
 #sc-1::-webkit-scrollbar-track, #sc-1::-webkit-scrollbar-track:horizontal {
     background-color: transparent;
+}
+
+#sc-hide::-webkit-scrollbar, #sc-hide::-webkit-resizer, #sc-hide::-webkit-scrollbar-corner {
+    display: none;
+}
+#sc-hide {
+    -ms-overflow-style: none;
+    scrollbar-width: none;
 }

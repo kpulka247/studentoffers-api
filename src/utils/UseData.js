@@ -1,11 +1,11 @@
-import React, {lazy, Suspense, useState, useEffect, useContext} from "react"
-import AuthContext from "../context/AuthContext"
-import {useParams, useNavigate} from "react-router-dom"
-import {FontAwesomeIcon} from "@fortawesome/react-fontawesome"
-import {faEye, faEyeSlash} from "@fortawesome/free-solid-svg-icons"
-import {useTranslation} from "react-i18next"
+import React, {lazy, Suspense, useState, useEffect, useContext} from 'react'
+import AuthContext from '../context/AuthContext'
+import {useParams, useNavigate} from 'react-router-dom'
+import {FontAwesomeIcon} from '@fortawesome/react-fontawesome'
+import {faEye, faEyeSlash} from '@fortawesome/free-solid-svg-icons'
+import {useTranslation} from 'react-i18next'
 
-const ConfirmationDialog = lazy(() => import("../components/ConfirmationDialog"))
+const ConfirmationDialog = lazy(() => import('../components/ConfirmationDialog'))
 
 
 // export function useUsersData() {
@@ -29,8 +29,8 @@ const ConfirmationDialog = lazy(() => import("../components/ConfirmationDialog")
 //         const data = await response.json()
 //
 //         if (response.status === 200) {
-//             setStudents(data.filter((user) => user.user_type === "Student"))
-//             setCompanies(data.filter((user) => user.user_type === "Company"))
+//             setStudents(data.filter((user) => user.user_type === 'Student'))
+//             setCompanies(data.filter((user) => user.user_type === 'Company'))
 //         } else if (response.status === 401) {
 //             logoutUser()
 //         }
@@ -57,14 +57,14 @@ export function useUsersData() {
             })
             if (response.ok) {
                 const data = await response.json()
-                alert(t("signup.account_created"))
-                navigate("/login")
+                alert(t('signup.account_created'))
+                navigate('/login')
                 // console.log('Successful registration!', data)
             } else {
-                alert(t("signup.required_data"))
+                alert(t('signup.required_data'))
             }
         } catch (error) {
-            console.error("Error during user create:", error)
+            console.error('Error during user create:', error)
         }
     }
 
@@ -106,7 +106,7 @@ export function useChatsData() {
             const filteredChats = data.filter(chat => chat.sender.id === user.user_id || chat.receiver.id === user.user_id)
             setChats(filteredChats)
         } catch (error) {
-            console.error("Error during chats request:", error)
+            console.error('Error during chats request:', error)
         }
     }
 
@@ -133,9 +133,9 @@ export function useChatsData() {
             const updatedChats = chats.filter(chat => chat.id !== chatId)
             closeConfirmation()
             setChats(updatedChats)
-            navigate("/chat")
+            navigate('/chat')
         } catch (error) {
-            console.error("Error during chat delete:", error)
+            console.error('Error during chat delete:', error)
         }
     }
 
@@ -148,7 +148,7 @@ export function useChatsData() {
             }`}>
                 <Suspense>
                     <ConfirmationDialog
-                        confirmationMessage={t("confirmation.delete_chat")}
+                        confirmationMessage={t('confirmation.delete_chat')}
                         onConfirm={() => deleteChat(chatToDelete)}
                         onCancel={closeConfirmation}
                     />
@@ -187,7 +187,7 @@ export function useChatData() {
             setChat(data)
             navigate(`/chat/${data.id}`)
         } catch (error) {
-            console.error("Error during chat create:", error)
+            console.error('Error during chat create:', error)
         }
     }
 
@@ -201,10 +201,13 @@ export function useMessagesData() {
     const {authTokens} = useContext(AuthContext)
     const [page, setPage] = useState(1)
     const limit = useState(20)
+    const [isSending, setIsSending] = useState(false)
+    const [isLoading, setIsLoading] = useState(false)
 
     const getMessages = async (chatId, page, limit) => {
 
         try {
+            setIsLoading(true)
             const response = await fetch(`/api/chats/${chatId}/?page=${page}&limit=${limit}/`, {
                 method: 'GET',
                 headers: {
@@ -221,7 +224,9 @@ export function useMessagesData() {
                 setHasNextPage(null)
             }
         } catch (error) {
-            console.error("Error during request:", error)
+            console.error('Error during request:', error)
+        } finally {
+            setIsLoading(false)
         }
     }
 
@@ -242,7 +247,7 @@ export function useMessagesData() {
                 setMessages(prevMessages => [latestMessage, ...prevMessages])
             }
         } catch (error) {
-            console.error("Error during request:", error);
+            console.error('Error during request:', error);
         }
     }
 
@@ -261,6 +266,7 @@ export function useMessagesData() {
         }
 
         try {
+            setIsSending(true)
             const response = await fetch(`/api/chats/${chatId}/`, {
                 method: 'POST',
                 headers: {
@@ -269,12 +275,15 @@ export function useMessagesData() {
                 body: messageData
             })
             if (response.ok) {
-                await getLatestMessage(chatId)
+                await getLatestMessage(chatId).then(() => {
+                    setIsSending(false)
+                })
             } else {
                 console.log('Something went wrong!')
+                setIsSending(false)
             }
         } catch (error) {
-            console.error("Error during send message:", error)
+            console.error('Error during send message:', error)
         }
     }
 
@@ -295,7 +304,19 @@ export function useMessagesData() {
             .catch(error => console.log(error))
     }
 
-    return {messages, setMessages, hasNextPage, page, setPage, limit, getMessages, sendMessage, downloadFile}
+    return {
+        messages,
+        setMessages,
+        hasNextPage,
+        page,
+        setPage,
+        limit,
+        isSending,
+        isLoading,
+        getMessages,
+        sendMessage,
+        downloadFile
+    }
 }
 
 export function useOffersData() {
@@ -305,6 +326,7 @@ export function useOffersData() {
     const [internships, setInternships] = useState([])
     const [apprenticeships, setApprenticeships] = useState([])
     const {authTokens, logoutUser} = useContext(AuthContext)
+    const [isLoading, setIsLoading] = useState(false)
 
     useEffect(() => {
         getOffers()
@@ -313,6 +335,7 @@ export function useOffersData() {
     const getOffers = async () => {
 
         try {
+            setIsLoading(true)
             const response = await fetch('/api/offers/', {
                 method: 'GET',
                 headers: {
@@ -326,18 +349,20 @@ export function useOffersData() {
             })
             if (response.ok) {
                 setOffers(data)
-                setJobs(data.filter((offer) => offer.offer_type === "Job"))
-                setInternships(data.filter((offer) => offer.offer_type === "Internship"))
-                setApprenticeships(data.filter((offer) => offer.offer_type === "Apprenticeship"))
+                setJobs(data.filter((offer) => offer.offer_type === 'Job'))
+                setInternships(data.filter((offer) => offer.offer_type === 'Internship'))
+                setApprenticeships(data.filter((offer) => offer.offer_type === 'Apprenticeship'))
             } else if (response.status === 401) {
                 logoutUser()
             }
         } catch (error) {
-            console.error("Error during offers request:", error)
+            console.error('Error during offers request:', error)
+        } finally {
+            setIsLoading(false)
         }
     }
 
-    return {offers, jobs, internships, apprenticeships}
+    return {offers, jobs, internships, apprenticeships, isLoading}
 }
 
 export function useOfferData() {
@@ -366,7 +391,7 @@ export function useOfferData() {
             const data = await response.json()
             setOffer(data)
         } catch (error) {
-            console.error("Error during offer request:", error)
+            console.error('Error during offer request:', error)
         }
     }
 
@@ -397,9 +422,9 @@ export function useOfferData() {
             } else {
                 console.log('Something went wrong!')
             }
-            navigate("/account")
+            navigate('/account')
         } catch (error) {
-            console.error("Error during offer create:", error)
+            console.error('Error during offer create:', error)
         }
     }
 
@@ -421,9 +446,9 @@ export function useOfferData() {
             } else {
                 console.log('Something went wrong!')
             }
-            navigate("/account")
+            navigate('/account')
         } catch (error) {
-            console.error("Error during offer update:", error)
+            console.error('Error during offer update:', error)
         }
     }
 
@@ -437,9 +462,9 @@ export function useOfferData() {
             } else if (offerId === 'new') {
                 await createOffer()
             }
-            navigate("/account")
+            navigate('/account')
         } catch (error) {
-            console.error("Error during offer submit:", error)
+            console.error('Error during offer submit:', error)
         }
     }
 
@@ -454,9 +479,9 @@ export function useOfferData() {
                 }
             })
             closeConfirmation()
-            navigate("/account")
+            navigate('/account')
         } catch (error) {
-            console.error("Error during offer delete:", error)
+            console.error('Error during offer delete:', error)
         }
     }
 
@@ -478,7 +503,7 @@ export function useOfferData() {
             }`}>
                 <Suspense>
                     <ConfirmationDialog
-                        confirmationMessage={t("confirmation.delete_offer")}
+                        confirmationMessage={t('confirmation.delete_offer')}
                         onConfirm={() => deleteOffer(offerToDelete)}
                         onCancel={closeConfirmation}
                     />
@@ -495,7 +520,7 @@ export function usePasswordToggle() {
         icon={visible ? faEye : faEyeSlash}
         onClick={() => setVisibility(visibility => !visibility)}
     />
-    const inputType = visible ? "text" : "password"
+    const inputType = visible ? 'text' : 'password'
 
     return [iconEye, inputType]
 }
@@ -503,11 +528,11 @@ export function usePasswordToggle() {
 export function useThemeSwitch() {
 
     const defaultTheme = window.matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light'
-    const savedTheme = localStorage.getItem("theme") || defaultTheme
+    const savedTheme = localStorage.getItem('theme') || defaultTheme
     const [theme, setTheme] = useState(savedTheme)
 
     const handleThemeSwitch = () => {
-        setTheme(theme === "dark" ? "light" : "dark")
+        setTheme(theme === 'dark' ? 'light' : 'dark')
     }
 
     return {theme, setTheme, handleThemeSwitch}
