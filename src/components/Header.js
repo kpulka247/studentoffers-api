@@ -1,11 +1,11 @@
-import React, {useContext, useEffect, useState} from "react"
-import {Link, useNavigate} from "react-router-dom"
-import AuthContext from "../context/AuthContext"
-import {useOfferData, useThemeSwitch} from "../utils/UseData"
-import {FontAwesomeIcon} from "@fortawesome/react-fontawesome"
-import {faSun, faMoon, faMagnifyingGlass, faHouse, faBars} from "@fortawesome/free-solid-svg-icons"
-import i18n from "i18next"
-import {useTranslation} from "react-i18next"
+import React, {useContext, useEffect, useState} from 'react'
+import {Link, useNavigate} from 'react-router-dom'
+import AuthContext from '../context/AuthContext'
+import {useOfferData, useThemeSwitch} from '../utils/UseData'
+import {FontAwesomeIcon} from '@fortawesome/react-fontawesome'
+import {faSun, faMoon, faMagnifyingGlass, faHouse, faBars, faComment} from '@fortawesome/free-solid-svg-icons'
+import i18n from 'i18next'
+import {useTranslation} from 'react-i18next'
 
 
 export default function Header() {
@@ -54,72 +54,72 @@ export default function Header() {
     }, [theme])
 
     return (
-        <div className="relative">
+        <div className='relative'>
             <div
-                className="pt-4 px-4 sm:px-6 md:px-8 md:mb-8 flex items-center justify-between gap-x-4 sm:gap-x-6 md:gap-x-8 leading-6 relative">
-                <ul className="flex whitespace-nowrap w-full md:w-fit lg:w-full">
+                className='pt-4 px-4 sm:px-6 md:px-8 md:mb-8 flex items-center justify-between gap-x-4 sm:gap-x-6 md:gap-x-8 leading-6 relative'>
+                <ul className='flex whitespace-nowrap w-full md:w-fit lg:w-full'>
                     {user ? (
-                        <ul className="flex grow items-center gap-x-4 sm:gap-x-6 md:gap-x-8">
+                        <ul className='flex grow items-center gap-x-4 sm:gap-x-6 md:gap-x-8'>
                             <li>
-                                <div className="md:hidden">
+                                <div className='md:hidden'>
                                     <button
-                                        className="btn-1-icon"
+                                        className='btn-1-icon'
                                         onClick={toggleMenu}
                                     >
                                         <FontAwesomeIcon icon={faBars}/>
                                     </button>
                                 </div>
                                 <Link
-                                    className="hidden md:max-xl:flex btn-1-icon"
-                                    to={`/`}>
+                                    className='hidden md:max-xl:flex btn-1-icon'
+                                    to={'/'}>
                                     <FontAwesomeIcon icon={faHouse}/>
                                 </Link>
                                 <Link
-                                    className="hidden xl:flex txt-2"
-                                    to={`/`}>
+                                    className='hidden xl:flex txt-2'
+                                    to={'/'}>
                                     StudentOffers
                                 </Link>
                             </li>
                             {user && menuOpen && (
-                                <button className="md:hidden flex txt-8" onClick={toggleLanguage}>
+                                <button className='md:hidden btn-3' onClick={toggleLanguage}>
                                     {i18n.language === 'en' ? 'EN' : 'PL'}
                                 </button>
                             )}
-                            <button className="hidden md:flex txt-8" onClick={toggleLanguage}>
+                            <button className='hidden md:flex btn-3' onClick={toggleLanguage}>
                                 {i18n.language === 'en' ? 'EN' : 'PL'}
                             </button>
-                            <li className="hidden xl:flex txt-8">
-                                {user && <p>{t("header.hello")}, {user.username}</p>}
+                            <li className='hidden xl:flex txt-8'>
+                                {user && <p>{t('header.hello')}, {user.username}</p>}
                             </li>
-                            <li className="flex md:max-lg:hidden rounded-full bg-white/70 dark:bg-zinc-700/70 w-full shadow-lg">
+                            <li className='flex md:max-lg:hidden rounded-full bg-white/70 dark:bg-zinc-700/70 w-full shadow-lg'>
                                 <input
-                                    className="inp-3 grow"
-                                    type="text"
-                                    placeholder={t("header.search") + "..."}
+                                    className='inp-3 grow'
+                                    type='text'
+                                    placeholder={t('header.search') + '...'}
                                     value={searchQuery}
                                     onChange={(e) => setSearchQuery(e.target.value)}
                                     onKeyDown={handleEnter}>
                                 </input>
                                 <Link
-                                    className="btn-1-icon"
+                                    className='btn-1-icon'
                                     to={`/offer?search=${searchQuery}`}>
                                     <FontAwesomeIcon icon={faMagnifyingGlass}/>
                                 </Link>
                             </li>
                         </ul>
                     ) : (
-                        <li className="flex items-center gap-x-4 sm:gap-x-6 md:gap-x-8">
+                        <li className='flex items-center gap-x-4 sm:gap-x-6 md:gap-x-8'>
                             <Link
-                                className="sm:hidden flex btn-1-icon"
-                                to={`/`}>
+                                className='sm:hidden flex btn-1-icon'
+                                to={'/'}>
                                 <FontAwesomeIcon icon={faHouse}/>
                             </Link>
                             <Link
-                                className="hidden sm:flex txt-2"
-                                to={`/`}>
+                                className='hidden sm:flex txt-2'
+                                to={'/'}>
                                 StudentOffers
                             </Link>
-                            <button className="flex txt-8" onClick={toggleLanguage}>
+                            <button className='btn-3' onClick={toggleLanguage}>
                                 {i18n.language === 'en' ? 'EN' : 'PL'}
                             </button>
                         </li>
@@ -127,59 +127,66 @@ export default function Header() {
                 </ul>
                 {user && (
                     <div
-                        className="hidden md:flex lg:pr-8 w-full lg:w-fit lg:border-r border-zinc-500 dark:border-white">
+                        className='hidden md:flex items-center w-full lg:w-fit'>
                         <Link
                             onClick={() => handleOfferType('Offer')}
-                            className="btn-3"
-                            to={"/offer"}>
-                            {t("header.offers")}
+                            className='btn-3'
+                            to={'/offer'}>
+                            {t('header.offers')}
                         </Link>
+                        <div className='lg:border-r lg:pr-8 h-5 border-zinc-700 dark:border-zinc-200'/>
                     </div>
                 )}
                 {user ? (
-                    <ul className="flex whitespace-nowrap items-center gap-x-8">
+                    <ul className='flex whitespace-nowrap items-center gap-x-8'>
                         {user.user_type === 'Company' && (
                             <Link
-                                className="hidden md:flex btn-3"
-                                to="/offer/new">
-                                {t("header.add_offer")}
+                                className='hidden md:flex btn-3'
+                                to='/offer/new'>
+                                {t('header.add_offer')}
                             </Link>
                         )}
                         <Link
-                            className="hidden md:flex btn-3"
-                            to="/chat">
-                            {t("header.conversations")}
+                            className='hidden md:flex btn-3'
+                            to='/chat'>
+                            {t('header.conversations')}
                         </Link>
                         <Link
-                            className="hidden btn-1 md:flex items-center"
-                            to={`/account`}>
-                            {t("header.account")}
+                            className='hidden btn-1 md:flex items-center'
+                            to={'/account'}>
+                            {t('header.account')}
                         </Link>
                         <button
-                            className="hidden md:flex btn-3"
+                            className='hidden md:flex btn-3'
                             onClick={logoutUser}>
-                            {t("button.log_out")}
+                            {t('button.log_out')}
                         </button>
-                        <button
-                            className="btn-2-icon"
-                            onClick={handleThemeSwitch}>
-                            <FontAwesomeIcon
-                                icon={theme === "dark" ? faMoon : faSun}
-                            />
-                        </button>
+                        <>
+                            <button
+                                className='btn-2-icon hidden md:block'
+                                onClick={handleThemeSwitch}>
+                                <FontAwesomeIcon
+                                    icon={theme === 'dark' ? faMoon : faSun}/>
+                            </button>
+                            <Link
+                                className='btn-2-icon md:hidden'
+                                to='/chat'>
+                                <FontAwesomeIcon icon={faComment}/>
+                            </Link>
+                        </>
                     </ul>
                 ) : (
-                    <ul className="flex items-center gap-x-4 sm:gap-x-6 md:gap-x-8">
+                    <ul className='flex items-center gap-x-4 sm:gap-x-6 md:gap-x-8'>
                         <Link
-                            className="btn-1 flex items-center"
-                            to={"/login"}>
-                            {t("button.log_in")}
+                            className='btn-1 flex items-center'
+                            to={'/login'}>
+                            {t('button.log_in')}
                         </Link>
                         <button
-                            className="btn-2-icon"
+                            className='btn-2-icon'
                             onClick={handleThemeSwitch}>
                             <FontAwesomeIcon
-                                icon={theme === "dark" ? faMoon : faSun}
+                                icon={theme === 'dark' ? faMoon : faSun}
                             />
                         </button>
                     </ul>
@@ -188,67 +195,66 @@ export default function Header() {
             <div
                 className={`md:hidden pb-8 overflow-hidden transition-max-h duration-300 ease-in-out ${menuOpen ? 'max-h-screen' : 'max-h-0'}`}>
                 {user && menuOpen && (
-                    <div className="con-1 mx-4 sm:mx-6 px-4 sm:px-6 mt-4">
-                        <ul className="flex flex-col w-full items-center">
+                    <div className='con-1 mx-4 sm:mx-6 px-4 sm:px-6 mt-4'>
+                        <ul className='flex flex-col w-full items-center'>
                             <Link
                                 onClick={toggleMenu}
-                                className="btn-6"
-                                to="/">
-                                {t("header.home")}
+                                className='btn-6'
+                                to='/'>
+                                {t('header.home')}
                             </Link>
                             <Link
                                 onClick={() => {
                                     handleOfferType('Offer')
                                     toggleMenu()
                                 }}
-                                className="btn-6"
-                                to={"/offer"}>
-                                {t("header.offers")}
+                                className='btn-6'
+                                to={'/offer'}>
+                                {t('header.offers')}
                             </Link>
                             {user.user_type === 'Company' && (
                                 <Link
                                     onClick={toggleMenu}
-                                    className="btn-6"
-                                    to="/offer/new">
-                                    {t("header.add_offer")}
+                                    className='btn-6'
+                                    to='/offer/new'>
+                                    {t('header.add_offer')}
                                 </Link>
                             )}
+                            <button
+                                onClick={handleThemeSwitch}
+                                className='btn-6'>
+                                {theme === 'dark' ? t('header.theme_light') : t('header.theme_dark')}
+                            </button>
                             <Link
                                 onClick={toggleMenu}
-                                className="btn-6"
-                                to="/chat">
-                                {t("header.conversations")}
-                            </Link>
-                            <Link
-                                onClick={toggleMenu}
-                                className="btn-6"
+                                className='btn-6'
                                 to={`/account`}>
-                                {t("header.account")}
+                                {t('header.account')}
                             </Link>
                             <button
-                                className="btn-6 border-b-0"
+                                className='btn-6 border-b-0'
                                 onClick={() => {
                                     logoutUser()
                                     toggleMenu()
                                 }}>
-                                {t("button.log_out")}
+                                {t('button.log_out')}
                             </button>
                         </ul>
                     </div>
                 )}
             </div>
             {user && (
-                <li className="hidden md:max-lg:flex mb-8 sm:mx-6 md:mx-8 rounded-full bg-white/70 dark:bg-zinc-700/70 shadow-lg">
+                <li className='hidden md:max-lg:flex mb-8 sm:mx-6 md:mx-8 rounded-full bg-white/70 dark:bg-zinc-700/70 shadow-lg'>
                     <input
-                        className="inp-3 grow"
-                        type="text"
-                        placeholder={t("header.search") + "..."}
+                        className='inp-3 grow'
+                        type='text'
+                        placeholder={t('header.search') + '...'}
                         value={searchQuery}
                         onChange={(e) => setSearchQuery(e.target.value)}
                         onKeyDown={handleEnter}>
                     </input>
                     <Link
-                        className="btn-1-icon"
+                        className='btn-1-icon'
                         to={`/offer?search=${searchQuery}`}>
                         <FontAwesomeIcon icon={faMagnifyingGlass}/>
                     </Link>

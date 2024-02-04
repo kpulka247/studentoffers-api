@@ -1,7 +1,7 @@
-import React, {createContext, useState, useEffect} from "react"
-import jwt_decode from "jwt-decode"
-import {useNavigate} from "react-router-dom"
-import {useTranslation} from "react-i18next"
+import React, {createContext, useState, useEffect} from 'react'
+import jwt_decode from 'jwt-decode'
+import {useNavigate} from 'react-router-dom'
+import {useTranslation} from 'react-i18next'
 
 
 const AuthContext = createContext()
@@ -10,13 +10,13 @@ export default AuthContext
 
 export const AuthProvider = ({ children }) => {
   const [authTokens, setAuthTokens] = useState(() =>
-    localStorage.getItem("authTokens")
-      ? JSON.parse(localStorage.getItem("authTokens"))
+    localStorage.getItem('authTokens')
+      ? JSON.parse(localStorage.getItem('authTokens'))
       : null
   )
   const [user, setUser] = useState(() =>
-    localStorage.getItem("authTokens")
-      ? jwt_decode(localStorage.getItem("authTokens"))
+    localStorage.getItem('authTokens')
+      ? jwt_decode(localStorage.getItem('authTokens'))
       : null
   )
   const [loading, setLoading] = useState(true)
@@ -28,9 +28,9 @@ export const AuthProvider = ({ children }) => {
     e.preventDefault()
     try {
       const response = await fetch(`/api/token/`, {
-        method: "POST",
+        method: 'POST',
         headers: {
-          "Content-Type": "application/json",
+          'Content-Type': 'application/json',
         },
         body: JSON.stringify({
           username: e.target.username.value,
@@ -43,32 +43,32 @@ export const AuthProvider = ({ children }) => {
       if (response.ok) {
         setAuthTokens(data)
         setUser(jwt_decode(data.access))
-        localStorage.setItem("authTokens", JSON.stringify(data))
-        navigate("/")
+        localStorage.setItem('authTokens', JSON.stringify(data))
+        navigate('/')
       } else {
-        alert(t("login.incorrect"))
+        alert(t('login.incorrect'))
       }
     } catch (error) {
-      console.error("Error during login:", error)
-      alert(t("login.error"))
+      console.error('Error during login:', error)
+      alert(t('login.error'))
     }
   }
 
   const logoutUser = () => {
     setAuthTokens(null)
     setUser(null)
-    localStorage.removeItem("offerType")
-    localStorage.removeItem("authTokens")
-    navigate("/login")
+    localStorage.removeItem('offerType')
+    localStorage.removeItem('authTokens')
+    navigate('/login')
   }
 
   const updateToken = async () => {
     if (authTokens?.refresh) {
       try {
         const response = await fetch(`/api/token/refresh/`, {
-          method: "POST",
+          method: 'POST',
           headers: {
-            "Content-Type": "application/json",
+            'Content-Type': 'application/json',
           },
           body: JSON.stringify({ refresh: authTokens.refresh }),
         })
@@ -78,12 +78,12 @@ export const AuthProvider = ({ children }) => {
         if (response.ok) {
           setAuthTokens(data)
           setUser(jwt_decode(data.access))
-          localStorage.setItem("authTokens", JSON.stringify(data))
+          localStorage.setItem('authTokens', JSON.stringify(data))
         } else {
           logoutUser()
         }
       } catch (error) {
-        console.error("Error during token refresh:", error)
+        console.error('Error during token refresh:', error)
         logoutUser()
       }
     }

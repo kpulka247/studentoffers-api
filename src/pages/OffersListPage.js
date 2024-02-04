@@ -1,9 +1,11 @@
-import React, {lazy, Suspense, useEffect, useState} from "react"
-import {useOfferData, useOffersData} from "../utils/UseData"
-import {useLocation} from "react-router-dom"
-import {useTranslation} from "react-i18next"
+import React, {lazy, Suspense, useEffect, useState} from 'react'
+import {useOfferData, useOffersData} from '../utils/UseData'
+import {useLocation} from 'react-router-dom'
+import {useTranslation} from 'react-i18next'
+import {FontAwesomeIcon} from "@fortawesome/react-fontawesome";
+import {faCircleNotch} from "@fortawesome/free-solid-svg-icons";
 
-const ListItem = lazy(() => import("../components/ListItem"))
+const ListItem = lazy(() => import('../components/ListItem'))
 
 
 export default function OffersListPage() {
@@ -11,7 +13,7 @@ export default function OffersListPage() {
     const [t] = useTranslation()
     const {offers, jobs, internships, apprenticeships} = useOffersData()
     const {offer, handleOfferType} = useOfferData()
-    const [sortOffers, setSortOffers] = useState("desc")
+    const [sortOffers, setSortOffers] = useState('desc')
 
     const location = useLocation()
     const searchQuery = new URLSearchParams(location.search).get('search')
@@ -43,90 +45,90 @@ export default function OffersListPage() {
     }, [])
 
     return (
-        <section className="w-full max-w-7xl mx-auto focus:outline-none px-4 sm:px-6 md:px-8 relative">
+        <section className='w-full max-w-7xl mx-auto focus:outline-none px-4 sm:px-6 md:px-8 relative'>
             <div
-                className="hidden md:block lg:flex lg:px-8 justify-between">
-                <div className="justify-center flex gap-x-4 sm:gap-x-6 md:gap-x-8 pb-8 lg:pb-0">
+                className='hidden md:block lg:flex lg:px-8 justify-between'>
+                <div className='justify-center flex gap-x-4 sm:gap-x-6 md:gap-x-8 pb-8 lg:pb-0'>
                     <button
                         onClick={() => handleOfferType('Offer')}
-                        className={offer.offer_type === 'Offer' ? ("btn-1") : ("btn-2")}>
-                        {t("offer.all")}
+                        className={offer.offer_type === 'Offer' ? ('btn-1') : ('btn-2')}>
+                        {t('offer.all')}
                     </button>
                     <button
                         onClick={() => handleOfferType('Job')}
-                        className={offer.offer_type === 'Job' ? ("btn-1") : ("btn-2")}>
-                        {t("offer.job")}
+                        className={offer.offer_type === 'Job' ? ('btn-1') : ('btn-2')}>
+                        {t('offer.job')}
                     </button>
                     <button
                         onClick={() => handleOfferType('Internship')}
-                        className={offer.offer_type === 'Internship' ? ("btn-1") : ("btn-2")}>
-                        {t("offer.internship")}
+                        className={offer.offer_type === 'Internship' ? ('btn-1') : ('btn-2')}>
+                        {t('offer.internship')}
                     </button>
                     <button
                         onClick={() => handleOfferType('Apprenticeship')}
-                        className={offer.offer_type === 'Apprenticeship' ? ("btn-1") : ("btn-2")}>
-                        {t("offer.apprenticeship")}
+                        className={offer.offer_type === 'Apprenticeship' ? ('btn-1') : ('btn-2')}>
+                        {t('offer.apprenticeship')}
                     </button>
                 </div>
-                <div className="justify-center flex gap-y-4 sm:gap-y-0 gap-x-4 sm:gap-x-6 md:gap-x-8">
+                <div className='justify-center flex gap-y-4 sm:gap-y-0 gap-x-4 sm:gap-x-6 md:gap-x-8'>
                     <button
                         onClick={() => handleSortOffersChange('desc')}
-                        className={sortOffers === 'desc' ? ("btn-1") : ("btn-2")}>
-                        {t("offer.newest")}
+                        className={sortOffers === 'desc' ? ('btn-1') : ('btn-2')}>
+                        {t('offer.newest')}
                     </button>
                     <button
                         onClick={() => handleSortOffersChange('asc')}
-                        className={sortOffers === 'asc' ? ("btn-1") : ("btn-2")}>
-                        {t("offer.oldest")}
+                        className={sortOffers === 'asc' ? ('btn-1') : ('btn-2')}>
+                        {t('offer.oldest')}
                     </button>
                 </div>
             </div>
-            <div className="md:hidden flex flex-col gap-y-8">
-                <div className="con-4">
+            <div className='md:hidden flex flex-col gap-y-8'>
+                <div className='con-4'>
                     <button
                         onClick={() => handleOfferType('Offer')}
-                        className={offer.offer_type === 'Offer' ? ("btn-7") : ("btn-7 text-zinc-400 dark:text-zinc-500")}>
-                        {t("offer.all")}
+                        className={offer.offer_type === 'Offer' ? ('btn-7') : ('btn-7 text-zinc-400 dark:text-zinc-500')}>
+                        {t('offer.all')}
                     </button>
                     <button
                         onClick={() => handleOfferType('Job')}
-                        className={offer.offer_type === 'Job' ? ("btn-7") : ("btn-7 text-zinc-400 dark:text-zinc-500")}>
-                        {t("offer.job")}
+                        className={offer.offer_type === 'Job' ? ('btn-7') : ('btn-7 text-zinc-400 dark:text-zinc-500')}>
+                        {t('offer.job')}
                     </button>
                     <button
                         onClick={() => handleOfferType('Internship')}
-                        className={offer.offer_type === 'Internship' ? ("btn-7") : ("btn-7 text-zinc-400 dark:text-zinc-500")}>
-                        {t("offer.internship")}
+                        className={offer.offer_type === 'Internship' ? ('btn-7') : ('btn-7 text-zinc-400 dark:text-zinc-500')}>
+                        {t('offer.internship')}
                     </button>
                     <button
                         onClick={() => handleOfferType('Apprenticeship')}
-                        className={offer.offer_type === 'Apprenticeship' ? ("btn-7 border-r-0") : ("btn-7 text-zinc-400 dark:text-zinc-500 border-r-0")}>
-                        {t("offer.apprenticeship")}
+                        className={offer.offer_type === 'Apprenticeship' ? ('btn-7 border-r-0') : ('btn-7 text-zinc-400 dark:text-zinc-500 border-r-0')}>
+                        {t('offer.apprenticeship')}
                     </button>
                 </div>
-                <div className="con-4">
+                <div className='con-4'>
                     <button
                         onClick={() => handleSortOffersChange('desc')}
-                        className={sortOffers === 'desc' ? ("btn-7") : ("btn-7 text-zinc-400 dark:text-zinc-500")}>
-                        {t("offer.newest")}
+                        className={sortOffers === 'desc' ? ('btn-7') : ('btn-7 text-zinc-400 dark:text-zinc-500')}>
+                        {t('offer.newest')}
                     </button>
                     <button
                         onClick={() => handleSortOffersChange('asc')}
-                        className={sortOffers === 'asc' ? ("btn-7 border-r-0") : ("btn-7 text-zinc-400 dark:text-zinc-500 border-r-0")}>
-                        {t("offer.oldest")}
+                        className={sortOffers === 'asc' ? ('btn-7 border-r-0') : ('btn-7 text-zinc-400 dark:text-zinc-500 border-r-0')}>
+                        {t('offer.oldest')}
                     </button>
                 </div>
             </div>
-            <div className="grid grid-cols-1 relative pt-8 lg:px-8 gap-y-4 sm:gap-y-6 md:gap-y-8 overflow-hidden">
+            <div className='grid grid-cols-1 relative pt-8 lg:px-8 gap-y-4 sm:gap-y-6 md:gap-y-8 overflow-hidden'>
                 <Suspense fallback={
-                    <div className="txt-1 flex justify-center items-center">
-                        . . .
+                    <div className='txt-1 animate-spin flex grow justify-center items-center min-h-fit'>
+                        <FontAwesomeIcon icon={faCircleNotch}/>
                     </div>
                 }>
                     {offer.offer_type === 'Offer' ? (
                         filteredOffers
                             .sort((a, b) => {
-                                if (sortOffers === "desc") {
+                                if (sortOffers === 'desc') {
                                     return b.date - a.date
                                 } else {
                                     return a.date - b.date
@@ -141,7 +143,7 @@ export default function OffersListPage() {
                     ) : offer.offer_type === 'Job' ? (
                         filteredJobs
                             .sort((a, b) => {
-                                if (sortOffers === "desc") {
+                                if (sortOffers === 'desc') {
                                     return b.date - a.date
                                 } else {
                                     return a.date - b.date
@@ -156,7 +158,7 @@ export default function OffersListPage() {
                     ) : offer.offer_type === 'Internship' ? (
                         filteredInternships
                             .sort((a, b) => {
-                                if (sortOffers === "desc") {
+                                if (sortOffers === 'desc') {
                                     return b.date - a.date
                                 } else {
                                     return a.date - b.date
@@ -171,7 +173,7 @@ export default function OffersListPage() {
                     ) : offer.offer_type === 'Apprenticeship' ? (
                         filteredApprenticeships
                             .sort((a, b) => {
-                                if (sortOffers === "desc") {
+                                if (sortOffers === 'desc') {
                                     return b.date - a.date
                                 } else {
                                     return a.date - b.date
@@ -184,8 +186,8 @@ export default function OffersListPage() {
                                 />
                             ))
                     ) : (
-                        <div className="txt-1 text-center mb-8 relative">
-                            <p>{t("offer.please_select_offers")}</p>
+                        <div className='txt-1 text-center mb-8 relative'>
+                            <p>{t('offer.please_select_offers')}</p>
                         </div>
                     )}
                 </Suspense>
