@@ -22,7 +22,7 @@ export default function MessagesPage() {
     const [t] = useTranslation()
     const {user} = useContext(AuthContext)
     const {chats, deleteChat, confirmationDialog} = useChatsData()
-    const {messages, setMessages, hasNextPage, page, setPage, limit, isSending, isLoading, getMessages, sendMessage, downloadFile} = useMessagesData()
+    const {messages, setMessages, hasNextPage, page, setPage, limit, isSending, isLoading, getMessages, getLatestMessage, sendMessage, downloadFile} = useMessagesData()
     const [chatId, setChatId] = useState([])
     const [content, setContent] = useState('')
     const [file, setFile] = useState(null)
@@ -132,6 +132,18 @@ export default function MessagesPage() {
         return format(new Date(message.created_at), 'dd/MM HH:mm')
     }
 
+    useEffect(() => {
+        const refreshInterval = setInterval(() => {
+            if (chats.find(chat => chat.id === chatId)) {
+                getLatestMessage(chatId)
+            }
+        }, 500)
+
+        return () => {
+            clearInterval(refreshInterval)
+        }
+    }, [chatId, getLatestMessage])
+
     return (
         <section
             className='min-h-fit flex grow w-full max-w-7xl mx-auto focus:outline-none md:px-8 relative'>
@@ -164,7 +176,7 @@ export default function MessagesPage() {
                                             className={chatId === chat.id ? ('btn-5 group relative') : ('btn-5-w')}>
                                             {chatId === chat.id ? (
                                                 <button
-                                                    className='btn-2-icon bg-zinc-200 dark:bg-zinc-700 opacity-0 group-hover:opacity-100 absolute self-end transition ease-in-out'
+                                                    className='btn-2-icon bg-zinc-100 dark:bg-zinc-700 opacity-0 group-hover:opacity-100 absolute self-end transition ease-in-out'
                                                     onClick={() => {
                                                         deleteChat(chatId)
                                                     }}>
@@ -215,43 +227,45 @@ export default function MessagesPage() {
                                     id='sc-1'
                                     ref={containerRef}>
                                     {messages.map((message, index) => (
-                                        <div key={index}
-                                             className={user.user_id === message.user.id ? ('w-full max-w-xl flex flex-col place-items-end pl-8 ml-auto') : ('w-full max-w-xl pr-8')}>
+                                        <div key={index} className='animate-messages'>
                                             <div
-                                                className={user.user_id === message.user.id ? ('max-w-fit w-full py-2 px-4 mt-4 break-words rounded-lg bg-white dark:bg-zinc-600') : ('max-w-fit w-full py-2 px-4 mt-4 break-words rounded-lg border border-zinc-200 dark:border-zinc-600 align-start')}>
-                                                <p className={user.user_id === message.user.id ? ('txt-10 text-right') : ('txt-10 text-left')}>
-                                                    {message.user.first_name} {message.user.last_name} {getTime(message)}
-                                                </p>
-                                                <ReactLinkify
-                                                    componentDecorator={(decoratedHref, decoratedText, key) => (
-                                                        <a target='blank' href={decoratedHref} key={key}
-                                                           className='btn-8'>
-                                                            {decoratedText}
-                                                        </a>
-                                                    )}>
-                                                    <p className='txt-6'>
-                                                        {message.content}
-                                                    </p>
-                                                </ReactLinkify>
+                                                className={user.user_id === message.user.id ? ('w-full max-w-xl flex flex-col place-items-end pl-8 ml-auto') : ('w-full max-w-xl pr-8')}>
                                                 <div
-                                                    className={user.user_id === message.user.id ? ('flex place-content-end') : ('flex place-content-start')}>
-                                                    {message.file && (
-                                                        imageExtensions.some(ext => message.file.endsWith(ext)) ? (
-                                                            <div className='my-2'>
-                                                                <img
-                                                                    className='max-w-full max-h-full rounded-lg'
-                                                                    src={`/api${message.file}`}
-                                                                    alt={message.file.name}/>
-                                                            </div>
-                                                        ) : (
-                                                            <button
-                                                                className='text-start overflow-auto btn-4'
-                                                                onClick={() => downloadFile(message.file, message.file)}>
-                                                                <FontAwesomeIcon
-                                                                    icon={faPaperclip}/> {message.file.replace('/media/chat_files/', '')}
-                                                            </button>
-                                                        )
-                                                    )}
+                                                    className={user.user_id === message.user.id ? ('max-w-fit w-full py-2 px-4 mt-4 break-words rounded-lg bg-white dark:bg-zinc-600') : ('max-w-fit w-full py-2 px-4 mt-4 break-words rounded-lg border border-zinc-200 dark:border-zinc-600 align-start')}>
+                                                    <p className={user.user_id === message.user.id ? ('txt-10 text-right') : ('txt-10 text-left')}>
+                                                        {message.user.first_name} {message.user.last_name} {getTime(message)}
+                                                    </p>
+                                                    <ReactLinkify
+                                                        componentDecorator={(decoratedHref, decoratedText, key) => (
+                                                            <a target='blank' href={decoratedHref} key={key}
+                                                               className='btn-8'>
+                                                                {decoratedText}
+                                                            </a>
+                                                        )}>
+                                                        <p className='txt-6'>
+                                                            {message.content}
+                                                        </p>
+                                                    </ReactLinkify>
+                                                    <div
+                                                        className={user.user_id === message.user.id ? ('flex place-content-end') : ('flex place-content-start')}>
+                                                        {message.file && (
+                                                            imageExtensions.some(ext => message.file.endsWith(ext)) ? (
+                                                                <div className='my-2'>
+                                                                    <img
+                                                                        className='max-w-full max-h-full rounded-lg'
+                                                                        src={`/api${message.file}`}
+                                                                        alt={message.file.name}/>
+                                                                </div>
+                                                            ) : (
+                                                                <button
+                                                                    className='text-start overflow-auto btn-4'
+                                                                    onClick={() => downloadFile(message.file, message.file)}>
+                                                                    <FontAwesomeIcon
+                                                                        icon={faPaperclip}/> {message.file.replace('/media/chat_files/', '')}
+                                                                </button>
+                                                            )
+                                                        )}
+                                                    </div>
                                                 </div>
                                             </div>
                                         </div>

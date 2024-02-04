@@ -22,14 +22,14 @@ button, input, select, textarea, div {
 }
 
 .btn-2 {
-    @apply txt-8 hover:bg-zinc-50 border-2 border-zinc-700 focus:outline-none active:ring-2 active:ring-zinc-700 active:ring-offset-2 h-10 md:h-12 px-4 md:px-6 rounded-full whitespace-nowrap pointer-events-auto
+    @apply txt-8 hover:bg-white border-2 border-zinc-700 focus:outline-none active:ring-2 active:ring-zinc-700 active:ring-offset-2 h-10 md:h-12 px-4 md:px-6 rounded-full whitespace-nowrap pointer-events-auto
 }
 .dark .btn-2 {
     @apply hover:bg-zinc-800 border-zinc-200 active:ring-zinc-200 active:ring-offset-zinc-700
 }
 
 .btn-2-icon {
-    @apply txt-3 hover:bg-zinc-50 border-2 border-zinc-700 focus:outline-none active:ring-2 active:ring-zinc-700 active:ring-offset-2 h-10 w-10 md:h-12 md:w-12 rounded-full flex-shrink-0 flex items-center justify-center pointer-events-auto
+    @apply txt-3 hover:bg-white border-2 border-zinc-700 focus:outline-none active:ring-2 active:ring-zinc-700 active:ring-offset-2 h-10 w-10 md:h-12 md:w-12 rounded-full flex-shrink-0 flex items-center justify-center pointer-events-auto
 }
 .dark .btn-2-icon {
     @apply hover:bg-zinc-800 border-zinc-200 active:ring-zinc-200 active:ring-offset-zinc-700
@@ -57,10 +57,10 @@ button, input, select, textarea, div {
 }
 
 .btn-5-w {
-    @apply txt-3 flex items-center justify-center hover:bg-zinc-100 hover:from-zinc-100 transition ease-in-out rounded-lg min-h-fit mb-4 p-4 overflow-hidden
+    @apply txt-3 bg-white flex items-center justify-center hover:bg-zinc-200 hover:transition ease-in-out rounded-lg min-h-fit mb-4 p-4 overflow-hidden
 }
 .dark .btn-5-w {
-    @apply hover:bg-zinc-600 hover:from-zinc-600
+    @apply bg-zinc-700 hover:bg-zinc-600
 }
 
 .btn-6 {
@@ -258,14 +258,14 @@ button, input, select, textarea, div {
 
 /* Animations */
 .an-1 {
-    @apply bg-sky-200 w-112 h-96 rounded-full mix-blend-multiply opacity-30 blur-7xl animate-blob absolute
+    @apply bg-sky-200 w-112 h-96 rounded-full mix-blend-multiply opacity-30 blur-7xl absolute
 }
 .dark .an-1 {
     @apply bg-sky-300 mix-blend-screen opacity-10
 }
 
 .an-2 {
-    @apply bg-purple-200 w-96 h-112 rounded-full mix-blend-multiply opacity-70 blur-7xl animate-blob absolute
+    @apply bg-purple-200 w-96 h-112 rounded-full mix-blend-multiply opacity-70 blur-7xl absolute
 }
 .dark .an-2 {
     @apply bg-purple-400 mix-blend-screen opacity-20

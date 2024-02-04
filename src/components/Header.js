@@ -161,19 +161,19 @@ export default function Header() {
                             onClick={logoutUser}>
                             {t('button.log_out')}
                         </button>
-                        <div className='btn-2-icon'>
+                        <>
                             <button
-                                className='hidden md:block'
+                                className='btn-2-icon hidden md:block'
                                 onClick={handleThemeSwitch}>
                                 <FontAwesomeIcon
                                     icon={theme === 'dark' ? faMoon : faSun}/>
                             </button>
                             <Link
-                                className='md:hidden'
+                                className='btn-2-icon md:hidden'
                                 to='/chat'>
                                 <FontAwesomeIcon icon={faComment}/>
                             </Link>
-                        </div>
+                        </>
                     </ul>
                 ) : (
                     <ul className='flex items-center gap-x-4 sm:gap-x-6 md:gap-x-8'>

@@ -25,14 +25,14 @@ export default function App() {
         <div
             className='min-h-screen max-h-fit antialiased flex flex-col bg-zinc-100 dark:bg-zinc-800 overflow-hidden relative'>
             <div className='an-1 top-1/4 left-2/4'/>
-            <div className='an-1 bottom-3/4 right-1/4 animation-delay-2000'/>
-            <div className='an-2 bottom-2/3 left-1/2 animation-delay-4000'/>
-            <div className='an-2 bottom-1/4 left-1/4 animation-delay-6000'/>
+            <div className='an-1 bottom-3/4 right-1/4'/>
+            <div className='an-2 bottom-2/3 left-1/2'/>
+            <div className='an-2 bottom-1/4 left-1/4'/>
             <div className='an-1 top-2/4 right-2/4'/>
-            <div className='an-1 top-1/3 left-1/4 animation-delay-2000'/>
-            <div className='an-1 top-1/2 right-1/4 animation-delay-6000'/>
-            <div className='an-2 bottom-0 right-1/3 animation-delay-4000'/>
-            <div className='an-1 bottom-0 right-1/2 animation-delay-2000'/>
+            <div className='an-1 top-1/3 left-1/4'/>
+            <div className='an-1 top-1/2 right-1/4'/>
+            <div className='an-2 bottom-0 right-1/3'/>
+            <div className='an-1 bottom-0 right-1/2'/>
             <Router>
                 <AuthProvider>
                     <Header/>

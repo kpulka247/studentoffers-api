@@ -7,25 +7,25 @@ module.exports = {
     theme: {
         extend: {
             animation: {
-                blob: "blob 8s infinite",
+                // blob: "blob 8s infinite",
                 text: "text 1s ease-in-out",
-                messages: "messages 1s ease-in-out"
+                messages: "messages 0.2s ease-in-out"
             },
             keyframes: {
-                blob: {
-                    "0%": {
-                        transform: 'translate(0px, 0px) scale(1)'
-                    },
-                    "33%": {
-                        transform: 'translate(-60px, -40px) scale(1.1)'
-                    },
-                    "66%": {
-                        transform: 'translate(30px, -40px) scale(0.9)'
-                    },
-                    "100%": {
-                        transform: 'translate(0px, 0px) scale(1)'
-                    }
-                },
+                // blob: {
+                //     "0%": {
+                //         transform: 'translate(0px, 0px) scale(1)'
+                //     },
+                //     "33%": {
+                //         transform: 'translate(-60px, -40px) scale(1.1)'
+                //     },
+                //     "66%": {
+                //         transform: 'translate(30px, -40px) scale(0.9)'
+                //     },
+                //     "100%": {
+                //         transform: 'translate(0px, 0px) scale(1)'
+                //     }
+                // },
                 text: {
                     "0%": {
                         transform: 'translateY(-50%) scale(0.9)',
@@ -38,7 +38,7 @@ module.exports = {
                 },
                 messages: {
                     "0%": {
-                        transform: 'translateX(-40%)',
+                        transform: 'translateX(10%)',
                         opacity: 0
                     },
                     "100%": {

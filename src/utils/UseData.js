@@ -36,7 +36,10 @@ const ConfirmationDialog = lazy(() => import('../components/ConfirmationDialog')
 //         }
 //         console.log('Users called!', data)
 //     }
-//     return {students, companies}
+//     return {
+//         students,
+//         companies
+//     }
 // }
 
 export function useUsersData() {
@@ -76,7 +79,12 @@ export function useUsersData() {
         setUser({...user, 'user_type': userType})
     }
 
-    return {user, setUser, handleUserSubmit, handleUserType}
+    return {
+        user,
+        setUser,
+        handleUserSubmit,
+        handleUserType
+    }
 }
 
 export function useChatsData() {
@@ -191,7 +199,10 @@ export function useChatData() {
         }
     }
 
-    return {chat, createChat}
+    return {
+        chat,
+        createChat
+    }
 }
 
 export function useMessagesData() {
@@ -203,6 +214,7 @@ export function useMessagesData() {
     const limit = useState(20)
     const [isSending, setIsSending] = useState(false)
     const [isLoading, setIsLoading] = useState(false)
+    const [lastMessage, setLastMessage] = useState(null)
 
     const getMessages = async (chatId, page, limit) => {
 
@@ -218,6 +230,10 @@ export function useMessagesData() {
             const data = await response.json()
             if ('results' in data) {
                 setMessages(prevMessages => [...prevMessages, ...data.results])
+                if (page === 1) {
+                    const lastMessageDate = new Date(data.results[0].created_at).toISOString()
+                    setLastMessage(lastMessageDate)
+                }
                 const hasNextPage = data.next !== null
                 setHasNextPage(hasNextPage)
             } else {
@@ -244,7 +260,11 @@ export function useMessagesData() {
 
             if (data.results.length > 0) {
                 const latestMessage = data.results[0]
-                setMessages(prevMessages => [latestMessage, ...prevMessages])
+                const latestMessageDate = new Date(latestMessage.created_at).toISOString()
+                if (latestMessageDate !== lastMessage) {
+                    setMessages(prevMessages => [latestMessage, ...prevMessages])
+                    setLastMessage(latestMessageDate)
+                }
             }
         } catch (error) {
             console.error('Error during request:', error);
@@ -314,6 +334,7 @@ export function useMessagesData() {
         isSending,
         isLoading,
         getMessages,
+        getLatestMessage,
         sendMessage,
         downloadFile
     }
@@ -362,7 +383,13 @@ export function useOffersData() {
         }
     }
 
-    return {offers, jobs, internships, apprenticeships, isLoading}
+    return {
+        offers,
+        jobs,
+        internships,
+        apprenticeships,
+        isLoading
+    }
 }
 
 export function useOfferData() {
@@ -535,7 +562,11 @@ export function useThemeSwitch() {
         setTheme(theme === 'dark' ? 'light' : 'dark')
     }
 
-    return {theme, setTheme, handleThemeSwitch}
+    return {
+        theme,
+        setTheme,
+        handleThemeSwitch
+    }
 }
 
 export function useWindowSize() {
