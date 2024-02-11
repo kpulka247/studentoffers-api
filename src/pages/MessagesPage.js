@@ -21,7 +21,7 @@ export default function MessagesPage() {
 
     const [t] = useTranslation()
     const {user} = useContext(AuthContext)
-    const {chats, deleteChat, confirmationDialog} = useChatsData()
+    const {chats, getChats, deleteChat, confirmationDialog} = useChatsData()
     const {messages, setMessages, hasNextPage, page, setPage, limit, isSending, isLoading, getMessages, getLatestMessage, sendMessage, downloadFile} = useMessagesData()
     const [chatId, setChatId] = useState([])
     const [content, setContent] = useState('')
@@ -36,8 +36,6 @@ export default function MessagesPage() {
     const handleScroll = _.debounce((e) => {
         const container = e.target
         const scrollConverted = container.scrollTop + container.scrollHeight - container.clientHeight
-        // console.log('Scrolling...', scrollConverted)
-        // console.log('Scrolling...', container.scrollTop)
         if (scrollConverted === 0 && !isLoading && hasNextPage && scrollActive) {
             loadMoreMessages()
             setScrollActive(true)
@@ -137,12 +135,16 @@ export default function MessagesPage() {
             if (chats.find(chat => chat.id === chatId)) {
                 getLatestMessage(chatId)
             }
-        }, 500)
+        }, 1000)
 
         return () => {
             clearInterval(refreshInterval)
         }
     }, [chatId, getLatestMessage])
+
+    useEffect(() => {
+        getChats()
+    }, [])
 
     return (
         <section
@@ -271,7 +273,7 @@ export default function MessagesPage() {
                                         </div>
                                     ))}
                                     <div className='flex items-center justify-center'>
-                                        {hasNextPage && !isLoading ? (
+                                        {hasNextPage && !isLoading && !messages ? (
                                             <button className='btn-4' onClick={loadMoreMessages}>
                                                 {t('chat.load_more')}
                                             </button>

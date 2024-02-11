@@ -2,16 +2,16 @@ import React, {lazy, Suspense, useEffect, useState} from 'react'
 import {useOfferData, useOffersData} from '../utils/UseData'
 import {useLocation} from 'react-router-dom'
 import {useTranslation} from 'react-i18next'
-import {FontAwesomeIcon} from "@fortawesome/react-fontawesome";
-import {faCircleNotch} from "@fortawesome/free-solid-svg-icons";
+import {FontAwesomeIcon} from '@fortawesome/react-fontawesome'
+import {faCircleNotch} from '@fortawesome/free-solid-svg-icons'
 
-const ListItem = lazy(() => import('../components/ListItem'))
+const ListItem = lazy(() => import('../components/ListOffer'))
 
 
 export default function OffersListPage() {
 
     const [t] = useTranslation()
-    const {offers, jobs, internships, apprenticeships} = useOffersData()
+    const {offers, jobs, internships, apprenticeships, getOffers} = useOffersData()
     const {offer, handleOfferType} = useOfferData()
     const [sortOffers, setSortOffers] = useState('desc')
 
@@ -42,6 +42,10 @@ export default function OffersListPage() {
             localStorage.setItem('offerType', offerType)
         }
         handleOfferType(offerType)
+    }, [])
+
+    useEffect(() => {
+        getOffers()
     }, [])
 
     return (

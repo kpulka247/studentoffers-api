@@ -3,7 +3,7 @@ import {Link} from 'react-router-dom'
 import {useTranslation} from 'react-i18next'
 
 
-const ListMyItem = ({offer}) => {
+const ListMyOffer = ({offer}) => {
 
     const [t] = useTranslation()
 
@@ -40,4 +40,4 @@ const ListMyItem = ({offer}) => {
     )
 }
 
-export default ListMyItem
+export default ListMyOffer

@@ -1,19 +1,23 @@
-import React, {lazy, Suspense} from 'react'
+import React, {lazy, Suspense, useEffect} from 'react'
 import {Link} from 'react-router-dom'
 import {useOfferData, useOffersData, useWindowSize} from '../utils/UseData'
 import {useTranslation} from 'react-i18next'
 import {FontAwesomeIcon} from "@fortawesome/react-fontawesome";
 import {faCircleNotch} from "@fortawesome/free-solid-svg-icons";
 
-const ListItem = lazy(() => import('../components/ListItem'))
+const ListItem = lazy(() => import('../components/ListOffer'))
 
 
 export default function HomePage() {
 
     const [t] = useTranslation()
-    const {jobs, internships, apprenticeships, isLoading} = useOffersData()
+    const {jobs, internships, apprenticeships, getOffers, isLoading} = useOffersData()
     const {handleOfferType} = useOfferData()
     const visibleOffers = useWindowSize()
+
+    useEffect(() => {
+        getOffers()
+    }, [])
 
     return (
         <Suspense fallback={

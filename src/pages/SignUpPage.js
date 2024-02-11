@@ -1,12 +1,12 @@
 import React from 'react'
-import {usePasswordToggle, useUsersData} from '../utils/UseData'
+import {usePasswordToggle, useUserData} from '../utils/UseData'
 import {useTranslation} from 'react-i18next'
 
 
 export default function SignUpPage() {
 
     const [t] = useTranslation()
-    const {user, setUser, handleUserSubmit, handleUserType} = useUsersData()
+    const {user, setUser, handleUserSubmit, handleUserType} = useUserData()
     const [toggleIcon, passwordInputType] = usePasswordToggle()
 
     return (
