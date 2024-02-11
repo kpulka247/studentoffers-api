@@ -161,7 +161,7 @@ export function useChatsData() {
     const [chats, setChats] = useState([])
     const [showConfirmation, setShowConfirmation] = useState(false)
     const [chatToDelete, setChatToDelete] = useState(null)
-    const {user, authTokens} = useContext(AuthContext)
+    const {authTokens} = useContext(AuthContext)
 
     const getChats = async () => {
 
@@ -174,8 +174,7 @@ export function useChatsData() {
                 }
             })
             const data = await response.json()
-            const filteredChats = data.filter(chat => chat.sender.id === user.user_id || chat.receiver.id === user.user_id)
-            setChats(filteredChats)
+            setChats(data)
         } catch (error) {
             console.error('Error during chats request:', error)
         }
@@ -411,7 +410,7 @@ export function useOffersData() {
     const [internships, setInternships] = useState([])
     const [apprenticeships, setApprenticeships] = useState([])
     const {authTokens, logoutUser} = useContext(AuthContext)
-    const [isLoading, setIsLoading] = useState(true)
+    const [isLoading, setIsLoading] = useState(false)
 
     const getOffers = async () => {
 

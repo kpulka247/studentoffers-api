@@ -19,30 +19,33 @@ const ListUser = ({user, userId, onDeleteUser, onUpdateUser}) => {
     }
 
     const getRecentDate = (user) => {
-        return format(new Date(user.last_login), 'dd/MM/yyyy H:m:s')
+        return format(new Date(user.last_login), 'dd/MM/yyyy HH:mm:ss')
     }
 
     return (
         <>
-            <div className={`btn-9 break-words ${menuOpen ? 'bg-zinc-100 dark:bg-zinc-700' : ''}`}>
-                <button className='w-3/5 sm:w-2/5 lg:w-1/5 flex items-center'
+            <div className={`btn-9 overflow-auto break-words ${menuOpen ? 'bg-zinc-100 dark:bg-zinc-700' : ''}`}>
+                <button className='flex py-8 pl-4 w-4/5'
                         onClick={toggleMenu}>
-                    <p className='txt-10 pr-4'>
-                        {user.id}
+                    <div className='w-3/4 sm:w-2/4 lg:w-1/4 flex items-center'
+                    >
+                        <p className='txt-10 pr-4'>
+                            {user.id}
+                        </p>
+                        <p className='txt-6'>
+                            {user.username}
+                        </p>
+                    </div>
+                    <p className='hidden lg:block w-1/4 txt-6 text-center px-4'>
+                        {user.first_name} {user.last_name}
                     </p>
-                    <p className='txt-6'>
-                        {user.username}
+                    <p className='hidden lg:block w-1/4 txt-6 text-center'>
+                        {user.email}
+                    </p>
+                    <p className='hidden sm:block w-2/4 lg:w-1/4 txt-10 text-center pl-4'>
+                        {getDate(user)}
                     </p>
                 </button>
-                <p className='hidden lg:block w-1/5 txt-6 text-center px-4'>
-                    {user.first_name} {user.last_name}
-                </p>
-                <p className='hidden lg:block w-1/5 txt-6 text-center'>
-                    {user.email}
-                </p>
-                <p className='hidden sm:block w-2/5 lg:w-1/5 txt-10 text-center px-4'>
-                    {getDate(user)}
-                </p>
                 <div className='w-2/5 sm:w-1/5 flex justify-end'>
                     <button className={user.is_active ? 'btn-1-icon' : 'btn-2-icon'}
                             onClick={() => {
@@ -57,7 +60,7 @@ const ListUser = ({user, userId, onDeleteUser, onUpdateUser}) => {
                 </div>
             </div>
             <div
-                className={`overflow-hidden transition-max-h duration-300 ease-in-out ${menuOpen ? 'max-h-screen' : 'max-h-0'}`}>
+                className={`transition-max-h duration-300 ease-in-out ${menuOpen ? 'max-h-screen' : 'max-h-0'}`}>
                 {menuOpen && (
                     <div className='con-1 bg-zinc-200 dark:bg-zinc-600'>
                         <div className='sm:flex sm:text-center break-words my-4 sm:my-6 md:my-8'>

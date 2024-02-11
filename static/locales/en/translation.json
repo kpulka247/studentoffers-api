@@ -91,7 +91,9 @@
     "number_of_offers": "Number of offers",
     "status": "Account status",
     "recent_activity": "Recent activity",
-    "no_data": "No data"
+    "no_data": "No data",
+    "show_active": "Show active accounts",
+    "hide_active": "Hide active accounts"
   },
   "login": {
     "under_development": "The website is currently under development and it is used for testing and presentation purposes.",

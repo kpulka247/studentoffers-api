@@ -1,4 +1,4 @@
-import React, {lazy, Suspense, useContext, useEffect} from 'react'
+import React, {lazy, Suspense, useContext, useEffect, useState} from 'react'
 import AuthContext from '../context/AuthContext'
 import {useOffersData, useUsersData} from '../utils/UseData'
 import {useTranslation} from 'react-i18next'
@@ -15,6 +15,14 @@ export default function AccountPage() {
     const {user} = useContext(AuthContext)
     const {offers, getOffers} = useOffersData()
     const {users, getUsers, deleteUser, updateUser, confirmationDialog} = useUsersData()
+    const [menuOpen, setMenuOpen] = useState(false)
+
+    const toggleMenu = () => {
+        setMenuOpen(!menuOpen)
+    }
+
+    const inactiveUsers = users.filter((user) => !user.is_active)
+    const activeUsers = users.filter((user) => user.is_active)
 
     const userOffers = offers
         .filter((offer) => offer.company.id === user.user_id)
@@ -25,7 +33,18 @@ export default function AccountPage() {
                 offer={offer}
             />))
 
-    const adminUsers = users
+    const inactiveAdminUsers = inactiveUsers
+        .map((user, index) => (
+            <ListUser
+                key={index}
+                user={user}
+                userId={user.id}
+                onUpdateUser={updateUser}
+                onDeleteUser={deleteUser}
+            />
+        ))
+
+    const activeAdminUsers = activeUsers
         .map((user, index) => (
             <ListUser
                 key={index}
@@ -213,7 +232,19 @@ export default function AccountPage() {
                                     {t('account.active')}
                                 </p>
                             </div>
-                            {adminUsers}
+                            {inactiveAdminUsers}
+                            {activeUsers.length > 0 && (
+                                <>
+                                    <button className='btn-10' onClick={toggleMenu}>
+                                        {!menuOpen ? (
+                                            t('account.show_active')
+                                        ) : (t('account.hide_active'))}
+                                    </button>
+                                    <div className={`overflow-hidden ${menuOpen ? 'max-h-fit mt-4' : 'max-h-0'}`}>
+                                        {activeAdminUsers}
+                                    </div>
+                                </>
+                            )}
                         </div>
                     </div>
                 )}

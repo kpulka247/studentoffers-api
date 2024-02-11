@@ -1,8 +1,9 @@
+from django.utils import timezone
 from rest_framework.response import Response
 from rest_framework.decorators import api_view, permission_classes
 from rest_framework.permissions import IsAuthenticated
 from base.models import User, Chat
-from .serializers import UserSerializer, ChatSerializer
+from .serializers import ChatSerializer
 from rest_framework_simplejwt.serializers import TokenObtainPairSerializer
 from rest_framework_simplejwt.views import TokenObtainPairView
 from .utils import getOffers, newOffer, getOffer, updateOffer, deleteOffer, getMessages, sendMessage, deleteMessage, \
@@ -32,6 +33,13 @@ class MyTokenObtainPairSerializer(TokenObtainPairSerializer):
 
 class MyTokenObtainPairView(TokenObtainPairView):
     serializer_class = MyTokenObtainPairSerializer
+
+    def post(self, request, *args, **kwargs):
+        response = super().post(request, *args, **kwargs)
+        user = User.objects.get(username=request.data['username'])
+        user.last_login = timezone.now()
+        user.save()
+        return response
 
 
 @api_view(['GET'])
@@ -91,7 +99,8 @@ def offerView(request, pk):
 @api_view(['GET'])
 @permission_classes([IsAuthenticated])
 def getChats(request):
-    chats = Chat.objects.all()
+    user_id = request.user.id
+    chats = Chat.objects.filter(sender_id=user_id) | Chat.objects.filter(receiver_id=user_id)
     serializer = ChatSerializer(chats, many=True)
     return Response(serializer.data)
 

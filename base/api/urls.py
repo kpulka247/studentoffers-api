@@ -3,10 +3,7 @@ from django.conf.urls.static import static
 from django.urls import path
 from . import views
 from .views import MyTokenObtainPairView
-
-from rest_framework_simplejwt.views import (
-    TokenRefreshView,
-)
+from rest_framework_simplejwt.views import TokenRefreshView
 
 urlpatterns = [
     path('', views.getRoutes, name='routes'),

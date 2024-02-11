@@ -91,7 +91,9 @@
     "number_of_offers": "Ilość ofert",
     "status": "Status konta",
     "recent_activity": "Ostatnia aktywność",
-    "no_data": "Brak danych"
+    "no_data": "Brak danych",
+    "show_active": "Pokaż aktywne konta",
+    "hide_active": "Ukryj aktywne konta"
   },
   "login": {
     "under_development": "Strona internetowa jest obecnie w fazie rozwoju i służy do celów testowych i prezentacyjnych.",

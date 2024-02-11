@@ -85,10 +85,17 @@ button, input, select, textarea, div {
 }
 
 .btn-9 {
-    @apply flex w-full hover:transition ease-in-out justify-center items-center hover:bg-zinc-100 my-2 p-4 rounded-lg
+    @apply flex w-full hover:transition ease-in-out justify-center items-center hover:bg-zinc-100 my-2 pr-4 rounded-lg
 }
 .dark .btn-9 {
     @apply hover:bg-zinc-700
+}
+
+.btn-10 {
+    @apply txt-3 hover:text-zinc-500 flex w-full justify-center items-center pt-8 border-t border-zinc-200
+}
+.dark .btn-10 {
+    @apply hover:text-zinc-300 border-zinc-600
 }
 
 /* Texts */
