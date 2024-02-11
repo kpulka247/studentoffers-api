@@ -8,41 +8,108 @@ import {useTranslation} from 'react-i18next'
 const ConfirmationDialog = lazy(() => import('../components/ConfirmationDialog'))
 
 
-// export function useUsersData() {
-//
-//     const [students, setStudents] = useState([])
-//     const [companies, setCompanies] = useState([])
-//     const {authTokens, logoutUser} = useContext(AuthContext)
-//
-//     useEffect(() => {
-//
-//     },[])
-//
-//     async function getUsers() {
-//         const response = await  fetch(`/api/users/`,{
-//             method: 'GET',
-//             headers: {
-//                 'Content-Type': 'application/json',
-//                 'Authorization': 'Bearer ' + String(authTokens.access)
-//             }
-//         })
-//         const data = await response.json()
-//
-//         if (response.status === 200) {
-//             setStudents(data.filter((user) => user.user_type === 'Student'))
-//             setCompanies(data.filter((user) => user.user_type === 'Company'))
-//         } else if (response.status === 401) {
-//             logoutUser()
-//         }
-//         console.log('Users called!', data)
-//     }
-//     return {
-//         students,
-//         companies
-//     }
-// }
-
 export function useUsersData() {
+
+    const [t] = useTranslation()
+    const [users, setUsers] = useState([])
+    const [showConfirmation, setShowConfirmation] = useState(false)
+    const [userToDelete, setUserToDelete] = useState(null)
+    const [username, setUsername] = useState(null)
+    const {authTokens, logoutUser} = useContext(AuthContext)
+
+    const getUsers = async () => {
+        try {
+            const response = await fetch(`/api/users/`, {
+                method: 'GET',
+                headers: {
+                    'Content-Type': 'application/json',
+                    'Authorization': 'Bearer ' + String(authTokens.access)
+                }
+            })
+            const data = await response.json()
+
+            if (response.ok) {
+                setUsers(data)
+            } else if (response.status === 401) {
+                logoutUser()
+            }
+        } catch (error) {
+            console.error('Error during users get:', error)
+        }
+    }
+
+    const updateUser = async (updatedUser) => {
+
+        try {
+            const response = await fetch(`/api/users/${updatedUser.id}/`, {
+                method: 'PUT',
+                headers: {
+                    'Content-Type': 'application/json',
+                    'Authorization': 'Bearer ' + String(authTokens.access)
+                },
+                body: JSON.stringify({is_active: !updatedUser.is_active})
+            })
+            if (response.ok) {
+                getUsers()
+            } else {
+                console.log('Something went wrong!')
+            }
+        } catch (error) {
+            console.error('Error during user update:', error)
+        }
+    }
+
+    const openConfirmation = (userId, username) => {
+        setUsername(username)
+        setUserToDelete(userId)
+        setShowConfirmation(true)
+    }
+
+    const closeConfirmation = () => {
+        setUserToDelete(null)
+        setShowConfirmation(false)
+    }
+
+    const deleteUser = async (userId) => {
+
+        try {
+            await fetch(`/api/users/${userId}/`, {
+                method: 'DELETE',
+                headers: {
+                    'Content-Type': 'application/json',
+                    'Authorization': 'Bearer ' + String(authTokens.access)
+                }
+            })
+            const updatedUsers = users.filter(user => user.id !== userId)
+            closeConfirmation()
+            setUsers(updatedUsers)
+        } catch (error) {
+            console.error('Error during user delete:', error)
+        }
+    }
+
+    return {
+        users,
+        getUsers,
+        updateUser,
+        deleteUser: openConfirmation,
+        confirmationDialog: showConfirmation && (
+            <div className={`fixed top-0 left-0 w-full h-full bg-black bg-opacity-30 flex justify-center items-center ${
+                showConfirmation ? '' : 'hidden'
+            }`}>
+                <Suspense>
+                    <ConfirmationDialog
+                        confirmationMessage={t('confirmation.delete_user') + ' ' + username + '?'}
+                        onConfirm={() => deleteUser(userToDelete)}
+                        onCancel={closeConfirmation}
+                    />
+                </Suspense>
+            </div>
+        )
+    }
+}
+
+export function useUserData() {
 
     const [t] = useTranslation()
     const navigate = useNavigate()
@@ -83,7 +150,7 @@ export function useUsersData() {
         user,
         setUser,
         handleUserSubmit,
-        handleUserType
+        handleUserType,
     }
 }
 
@@ -95,10 +162,6 @@ export function useChatsData() {
     const [showConfirmation, setShowConfirmation] = useState(false)
     const [chatToDelete, setChatToDelete] = useState(null)
     const {user, authTokens} = useContext(AuthContext)
-
-    useEffect(() => {
-        getChats()
-    }, [])
 
     const getChats = async () => {
 
@@ -149,6 +212,7 @@ export function useChatsData() {
 
     return {
         chats,
+        getChats,
         deleteChat: openConfirmation,
         confirmationDialog: showConfirmation && (
             <div className={`fixed top-0 left-0 w-full h-full bg-black bg-opacity-30 flex justify-center items-center ${
@@ -228,7 +292,7 @@ export function useMessagesData() {
                 }
             })
             const data = await response.json()
-            if ('results' in data) {
+            if ('results' in data && data.results.length > 0) {
                 setMessages(prevMessages => [...prevMessages, ...data.results])
                 if (page === 1) {
                     const lastMessageDate = new Date(data.results[0].created_at).toISOString()
@@ -347,11 +411,7 @@ export function useOffersData() {
     const [internships, setInternships] = useState([])
     const [apprenticeships, setApprenticeships] = useState([])
     const {authTokens, logoutUser} = useContext(AuthContext)
-    const [isLoading, setIsLoading] = useState(false)
-
-    useEffect(() => {
-        getOffers()
-    }, [])
+    const [isLoading, setIsLoading] = useState(true)
 
     const getOffers = async () => {
 
@@ -388,6 +448,7 @@ export function useOffersData() {
         jobs,
         internships,
         apprenticeships,
+        getOffers,
         isLoading
     }
 }
@@ -466,14 +527,12 @@ export function useOfferData() {
                 },
                 body: JSON.stringify(offer)
             })
-            const data = await response.json()
-
             if (response.ok) {
                 getOffer()
+                navigate('/account')
             } else {
                 console.log('Something went wrong!')
             }
-            navigate('/account')
         } catch (error) {
             console.error('Error during offer update:', error)
         }

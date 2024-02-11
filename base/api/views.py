@@ -6,7 +6,7 @@ from .serializers import UserSerializer, ChatSerializer
 from rest_framework_simplejwt.serializers import TokenObtainPairSerializer
 from rest_framework_simplejwt.views import TokenObtainPairView
 from .utils import getOffers, newOffer, getOffer, updateOffer, deleteOffer, getMessages, sendMessage, deleteMessage, \
-    getUsers, newUser
+    getUsers, newUser, getUser, deleteUser, updateUser
 
 
 class MyTokenObtainPairSerializer(TokenObtainPairSerializer):
@@ -18,6 +18,8 @@ class MyTokenObtainPairSerializer(TokenObtainPairSerializer):
         token['first_name'] = user.first_name
         token['last_name'] = user.last_name
         token['user_type'] = user.user_type
+        token['is_active'] = user.is_active
+        token['is_staff'] = user.is_staff
         if user.user_type == 'Student':
             token['field_of_study'] = user.student.field_of_study
             token['student_id'] = user.student.student_id
@@ -50,12 +52,17 @@ def usersView(request):
         return newUser(request)
 
 
-@api_view(['GET'])
+@api_view(['GET', 'PUT', 'DELETE'])
 @permission_classes([IsAuthenticated])
-def getUser(request, pk):
-    users = User.objects.get(id=pk)
-    serializer = UserSerializer(users, many=False)
-    return Response(serializer.data)
+def userView(request, pk):
+    if request.method == 'GET':
+        return getUser(pk)
+
+    if request.method == 'PUT':
+        return updateUser(request, pk)
+
+    if request.method == 'DELETE':
+        return deleteUser(pk)
 
 
 @api_view(['GET', 'POST'])

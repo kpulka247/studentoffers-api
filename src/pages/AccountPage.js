@@ -1,18 +1,20 @@
-import React, {lazy, Suspense, useContext} from 'react'
+import React, {lazy, Suspense, useContext, useEffect} from 'react'
 import AuthContext from '../context/AuthContext'
-import {useOffersData} from '../utils/UseData'
+import {useOffersData, useUsersData} from '../utils/UseData'
 import {useTranslation} from 'react-i18next'
-import {FontAwesomeIcon} from "@fortawesome/react-fontawesome";
-import {faCircleNotch} from "@fortawesome/free-solid-svg-icons";
+import {FontAwesomeIcon} from '@fortawesome/react-fontawesome'
+import {faCircleNotch} from '@fortawesome/free-solid-svg-icons'
 
-const ListMyItem = lazy(() => import('../components/ListMyItem'))
+const ListMyItem = lazy(() => import('../components/ListMyOffer'))
+const ListUser = lazy(() => import('../components/ListUser'))
 
 
 export default function AccountPage() {
 
     const [t] = useTranslation()
     const {user} = useContext(AuthContext)
-    const {offers} = useOffersData()
+    const {offers, getOffers} = useOffersData()
+    const {users, getUsers, deleteUser, updateUser, confirmationDialog} = useUsersData()
 
     const userOffers = offers
         .filter((offer) => offer.company.id === user.user_id)
@@ -23,70 +25,97 @@ export default function AccountPage() {
                 offer={offer}
             />))
 
+    const adminUsers = users
+        .map((user, index) => (
+            <ListUser
+                key={index}
+                user={user}
+                userId={user.id}
+                onUpdateUser={updateUser}
+                onDeleteUser={deleteUser}
+            />
+        ))
+
+    useEffect(() => {
+        if (user.user_type === 'Company') {
+            getOffers()
+        } else if (user.is_staff) {
+            getOffers()
+            getUsers()
+        }
+    }, [user.user_type])
+
     return (
         <section className='w-full max-w-7xl mx-auto focus:outline-none px-4 sm:px-6 md:px-8 relative'>
             <div className='gap-6 lg:gap-8'>
                 <figure
                     className='con-1 txt-9 px-4 sm:px-6 md:px-8'>
-                    <div className='sm:flex sm:text-center break-words justify-around my-4 sm:my-6 md:my-8'>
-                        <div className=''>
-                            <p className='txt-3 flex justify-around mb-8'>
+                    <div className='sm:flex sm:text-center break-words my-4 sm:my-6 md:my-8'>
+                        <div className='sm:w-1/2'>
+                            <p className='txt-3 text-center mb-8'>
                                 {t('account.account_details')}
                             </p>
                             {t('account.username')}
-                            <div className='txt-4 mb-4'>
+                            <p className='txt-4 mb-4'>
                                 {user.username}
-                            </div>
+                            </p>
                             {t('account.email')}
-                            <div className='txt-4 mb-4'>
+                            <p className='txt-4 mb-4'>
                                 {user.email}
-                            </div>
+                            </p>
 
                             {user.user_type === 'Company' ? (
                                 <>
                                     {t('account.account_type')}
-                                    <div className='txt-4'>
-                                        <p>{t('account.company')}</p>
-                                    </div>
+                                    <p className='txt-4'>
+                                        {t('account.company')}
+                                    </p>
                                 </>
                             ) : user.user_type === 'Student' ? (
                                 <>
                                     {t('account.account_type')}
-                                    <div className='txt-4'>
-                                        <p>{t('account.student')}</p>
-                                    </div>
+                                    <p className='txt-4'>
+                                        {t('account.student')}
+                                    </p>
+                                </>
+                            ) : user.is_staff ? (
+                                <>
+                                    {t('account.account_type')}
+                                    <p className='txt-4'>
+                                        {t('account.admin')}
+                                    </p>
                                 </>
                             ) : null}
                         </div>
-                        <div>
-                            <p className='txt-3 flex justify-around mb-8 mt-8 sm:mt-0'>
+                        <div className='sm:w-1/2'>
+                            <p className='txt-3 text-center mb-8 mt-8 sm:mt-0'>
                                 {t('account.personal_details')}
                             </p>
                             {t('account.full_name')}
-                            <div className='txt-4 mb-4'>
+                            <p className='txt-4 mb-4'>
                                 {user.first_name} {user.last_name}
-                            </div>
+                            </p>
                             {user.user_type === 'Company' ? (
                                 <>
                                     {t('account.company_name')}
-                                    <div className='txt-4 mb-4'>
+                                    <p className='txt-4 mb-4'>
                                         {user.name}
-                                    </div>
+                                    </p>
                                     {t('account.address')}
-                                    <div className='txt-4'>
+                                    <p className='txt-4'>
                                         {user.location}
-                                    </div>
+                                    </p>
                                 </>
                             ) : user.user_type === 'Student' ? (
                                 <>
                                     {t('account.field_of_study')}
-                                    <div className='txt-4 mb-4'>
+                                    <p className='txt-4 mb-4'>
                                         {user.field_of_study}
-                                    </div>
+                                    </p>
                                     {t('account.student_id_number')}
-                                    <div className='txt-4'>
+                                    <p className='txt-4'>
                                         {user.student_id}
-                                    </div>
+                                    </p>
                                 </>
                             ) : null}
                         </div>
@@ -120,6 +149,75 @@ export default function AccountPage() {
                         )}
                     </div>
                 ) : null}
+                {user.is_staff && (
+                    <div className='relative mt-8'>
+                        <section className='text-center'>
+                            <h1 className='txt-1'>
+                                {t('account.admin_panel')}
+                            </h1>
+                        </section>
+                        <div
+                            className='con-1 py-8 txt-9 px-4 sm:px-6 md:px-8 mt-8'>
+                            <p className='txt-3 text-center pb-8'>
+                                {t('account.stats')}
+                            </p>
+                            <div className='sm:flex w-full sm:text-center break-words'>
+                                <div className='sm:w-1/2'>
+                                    {t('account.inactive_all')}
+                                    <p className='txt-3 mb-4'>
+                                        {t('offer.all')}: {users.filter(user => !user.is_active).length} / {users.length}
+                                    </p>
+                                    <p className='txt-4'>
+                                        {t('account.student')}: {users.filter(user => user.user_type === 'Student' && !user.is_active).length} / {users.filter(user => user.user_type === 'Student').length}
+                                    </p>
+                                    <p className='txt-4'>
+                                        {t('account.company')}: {users.filter(user => user.user_type === 'Company' && !user.is_active).length} / {users.filter(user => user.user_type === 'Company').length}
+                                    </p>
+                                </div>
+                                <div className='sm:w-1/2 mt-4 sm:mt-0'>
+                                    {t('account.number_of_offers')}
+                                    <p className='txt-3 mb-4'>
+                                        {t('offer.all')}: {offers.length}
+                                    </p>
+                                    <p className='txt-4'>
+                                        {t('offer.job')}: {offers.filter(offer => offer.offer_type === 'Job').length}
+                                    </p>
+                                    <p className='txt-4'>
+                                        {t('offer.internship')}: {offers.filter(offer => offer.offer_type === 'Internship').length}
+                                    </p>
+                                    <p className='txt-4'>
+                                        {t('offer.apprenticeship')}: {offers.filter(offer => offer.offer_type === 'Apprenticeship').length}
+                                    </p>
+                                </div>
+                            </div>
+                        </div>
+                        <div
+                            className='con-1 py-8 txt-9 px-4 sm:px-6 md:px-8 mt-8'>
+                            <p className='txt-3 text-center pb-8'>
+                                {t('account.user_accounts')}
+                            </p>
+                            <div className='flex w-full mb-4 justify-around text-center break-words'>
+                                <p className='w-3/5 sm:w-2/5 lg:w-1/5 text-start'>
+                                    {t('account.username')}
+                                </p>
+                                <p className='hidden lg:block w-1/5 px-4'>
+                                    {t('account.full_name')}
+                                </p>
+                                <p className='hidden lg:block w-1/5'>
+                                    {t('account.email')}
+                                </p>
+                                <p className='hidden sm:block w-2/5 lg:w-1/5 px-4'>
+                                    {t('account.joined')}
+                                </p>
+                                <p className='w-2/5 sm:w-1/5 text-end'>
+                                    {t('account.active')}
+                                </p>
+                            </div>
+                            {adminUsers}
+                        </div>
+                    </div>
+                )}
+                {confirmationDialog}
             </div>
         </section>
     )

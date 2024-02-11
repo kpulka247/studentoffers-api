@@ -84,6 +84,13 @@ button, input, select, textarea, div {
     @apply hover:text-zinc-300
 }
 
+.btn-9 {
+    @apply flex w-full hover:transition ease-in-out justify-center items-center hover:bg-zinc-100 my-2 p-4 rounded-lg
+}
+.dark .btn-9 {
+    @apply hover:bg-zinc-700
+}
+
 /* Texts */
 .txt-1 {
     @apply text-zinc-700 font-extrabold text-2xl
@@ -256,18 +263,18 @@ button, input, select, textarea, div {
     @apply from-zinc-700
 }
 
-/* Animations */
-.an-1 {
+/* Background */
+.bg-1 {
     @apply bg-sky-200 w-112 h-96 rounded-full mix-blend-multiply opacity-30 blur-7xl absolute
 }
-.dark .an-1 {
+.dark .bg-1 {
     @apply bg-sky-300 mix-blend-screen opacity-10
 }
 
-.an-2 {
+.bg-2 {
     @apply bg-purple-200 w-96 h-112 rounded-full mix-blend-multiply opacity-70 blur-7xl absolute
 }
-.dark .an-2 {
+.dark .bg-2 {
     @apply bg-purple-400 mix-blend-screen opacity-20
 }
 

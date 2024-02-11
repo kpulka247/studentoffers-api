@@ -16,7 +16,7 @@ class MessagesPagination(PageNumberPagination):
 
 @permission_classes([IsAuthenticated])
 def getUsers():
-    users = User.objects.all()
+    users = User.objects.all().order_by('-date_joined')
     serializer = UserSerializer(users, many=True)
     return Response(serializer.data)
 
@@ -62,6 +62,26 @@ def newUser(request):
     else:
         return Response({'Invalid user type!'}, status=400)
     return Response(serializer.data)
+
+
+def getUser(pk):
+    users = User.objects.get(id=pk)
+    serializer = UserSerializer(users, many=False)
+    return Response(serializer.data)
+
+
+def updateUser(request, pk):
+    data = request.data
+    user = User.objects.get(id=pk)
+    user.is_active = data.get('is_active', user.is_active)
+    user.save()
+    return Response({'is_active': user.is_active})
+
+
+def deleteUser(pk):
+    user = User.objects.get(id=pk)
+    user.delete()
+    return Response('User was deleted!')
 
 
 def getOffers():

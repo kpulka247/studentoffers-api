@@ -4,7 +4,7 @@ import {format} from 'date-fns'
 import {useTranslation} from 'react-i18next'
 
 
-const ListItem = ({offer}) => {
+const ListOffer = ({offer}) => {
 
     const [t] = useTranslation()
     const getTime = (offer) => {
@@ -46,4 +46,4 @@ const ListItem = ({offer}) => {
     )
 }
 
-export default ListItem
+export default ListOffer
