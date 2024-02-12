@@ -1,4 +1,4 @@
-import React, {useContext, useEffect, useRef, useState} from 'react'
+import React, {lazy, Suspense, useContext, useEffect, useRef, useState} from 'react'
 import AuthContext from '../context/AuthContext'
 import {useChatsData, useMessagesData} from '../utils/UseData'
 import {Link} from 'react-router-dom'
@@ -16,6 +16,8 @@ import {useTranslation} from 'react-i18next'
 import ReactLinkify from 'react-linkify'
 import _ from 'lodash'
 
+const ImagePreview = lazy(() => import('../components/ImagePreview'))
+
 
 export default function MessagesPage() {
 
@@ -30,6 +32,15 @@ export default function MessagesPage() {
     const containerRef = useRef(null)
     const [scrollActive, setScrollActive] = useState(true)
     const [scrollToBottom, setScrollToBottom] = useState(false)
+    const [selectedImage, setSelectedImage] = useState(null)
+
+    const handleImageClick = (imageUrl) => {
+        setSelectedImage(imageUrl)
+    }
+
+    const handleCloseImagePreview = () => {
+        setSelectedImage(null)
+    }
 
     const imageExtensions = ['.jpg', '.jpeg', '.png', '.gif', '.tiff', '.gif', '.bmp']
 
@@ -229,45 +240,46 @@ export default function MessagesPage() {
                                     id='sc-1'
                                     ref={containerRef}>
                                     {messages.map((message, index) => (
-                                        <div key={index} className='animate-messages'>
+                                        <div
+                                            className={user.user_id === message.user.id ? ('w-full max-w-xl flex flex-col place-items-end pl-8 ml-auto') : ('w-full max-w-xl pr-8')}
+                                            key={index}>
                                             <div
-                                                className={user.user_id === message.user.id ? ('w-full max-w-xl flex flex-col place-items-end pl-8 ml-auto') : ('w-full max-w-xl pr-8')}>
-                                                <div
-                                                    className={user.user_id === message.user.id ? ('max-w-fit w-full py-2 px-4 mt-4 break-words rounded-lg bg-white dark:bg-zinc-600') : ('max-w-fit w-full py-2 px-4 mt-4 break-words rounded-lg border border-zinc-200 dark:border-zinc-600 align-start')}>
-                                                    <p className={user.user_id === message.user.id ? ('txt-10 text-right') : ('txt-10 text-left')}>
-                                                        {message.user.first_name} {message.user.last_name} {getTime(message)}
+                                                className={user.user_id === message.user.id ? ('max-w-fit w-full py-2 px-4 mt-4 break-words rounded-lg bg-white dark:bg-zinc-600') : ('max-w-fit w-full py-2 px-4 mt-4 break-words rounded-lg border border-zinc-200 dark:border-zinc-600 align-start')}>
+                                                <p className={user.user_id === message.user.id ? ('txt-10 text-right') : ('txt-10 text-left')}>
+                                                    {message.user.first_name} {message.user.last_name} {getTime(message)}
+                                                </p>
+                                                <ReactLinkify
+                                                    componentDecorator={(decoratedHref, decoratedText, key) => (
+                                                        <a target='blank' href={decoratedHref} key={key}
+                                                           className='btn-8'>
+                                                            {decoratedText}
+                                                        </a>
+                                                    )}>
+                                                    <p className='txt-6'>
+                                                        {message.content}
                                                     </p>
-                                                    <ReactLinkify
-                                                        componentDecorator={(decoratedHref, decoratedText, key) => (
-                                                            <a target='blank' href={decoratedHref} key={key}
-                                                               className='btn-8'>
-                                                                {decoratedText}
-                                                            </a>
-                                                        )}>
-                                                        <p className='txt-6'>
-                                                            {message.content}
-                                                        </p>
-                                                    </ReactLinkify>
-                                                    <div
-                                                        className={user.user_id === message.user.id ? ('flex place-content-end') : ('flex place-content-start')}>
-                                                        {message.file && (
-                                                            imageExtensions.some(ext => message.file.endsWith(ext)) ? (
-                                                                <div className='my-2'>
-                                                                    <img
-                                                                        className='max-w-full max-h-full rounded-lg'
-                                                                        src={`/api${message.file}`}
-                                                                        alt={message.file.name}/>
-                                                                </div>
-                                                            ) : (
-                                                                <button
-                                                                    className='text-start overflow-auto btn-4'
-                                                                    onClick={() => downloadFile(message.file, message.file)}>
-                                                                    <FontAwesomeIcon
-                                                                        icon={faPaperclip}/> {message.file.replace('/media/chat_files/', '')}
-                                                                </button>
-                                                            )
-                                                        )}
-                                                    </div>
+                                                </ReactLinkify>
+                                                <div
+                                                    className={user.user_id === message.user.id ? ('flex place-content-end') : ('flex place-content-start')}>
+                                                    {message.file && (
+                                                        imageExtensions.some(ext => message.file.split('?')[0].endsWith(ext)) ? (
+                                                            <div className='my-2'>
+                                                                <img
+                                                                    className='max-w-full cursor-pointer max-h-full rounded-lg'
+                                                                    src={message.file}
+                                                                    alt={message.file.name}
+                                                                    onClick={() => handleImageClick(message.file)}
+                                                                />
+                                                            </div>
+                                                        ) : (
+                                                            <button
+                                                                className='text-start overflow-auto btn-4'
+                                                                onClick={() => downloadFile(message.file, message.file.split('/').pop().split('?')[0])}>
+                                                                <FontAwesomeIcon
+                                                                    icon={faPaperclip}/> {message.file.split('/').pop().split('?')[0]}
+                                                            </button>
+                                                        )
+                                                    )}
                                                 </div>
                                             </div>
                                         </div>
@@ -345,6 +357,11 @@ export default function MessagesPage() {
                     </div>
                 </figure>
                 {confirmationDialog}
+                {selectedImage && (
+                    <Suspense>
+                        <ImagePreview imageUrl={selectedImage} onClose={handleCloseImagePreview}/>
+                    </Suspense>
+                )}
             </div>
         </section>
     )

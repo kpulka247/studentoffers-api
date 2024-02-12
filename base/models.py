@@ -1,3 +1,6 @@
+import os
+
+from django.core.exceptions import ValidationError
 from django.db import models
 from django.contrib.auth.models import AbstractUser
 
@@ -40,11 +43,27 @@ class Chat(models.Model):
     receiver = models.ForeignKey(User, related_name='receiver', on_delete=models.CASCADE)
 
 
+def file_size(value):
+    max_size = 500 * 1024 * 1024
+    if value.size > max_size:
+        raise ValidationError('File is too large. Max file size is 500 MB.')
+
+
+def upload_path(self, filename):
+    base_path = f'chats/{self.chat.id}/'
+    return os.path.join(base_path, filename)
+
+
 class Message(models.Model):
     user = models.ForeignKey(User, on_delete=models.CASCADE)
     chat = models.ForeignKey(Chat, on_delete=models.CASCADE)
     content = models.TextField(blank=True)
-    file = models.FileField(upload_to='chat_files/', blank=True, null=True)
+    file = models.FileField(
+        upload_to=upload_path,
+        blank=True,
+        null=True,
+        validators=[file_size]
+    )
     created_at = models.DateTimeField(auto_now_add=True)
 
 
@@ -83,7 +102,6 @@ class Internship(Offer):
 
 
 class Apprenticeship(Offer):
-
     class Meta:
         verbose_name = 'Apprenticeship'
 
