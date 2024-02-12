@@ -137,6 +137,17 @@ export default function MessagesPage() {
         setFile(selectedFile)
     }
 
+    const handlePaste = (event) => {
+        const items = (event.clipboardData || event.originalEvent.clipboardData).items
+
+        for (const item of items) {
+            if (item.type.indexOf('image') === 0) {
+                const blob = item.getAsFile()
+                handleFileChange({target: {files: [blob]}})
+            }
+        }
+    }
+
     const getTime = (message) => {
         return format(new Date(message.created_at), 'dd/MM HH:mm')
     }
@@ -161,9 +172,10 @@ export default function MessagesPage() {
         <section
             className='min-h-fit flex grow w-full max-w-7xl mx-auto focus:outline-none md:px-8 relative'>
             <div className='gap-6 lg:gap-8 w-full'>
-                <figure className='con-1 rounded-none md:rounded-lg overflow-hidden h-80 min-h-full flex flex-col'>
+                <figure className='con-1 px-0 rounded-none md:rounded-lg overflow-hidden h-80 min-h-full flex flex-col'>
                     {chats.find(chat => chat.id === chatId) && (
-                        <div className='md:hidden gap-x-4 sm:gap-x-6 flex justify-between items-center pt-4 sm:pt-6'>
+                        <div
+                            className='md:hidden gap-x-4 sm:gap-x-6 flex justify-between items-center px-4 sm:px-6 pt-4 sm:pt-6'>
                             <button
                                 className='btn-2-icon'
                                 onClick={() => setChatId(null)}>
@@ -174,7 +186,7 @@ export default function MessagesPage() {
                             </p>
                         </div>
                     )}
-                    <div className='flex grow overflow-y-auto py-4 sm:py-6 md:py-8'
+                    <div className='flex grow overflow-y-auto px-4 sm:px-6 md:px-8 py-4 sm:py-6 md:py-8'
                          id='sc-1'>
                         <div
                             className={chats.find(chat => chat.id === chatId || chat.id !== chatId) ? (`w-full md:w-1/3 text-center ${chats.find(chat => chat.id === chatId) ? `hidden md:block` : ``}`) : null}>
@@ -267,7 +279,7 @@ export default function MessagesPage() {
                                                                 <img
                                                                     className='max-w-full cursor-pointer max-h-full rounded-lg'
                                                                     src={message.file}
-                                                                    alt={message.file.name}
+                                                                    alt={message.file}
                                                                     onClick={() => handleImageClick(message.file)}
                                                                 />
                                                             </div>
@@ -285,7 +297,7 @@ export default function MessagesPage() {
                                         </div>
                                     ))}
                                     <div className='flex items-center justify-center'>
-                                        {hasNextPage && !isLoading && !messages ? (
+                                        {hasNextPage && !isLoading ? (
                                             <button className='btn-4' onClick={loadMoreMessages}>
                                                 {t('chat.load_more')}
                                             </button>
@@ -338,11 +350,16 @@ export default function MessagesPage() {
                                         placeholder={isSending ? (t('chat.sending')) + '...' : (messages.length === 0 ? t('chat.type_first_message') + '...' : t('chat.type_message') + '...')}
                                         value={content}
                                         onChange={(event) => setContent(event.target.value)}
-                                        onKeyDown={handleEnter}/>
+                                        onKeyDown={handleEnter}
+                                        onPaste={handlePaste}
+                                    />
                                     <button
                                         className='flex items-center btn-1-icon'
                                         onClick={handleSendButton}>
-                                        <div className={isSending ? 'animate-spin' : ''}>
+                                        <div className={isSending ? 'animate-spin' : 'hidden'}>
+                                            <FontAwesomeIcon icon={faCircleNotch}/>
+                                        </div>
+                                        <div className={isSending ? 'hidden' : ''}>
                                             <FontAwesomeIcon icon={faPaperPlane}/>
                                         </div>
                                     </button>
