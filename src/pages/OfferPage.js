@@ -3,7 +3,7 @@ import {useParams} from 'react-router-dom'
 import {useChatData, useOfferData} from '../utils/UseData'
 import AuthContext from '../context/AuthContext'
 import {useTranslation} from 'react-i18next'
-import ReactLinkify from 'react-linkify';
+import ReactLinkify from 'react-linkify'
 
 
 export default function OfferPage() {

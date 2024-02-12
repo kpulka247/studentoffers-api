@@ -1,7 +1,5 @@
 from django.core.files import File
-from rest_framework.decorators import permission_classes
 from rest_framework.pagination import PageNumberPagination
-from rest_framework.permissions import IsAuthenticated
 from rest_framework.response import Response
 from base.models import Offer, Job, Internship, Apprenticeship, Company, Message, Chat, User, Student
 from .serializers import OfferSerializer, JobSerializer, InternshipSerializer, ApprenticeshipSerializer, \
@@ -14,7 +12,6 @@ class MessagesPagination(PageNumberPagination):
     max_page_size = 100
 
 
-@permission_classes([IsAuthenticated])
 def getUsers():
     users = User.objects.all().order_by('-date_joined')
     serializer = UserSerializer(users, many=True)

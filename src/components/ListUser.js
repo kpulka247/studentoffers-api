@@ -25,7 +25,7 @@ const ListUser = ({user, userId, onDeleteUser, onUpdateUser}) => {
     return (
         <>
             <div className={`btn-9 overflow-auto break-words ${menuOpen ? 'bg-zinc-100 dark:bg-zinc-700' : ''}`}>
-                <button className='flex py-8 pl-4 w-4/5'
+                <button className='flex items-center py-8 pl-4 w-4/5'
                         onClick={toggleMenu}>
                     <div className='w-3/4 sm:w-2/4 lg:w-1/4 flex items-center'
                     >
@@ -60,7 +60,7 @@ const ListUser = ({user, userId, onDeleteUser, onUpdateUser}) => {
                 </div>
             </div>
             <div
-                className={`transition-max-h duration-300 ease-in-out ${menuOpen ? 'max-h-screen' : 'max-h-0'}`}>
+                className={`transition-max-h overflow-hidden duration-300 ease-in-out ${menuOpen ? 'max-h-screen' : 'max-h-0'}`}>
                 {menuOpen && (
                     <div className='con-1 bg-zinc-200 dark:bg-zinc-600'>
                         <div className='sm:flex sm:text-center break-words my-4 sm:my-6 md:my-8'>

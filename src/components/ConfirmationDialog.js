@@ -14,6 +14,7 @@ export default function ConfirmationDialog({confirmationMessage, onConfirm, onCa
         }
 
         document.addEventListener('mousedown', handleOutsideClick)
+
         return () => {
             document.removeEventListener('mousedown', handleOutsideClick)
         }

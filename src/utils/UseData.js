@@ -330,7 +330,7 @@ export function useMessagesData() {
                 }
             }
         } catch (error) {
-            console.error('Error during request:', error);
+            console.error('Error during request:', error)
         }
     }
 
@@ -358,23 +358,20 @@ export function useMessagesData() {
                 body: messageData
             })
             if (response.ok) {
-                await getLatestMessage(chatId).then(() => {
-                    setIsSending(false)
-                })
+                await getLatestMessage(chatId)
             } else {
                 console.log('Something went wrong!')
-                setIsSending(false)
             }
         } catch (error) {
             console.error('Error during send message:', error)
+        } finally {
+            setIsSending(false)
         }
     }
 
     const downloadFile = (fileUrl, fileName) => {
-        const apiUrl = '/api'
-        const downloadUrl = `${apiUrl}${fileUrl}`
 
-        fetch(downloadUrl)
+        fetch(fileUrl)
             .then(response => response.blob())
             .then(blob => {
                 const fileUrl = window.URL.createObjectURL(blob)
