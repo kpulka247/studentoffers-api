@@ -60,7 +60,7 @@ const ListUser = ({user, userId, onDeleteUser, onUpdateUser}) => {
                 </div>
             </div>
             <div
-                className={`transition-max-h overflow-hidden duration-300 ease-in-out ${menuOpen ? 'max-h-screen' : 'max-h-0'}`}>
+                className={`transition-all overflow-hidden duration-200 ${menuOpen ? 'max-h-[70rem] opacity-100' : 'max-h-0 opacity-0'}`}>
                 {menuOpen && (
                     <div className='con-1 bg-zinc-200 dark:bg-zinc-600'>
                         <div className='sm:flex sm:text-center break-words my-4 sm:my-6 md:my-8'>

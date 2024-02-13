@@ -65,7 +65,7 @@ export default function AccountPage() {
     }, [user.user_type])
 
     return (
-        <section className='w-full max-w-7xl mx-auto focus:outline-none px-4 sm:px-6 md:px-8 relative'>
+        <section className='w-full max-w-7xl mx-auto focus:outline-none pt-8 md:pt-0 px-4 sm:px-6 md:px-8 relative'>
             <div className='gap-6 lg:gap-8'>
                 <figure
                     className='con-1 txt-9 px-4 sm:px-6 md:px-8'>
@@ -240,7 +240,7 @@ export default function AccountPage() {
                                             t('account.show_active')
                                         ) : (t('account.hide_active'))}
                                     </button>
-                                    <div className={`overflow-hidden ${menuOpen ? 'max-h-fit mt-4' : 'max-h-0'}`}>
+                                    <div className={`overflow-hidden ${menuOpen ? 'max-h-fit' : 'max-h-0'}`}>
                                         {activeAdminUsers}
                                     </div>
                                 </>

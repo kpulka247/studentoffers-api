@@ -30,9 +30,9 @@ export default function ImagePreview({imageUrl, onClose}) {
         <div className='fixed top-0 left-0 w-full h-full bg-black bg-opacity-30 flex justify-center items-center'>
             <div ref={imageRef}>
                 <img
-                    className='max-w-full max-h-full'
+                    className='max-w-screen max-h-screen'
                     src={imageUrl}
-                    alt='Preview'
+                    alt={imageUrl}
                 />
             </div>
         </div>

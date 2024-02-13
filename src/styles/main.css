@@ -270,19 +270,19 @@ button, input, select, textarea, div {
     @apply from-zinc-700
 }
 
-/* Background */
-.bg-1 {
-    @apply bg-sky-200 w-112 h-96 rounded-full mix-blend-multiply opacity-30 blur-7xl absolute
+/* Animations */
+.an-1 {
+    @apply bg-sky-200 w-112 h-96 rounded-full mix-blend-multiply opacity-30 blur-7xl animate-blob absolute
 }
-.dark .bg-1 {
-    @apply bg-sky-300 mix-blend-screen opacity-10
+.dark .an-1 {
+    @apply bg-sky-300 mix-blend-normal opacity-10
 }
 
-.bg-2 {
-    @apply bg-purple-200 w-96 h-112 rounded-full mix-blend-multiply opacity-70 blur-7xl absolute
+.an-2 {
+    @apply bg-purple-200 w-96 h-112 rounded-full mix-blend-multiply opacity-70 blur-7xl animate-blob absolute
 }
-.dark .bg-2 {
-    @apply bg-purple-400 mix-blend-screen opacity-20
+.dark .an-2 {
+    @apply bg-purple-400 mix-blend-normal opacity-20
 }
 
 /* Labels */

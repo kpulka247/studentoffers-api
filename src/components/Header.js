@@ -193,7 +193,7 @@ export default function Header() {
                 )}
             </div>
             <div
-                className={`md:hidden pb-8 overflow-hidden transition-max-h duration-300 ease-in-out ${menuOpen ? 'max-h-screen' : 'max-h-0'}`}>
+                className={`md:hidden overflow-hidden transition-all duration-200 ${menuOpen ? 'max-h-screen opacity-100' : 'max-h-0 opacity-0'}`}>
                 {user && menuOpen && (
                     <div className='con-1 mx-4 sm:mx-6 px-4 sm:px-6 mt-4'>
                         <ul className='flex flex-col w-full items-center'>

@@ -24,7 +24,7 @@ export default function OfferPage() {
     }, [user, offerId])
 
     return (
-        <section className='w-full max-w-7xl mx-auto focus:outline-none px-4 sm:px-6 md:px-8 relative'>
+        <section className='w-full max-w-7xl mx-auto focus:outline-none pt-8 md:pt-0 px-4 sm:px-6 md:px-8 relative'>
             {offerId === 'new' && user.user_type === 'Company' && (
                 <div>
                     {offer.offer_type === null ? (

@@ -26,7 +26,7 @@ export default function HomePage() {
             </div>
         }>
             {!isLoading ? (
-                <section className='w-full max-w-7xl mx-auto focus:outline-none px-4 sm:px-6 md:px-8'>
+                <section className='w-full max-w-7xl mx-auto focus:outline-none pt-8 md:pt-0 px-4 sm:px-6 md:px-8'>
                     <div className='relative'>
                         <section className='text-center'>
                             <h1 className='txt-1'>
