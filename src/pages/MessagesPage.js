@@ -154,7 +154,7 @@ export default function MessagesPage() {
 
     useEffect(() => {
         const refreshInterval = setInterval(() => {
-            if (chats.find(chat => chat.id === chatId)) {
+            if (!isSending && chats.find(chat => chat.id === chatId)) {
                 getLatestMessage(chatId)
             }
         }, 1000)
@@ -162,7 +162,7 @@ export default function MessagesPage() {
         return () => {
             clearInterval(refreshInterval)
         }
-    }, [chatId, getLatestMessage])
+    }, [chatId, getLatestMessage, isSending])
 
     useEffect(() => {
         getChats()
@@ -170,7 +170,7 @@ export default function MessagesPage() {
 
     return (
         <section
-            className='min-h-fit flex grow w-full max-w-7xl mx-auto focus:outline-none md:px-8 relative'>
+            className='min-h-fit flex grow w-full max-w-7xl mx-auto focus:outline-none pt-8 md:pt-0 md:px-8 relative'>
             <div className='gap-6 lg:gap-8 w-full'>
                 <figure className='con-1 px-0 rounded-none md:rounded-lg overflow-hidden h-80 min-h-full flex flex-col'>
                     {chats.find(chat => chat.id === chatId) && (

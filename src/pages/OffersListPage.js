@@ -49,7 +49,7 @@ export default function OffersListPage() {
     }, [])
 
     return (
-        <section className='w-full max-w-7xl mx-auto focus:outline-none px-4 sm:px-6 md:px-8 relative'>
+        <section className='w-full max-w-7xl mx-auto focus:outline-none pt-8 md:pt-0 px-4 sm:px-6 md:px-8 relative'>
             <div
                 className='hidden md:block lg:flex lg:px-8 justify-between'>
                 <div className='justify-center flex gap-x-4 sm:gap-x-6 md:gap-x-8 pb-8 lg:pb-0'>
